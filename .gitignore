@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+
+# Registro crudo (.jsonl) de las conversaciones con los agentes: no se versiona
+09_Conversaciones/
+
+# Zip original del enunciado: su contenido ya está en 01_Datos/01_Crudos/
+Comunicados_Minutas_Banrep.zip
