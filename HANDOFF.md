@@ -16,58 +16,91 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **Definir la pregunta del taller y las series macro.**
+1. **Fijar la pregunta del taller con el equipo.**
+   - Candidata (todavía no registrada en "Decisiones tomadas"): si la
+     dirección del voto de la minoría y los argumentos de la minuta anticipan
+     la siguiente decisión de tasa más allá de la inflación y las expectativas.
    - Archivo: fila nueva en "Decisiones tomadas" de `CLAUDE.md` con la
-     pregunta, y tabla "Definición de variables" con cada serie (por qué,
-     fuente, cobertura, frecuencia, transformaciones).
+     pregunta, y tabla "Definición de variables" con cada serie macro (por
+     qué, fuente con URL, cobertura, frecuencia, transformaciones).
    - *Terminado cuando:* la pregunta es una sola oración que la mesa de renta
-     fija entendería, y cada serie tiene fuente con URL.
-2. **`PLAN.md` y ampliaciones del catálogo.** El catálogo
-   (`07_Recursos/catalogo_metodos.md`, Labs 11 y 12) ya existe.
-   - Archivos: `PLAN.md` con hitos y tareas `Pk.n`; filas en el "Registro de
-     ampliaciones" del catálogo al menos para `pdftools` y la lectura de las
-     series macro.
-   - *Terminado cuando:* cada análisis previsto en el plan usa una herramienta
-     del catálogo o una ampliación registrada.
-3. **Base del pipeline: `00_main.R`, formato y extracción de texto.**
-   - Archivos: `00_main.R`; `02_Scripts/00_formato_graficas.R` y
-     `00_formato_tablas.R` (traídos del Taller 2 y adaptados);
-     `02_Scripts/01_extraer_texto.R` (texto de los 194 comunicados y las 199
-     minutas a `02_Procesados/`, con fecha y tipo de documento tomados del
-     nombre).
-   - *Terminado cuando:* `00_main.R` corre desde cero, reporta cuántos PDF no
-     tienen texto extraíble y la base tiene 393 documentos (sin el informe
-     técnico del 2020-04-30).
+     fija entendería, el equipo la aprobó y cada serie tiene fuente con URL.
+   - Insumos: las tres notas de `05_Notas/` y la bitácora del 2026-11-12.
+2. **Validar a mano la votación.**
+   - Archivo: `03_Resultados/Tablas/04_bigramas/conjunto_votacion_muestra_validacion.csv`
+     con las columnas de revisión llenas (30 documentos), y la nota
+     `05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md` actualizada con
+     el porcentaje de aciertos de la clasificación y de la dirección de la
+     minoría.
+   - *Terminado cuando:* están revisados los 30 documentos y, si la tasa de
+     error lo pide, se corrigieron las expresiones de `04_bigramas.R` o se
+     decidió codificar a mano las reuniones por mayoría (101).
+3. **`PLAN.md` y series macro**, una vez fijada la pregunta.
+   - Archivos: `PLAN.md` con hitos y tareas `Pk.n`; series en
+     `01_Datos/01_Crudos/` (o su script de descarga) y filas en el "Registro de
+     ampliaciones" del catálogo para lo que haga falta.
+   - *Terminado cuando:* cada análisis del plan usa una herramienta del
+     catálogo o una ampliación registrada, y la regla de alineación temporal
+     entre reuniones y series está escrita.
 
 **Bloqueos y preguntas abiertas:**
 
 - Roles de los integrantes en el Taller 3.
 - Fecha de la retroalimentación a compañeros (no afecta el repositorio).
-- Las minutas cambian mucho de extensión y formato (de 11–23 mil caracteres en
-  2007–2013 a unos 3 mil en 2019–2020); falta ubicar los cortes exactos antes
-  de leer tendencias.
-- Si la pregunta depende de cuándo llega la minuta al mercado, hay que
-  conseguir las fechas de publicación por fuera: los documentos no las traen.
+- La clasificación de la votación y la dirección de la minoría son
+  automáticas y no están validadas; la dirección no es codificable en 35 de
+  las 101 reuniones decididas por mayoría, casi todas antes de 2016.
+- Parte del aumento de las decisiones por mayoría puede ser un cambio en cómo
+  se redacta la minuta (ver la nota de votación).
+- Solo 31 minutas traen su fecha de publicación (rezago mediano de 14 días);
+  para las demás hay que suponerlo o consultarlo.
+- El LDA con la minuta entera como documento separa épocas y formatos, no
+  temas: si la pregunta necesita temas, hay que bajar a párrafo u oración.
 
 ## Estado actual
 
-- **Estructura:** carpetas numeradas como en el Taller 2 (`01_Datos` a
-  `09_Conversaciones`), `taller_03.Rproj`, `.gitignore`, `CLAUDE.md` y las
-  skills `bitacora-sesion`, `cerrar-sesion` y `registrar-hallazgo`.
-- **Datos:** los 394 PDF de la Junta en
-  `01_Datos/01_Crudos/Comunicados_Minutas_Banrep/` (194 comunicados,
-  2007-01-26 a 2026-09-30; 199 minutas, 2007-06-15 a 2026-09-30). El informe
-  técnico que el zip traía como minuta del 2020-04-30 está aparte, en la misma
-  carpeta, como `2020-04-30_informe_tecnico_mercados_capitales.pdf`.
-  El nombre de cada archivo es la fecha de la reunión. Aún no hay series macro.
-- **Recursos:** `07_Recursos/Problem_Set_3.pdf` y
-  `07_Recursos/heuristicas_retroalimentacion_taller1.md` (copiada del Taller 2)
-  y `07_Recursos/catalogo_metodos.md` (métodos de los Labs 11 y 12).
-- **Scripts y resultados:** ninguno todavía.
-- **Git:** primer commit en la rama `SantiagoMunozM`; `main` sigue sin
-  commits. Remoto `https://github.com/talleres-ECON3785/taller_03.git`.
+- **Pipeline:** `00_main.R` corre desde cero sin errores (unos 5 minutos; 3
+  si ya existe la anotación de `udpipe`). Carga los paquetes con `pacman`,
+  crea las carpetas y ejecuta cinco scripts. Requiere Chrome para exportar las
+  tablas e internet la primera vez.
+- **Scripts:** `00_formato_graficas.R`, `00_formato_tablas.R` y
+  `00_funciones_texto.R` (periodos, formatos de minuta, diccionario de
+  compuestos, palabras vacías, grupos temáticos); `01_extraer_texto.R`,
+  `02_limpiar_texto.R`, `03_frecuencias_tfidf.R`, `04_bigramas.R` y
+  `05_lda_exploratorio.R`.
+- **Datos:** 393 documentos (194 comunicados y 199 minutas), todos con texto
+  extraíble. `01_Datos/02_Procesados/corpus_texto.rds` tiene el texto limpio,
+  el texto de la discusión de la Junta, el formato de cada minuta y el
+  periodo; `01_Datos/03_Listos/` tiene los tokens limpios y el vocabulario.
+  Aún no hay series macro.
+- **Lo que se sabe del corpus:** las minutas tienen cinco formatos (cortes en
+  2014-05-30, 2019-06-21, 2020-07-31 y 2023-03-30) y hasta abril de 2019 solo
+  27 a 30 % del texto es discusión de la Junta; hay diez periodos de política
+  monetaria definidos a priori; 188 reuniones tienen los dos documentos.
+- **Resultados:** todos exploratorios, sin cruce con macro. Mapa completo en
+  `README.md`. Tres notas en `05_Notas/` (estructura de la minuta, inflación
+  como validación de las medidas, votación).
+- **Reglas:** `CLAUDE.md` tiene las decisiones de la sesión (provisionales
+  hasta fijar la pregunta); el catálogo registra `pdftools` y `gt`.
+- **Git:** trabajo en la rama `SamuelEscandonC`; `main` tiene la configuración
+  inicial.
 
 ## Registro de sesiones
+
+### 2026-11-12: base del pipeline y exploración del corpus
+
+- Samuel Escandón (`SamuelEscandonC`). Se crearon `00_main.R`, los scripts de
+  formato, `00_funciones_texto.R` y cinco scripts (extracción, limpieza,
+  frecuencias y TF-IDF, bigramas y votación, LDA exploratorio), el README y
+  tres notas. Se ubicaron los cortes de formato de las minutas, se definieron
+  diez periodos a priori y se exportó una muestra de 30 documentos para
+  validar la votación. No se cruzó texto con series macro. El objetivo de
+  definir la pregunta avanzó sin cerrarse: falta acordarla con el equipo.
+- Bitácora: [2026-11-12_exploracion-corpus.md](06_Bitacoras/2026-11-12_exploracion-corpus.md)
+- **Siguientes objetivos:** (1) fijar la pregunta con el equipo (candidata: si
+  el voto de la minoría y los argumentos de la minuta anticipan la siguiente
+  decisión más allá de la inflación y las expectativas); (2) validar a mano la
+  votación con la muestra de 30 documentos; (3) `PLAN.md` y series macro.
 
 ### 2026-11-08: configuración inicial, catálogo de métodos y verificación de los documentos
 

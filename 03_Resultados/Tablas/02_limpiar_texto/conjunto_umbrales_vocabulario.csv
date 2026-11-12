@@ -1,0 +1,46 @@
+grupo,documentos,min_docs,max_pct,terminos,pct_tokens,clave_excluidas
+Comunicados,194,3,25,832,35.1469955542808,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, credito"
+Comunicados,194,3,50,936,62.67603613939481,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio, pib"
+Comunicados,194,3,75,973,82.54409866628424,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia"
+Comunicados,194,3,90,983,91.22042162627277,"inflacion, tasa_intervencion, crecimiento"
+Comunicados,194,3,100,987,97.31822744873082,
+Comunicados,194,5,25,624,33.050337014197616,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, credito"
+Comunicados,194,5,50,728,60.57937759931163,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio, pib"
+Comunicados,194,5,75,765,80.44744012620106,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia"
+Comunicados,194,5,90,775,89.12376308618958,"inflacion, tasa_intervencion, crecimiento"
+Comunicados,194,5,100,779,95.22156890864764,
+Comunicados,194,10,25,393,28.406711601893015,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, credito"
+Comunicados,194,10,50,497,55.935752187007026,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio, pib"
+Comunicados,194,10,75,534,75.80381471389646,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia"
+Comunicados,194,10,90,544,84.48013767388498,"inflacion, tasa_intervencion, crecimiento"
+Comunicados,194,10,100,548,90.57794349634304,
+"Minutas, texto completo",199,3,25,1682,17.94833844310533,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo, reserva_federal"
+"Minutas, texto completo",199,3,50,1917,35.874123409803715,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo"
+"Minutas, texto completo",199,3,75,2056,64.11671424040597,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio, pib, riesgo"
+"Minutas, texto completo",199,3,90,2104,84.40568065687,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio"
+"Minutas, texto completo",199,3,100,2123,98.45649645839941,
+"Minutas, texto completo",199,5,25,1233,16.810797476829826,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo, reserva_federal"
+"Minutas, texto completo",199,5,50,1468,34.73658244352821,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo"
+"Minutas, texto completo",199,5,75,1607,62.97917327413046,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio, pib, riesgo"
+"Minutas, texto completo",199,5,90,1655,83.2681396905945,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio"
+"Minutas, texto completo",199,5,100,1674,97.3189554921239,
+"Minutas, texto completo",199,10,25,780,14.566726574338373,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo, reserva_federal"
+"Minutas, texto completo",199,10,50,1015,32.492511541036755,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo"
+"Minutas, texto completo",199,10,75,1154,60.735102371639,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio, pib, riesgo"
+"Minutas, texto completo",199,10,90,1202,81.02406878810304,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio"
+"Minutas, texto completo",199,10,100,1221,95.07488458963245,
+"Minutas, solo discusión de la Junta",199,3,25,1333,32.171865237660406,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo"
+"Minutas, solo discusión de la Junta",199,3,50,1494,59.58731837042021,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo"
+"Minutas, solo discusión de la Junta",199,3,75,1552,82.002851604428,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio"
+"Minutas, solo discusión de la Junta",199,3,90,1565,91.2769740952564,"inflacion, tasa_intervencion, crecimiento, economia"
+"Minutas, solo discusión de la Junta",199,3,100,1569,97.11795709777158,
+"Minutas, solo discusión de la Junta",199,5,25,949,29.965876868361608,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo"
+"Minutas, solo discusión de la Junta",199,5,50,1110,57.38133000112142,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo"
+"Minutas, solo discusión de la Junta",199,5,75,1168,79.79686323512921,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio"
+"Minutas, solo discusión de la Junta",199,5,90,1181,89.07098572595761,"inflacion, tasa_intervencion, crecimiento, economia"
+"Minutas, solo discusión de la Junta",199,5,100,1185,94.91196872847279,
+"Minutas, solo discusión de la Junta",199,10,25,585,25.84066259752327,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo, tasa_cambio, credito, petroleo"
+"Minutas, solo discusión de la Junta",199,10,50,746,53.25611573028308,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, meta_inflacion, politica_monetaria, economia, precio, demanda_interna, pib, riesgo"
+"Minutas, solo discusión de la Junta",199,10,75,804,75.67164896429087,"inflacion, tasa_intervencion, crecimiento, expectativas_inflacion, politica_monetaria, economia, precio"
+"Minutas, solo discusión de la Junta",199,10,90,817,84.94577145511927,"inflacion, tasa_intervencion, crecimiento, economia"
+"Minutas, solo discusión de la Junta",199,10,100,821,90.78675445763444,
