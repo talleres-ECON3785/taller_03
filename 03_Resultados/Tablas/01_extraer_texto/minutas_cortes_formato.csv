@@ -1,0 +1,6 @@
+formato,descripcion,inicio,fin,minutas,palabras,palabras_equipo_tecnico,palabras_junta,pct_junta,evidencia
+A,Antecedentes del equipo técnico + discusión + decisión,2007-06-15,2014-04-25,83,2835,1736,761,26.843033509700177,1. Antecedentes / 2. Discusión y opciones de política / 3. Decisión de política
+B,Síntesis del equipo técnico + discusión + decisión,2014-05-30,2019-04-26,55,1383,823,414,29.934924078091107,1. CONTEXTO MACROECONÓMICO / 2. DISCUSIÓN Y OPCIONES DE POLÍTICA / 3. DECISIÓN DE POLÍTICA
+C,"Discusión + decisión, sin sección del equipo técnico",2019-06-21,2020-06-30,9,457,0,403,88.18380743982495,1. DISCUSIÓN Y OPCIONES DE POLÍTICA / 2. DECISIÓN DE POLÍTICA
+D,"Texto corrido, sin secciones",2020-07-31,2023-01-27,23,919,0,919,100,Sin encabezados. Empieza: «Minutas de la reunión de la Junta Directiva del Banco de la República de julio 31 de 2020»
+E,Titular con la decisión + texto corrido,2023-03-30,2026-09-30,29,1448,0,1448,100,Sin encabezados. Empieza: «Minutas BanRep: estos son los elementos que tuvo en cuenta la Junta Directiva en su discusión de política»

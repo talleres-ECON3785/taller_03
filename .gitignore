@@ -9,3 +9,7 @@
 
 # Zip original del enunciado: su contenido ya está en 01_Datos/01_Crudos/
 Comunicados_Minutas_Banrep.zip
+
+# Modelo de udpipe y anotacion: pesados y regenerables con 00_main.R
+01_Datos/02_Procesados/*.udpipe
+01_Datos/02_Procesados/anotado_udpipe.rds

@@ -1,0 +1,22 @@
+grupo,paso,tokens,perdidos,pct_del_total
+Comunicados,0. Tokens anotados (sin puntuación),84942,NA,100
+Comunicados,"1. Categoría gramatical: sustantivos, adjetivos, verbos, nombres propios y compuestos",37629,47313,44.29963975418521
+Comunicados,2. Sin palabras vacías generales (español e inglés),37562,67,44.22076240258058
+Comunicados,3. Sin palabras vacías de dominio ni nombres de asistentes,34866,2696,41.04683195592286
+Comunicados,4. Sin tokens con dígitos,34866,0,41.04683195592286
+Comunicados,5. Sin tokens de un carácter,34865,1,41.045654682018316
+Comunicados,6. Sin el preámbulo de las minutas (asistentes),34865,0,41.045654682018316
+"Minutas, texto completo",0. Tokens anotados (sin puntuación),365802,NA,100
+"Minutas, texto completo","1. Categoría gramatical: sustantivos, adjetivos, verbos, nombres propios y compuestos",162173,203629,44.33354656344142
+"Minutas, texto completo",2. Sin palabras vacías generales (español e inglés),161869,304,44.250441495672526
+"Minutas, texto completo",3. Sin palabras vacías de dominio ni nombres de asistentes,147625,14244,40.35653167560593
+"Minutas, texto completo",4. Sin tokens con dígitos,147575,50,40.34286307893341
+"Minutas, texto completo",5. Sin tokens de un carácter,147426,149,40.302130660849315
+"Minutas, texto completo",6. Sin el preámbulo de las minutas (asistentes),141885,5541,38.787376777601
+"Minutas, solo discusión de la Junta",0. Tokens anotados (sin puntuación),152078,NA,100
+"Minutas, solo discusión de la Junta","1. Categoría gramatical: sustantivos, adjetivos, verbos, nombres propios y compuestos",67028,85050,44.07475111455963
+"Minutas, solo discusión de la Junta",2. Sin palabras vacías generales (español e inglés),66896,132,43.98795355015189
+"Minutas, solo discusión de la Junta",3. Sin palabras vacías de dominio ni nombres de asistentes,62443,4453,41.059850866002975
+"Minutas, solo discusión de la Junta",4. Sin tokens con dígitos,62435,8,41.054590407554016
+"Minutas, solo discusión de la Junta",5. Sin tokens de un carácter,62421,14,41.045384605268346
+"Minutas, solo discusión de la Junta",6. Sin el preámbulo de las minutas (asistentes),62421,0,41.045384605268346

@@ -90,7 +90,7 @@ Los enlaces de entrega están en Bloque Neón; el enunciado está en
 - `08_Entregables/`          presentación final y video
 - `09_Conversaciones/`       registro crudo (`.jsonl`) de las conversaciones con los agentes; en `.gitignore`, no se versiona (cada integrante guarda las suyas localmente; al final se unen por aparte)
 - `.claude/skills/`          skills del proyecto (`bitacora-sesion`, `cerrar-sesion`, `registrar-hallazgo`)
-- `00_main.R`                (raíz) script maestro: corre todo el pipeline (**pendiente: crearlo**)
+- `00_main.R`                (raíz) script maestro: corre todo el pipeline
 - `HANDOFF.md`               (raíz) estado actual, siguientes objetivos y registro de sesiones
 - `taller_03.Rproj`          proyecto de RStudio (raíz del proyecto)
 
@@ -214,8 +214,7 @@ Taller 1 (repositorio con 100/100). Son obligatorias:
 #### Formato de las tablas
 
 El formato de las tablas vive en un único lugar: `02_Scripts/00_formato_tablas.R`
-(**pendiente: traerlo del Taller 2 y adaptarlo**; allí se usó `gt`, con
-`modelsummary(..., output = "gt")` para las regresiones y el `.png` generado con
+(traído del Taller 2 y adaptado el 2026-11-10: usa `gt` y genera el `.png` con
 Chrome/Chromium en modo headless). Ese script no genera tablas, solo define el
 estilo y la función de exportación (`guardar_tabla()`).
 
@@ -242,8 +241,7 @@ proyecto, estructura de carpetas, instrucciones de ejecución (solo
 (documentos y series macro, con cobertura y transformaciones) y un **mapa
 completo script → tablas/figuras**, de forma que cada elemento de las
 diapositivas se pueda rastrear al script que lo genera. El README se actualiza
-en la misma sesión en que se agrega o renombra un script o un resultado
-(**pendiente: crearlo**).
+en la misma sesión en que se agrega o renombra un script o un resultado.
 
 ### Flujo de versiones: una rama por integrante (obligatorio para los agentes)
 
@@ -504,8 +502,8 @@ ni intentar unir las conversaciones de otros integrantes.
   la reunión; la minuta resume la discusión y se publica después). Cada
   análisis declara qué tipo de documento usa, y cualquier comparación entre los
   dos lo hace explícito. Los dos tipos de documento se fechan con la fecha de
-  la reunión (ver "Datos"); la fecha de publicación de las minutas no está en
-  los documentos.
+  la reunión (ver "Datos"); la fecha de publicación solo está en 31 minutas,
+  con un rezago mediano de 14 días frente a la reunión.
 - **Alineación temporal.** Los documentos son irregulares (8 a 12 reuniones por
   año) y las series macro tienen su propia frecuencia y rezago de publicación.
   Al cruzarlas, documentar la regla de alineación (p. ej. el último dato
@@ -550,11 +548,21 @@ ni intentar unir las conversaciones de otros integrantes.
       texto (el formato nuevo empieza con un titular de la decisión). Todas
       tienen un comunicado con la misma fecha, y el comunicado sale el día de la
       reunión; así que su nombre también es la fecha de la reunión.
-    - **Los documentos no dicen cuándo se publicó cada minuta.** Si el análisis
-      necesita cuándo llegó la minuta al mercado (p. ej. reacción de precios),
-      el rezago de publicación se consulta aparte y se registra como fuente.
-    - Cruce comunicados–minutas: 188 fechas tienen los dos documentos; 12
-      minutas no tienen comunicado (a unos 21–56 días del comunicado más
+    - **Solo 31 minutas dicen cuándo se publicaron** (verificado el
+      2026-11-10 con `01_extraer_texto.R`): cierran con ciudad y fecha
+      ("Bogotá D. C., enero 05 de 2009"), entre 2007-06-15 y 2017-07-27. En
+      ellas el rezago frente a la reunión es de 14 días (mediana; mínimo 12,
+      máximo 17). Queda en la columna `fecha_cierre_minuta` de
+      `corpus_texto.rds`. Las otras 168 no traen esa fecha: si el análisis
+      necesita cuándo llegó cada minuta al mercado (p. ej. reacción de
+      precios), se supone el rezago de 14 días y se declara, o se consulta
+      aparte y se registra como fuente. Las minutas de 2012 a 2019 traen
+      además "Última modificación" de la página web, que puede ser posterior
+      a la publicación y no se usa como fecha.
+    - Los 131 comunicados que traen "Fecha de publicación" (hasta 2019-01)
+      coinciden con la fecha del nombre del archivo.
+    - Cruce comunicados–minutas: 188 fechas tienen los dos documentos; 11
+      minutas no tienen comunicado (12 antes de sacar el informe técnico) (a unos 21–56 días del comunicado más
       cercano: reuniones cuyo comunicado no está en el zip) y 6 comunicados no
       tienen minuta (los 5 de enero a mayo de 2007, porque las minutas empiezan
       en junio de 2007, y `2019-08-30`).
@@ -574,8 +582,14 @@ ni intentar unir las conversaciones de otros integrantes.
     por minuta: 11–23 mil en 2007–2013, 7–10 mil en 2014–2018, unos 3 mil en
     2019–2020, 6 mil en 2021–2022 y 8–10 mil en 2023–2026. En las minutas
     revisadas, la de 2016-02-19 aún trae una sección con la visión del equipo
-    técnico y la de 2020-01-31 ya solo reseña la discusión de la Junta;
-    **pendiente:** ubicar con precisión en qué reunión cambia cada formato. Toda medida de texto sobre minutas se
+    técnico y la de 2020-01-31 ya solo reseña la discusión de la Junta.
+    **Cortes ubicados el 2026-11-10** (`01_extraer_texto.R`, tabla
+    `03_Resultados/Tablas/01_extraer_texto/minutas_cortes_formato.png`):
+    formato A desde 2007-06-15 (antecedentes del equipo técnico + discusión +
+    decisión), B desde 2014-05-30 (síntesis del equipo técnico + discusión +
+    decisión), C desde 2019-06-21 (sin sección del equipo técnico), D desde
+    2020-07-31 (texto corrido) y E desde 2023-03-30 (titular con la decisión).
+    En A y B solo 27–30 % del texto es discusión de la Junta. Toda medida de texto sobre minutas se
     normaliza por extensión y se interpreta teniendo en cuenta estos cortes
     (ver "Cuidado con los cambios de formato").
 - **Series macroeconómicas:** las elige el equipo. Para cada una se documenta
@@ -590,8 +604,8 @@ ni intentar unir las conversaciones de otros integrantes.
 
 Se mantiene el formato de los talleres anteriores para que las figuras se vean
 como una sola familia. El formato debe vivir en un único lugar,
-`02_Scripts/00_formato_graficas.R` (**pendiente: traerlo del Taller 2 y
-adaptar subtítulos y notas al nuevo cliente**); ese script no genera figuras,
+`02_Scripts/00_formato_graficas.R` (traído del Taller 2 y adaptado el
+2026-11-10); ese script no genera figuras,
 solo define paleta, tema y exportación.
 
 - **Regla:** cualquier script que produzca figuras debe empezar con
@@ -660,6 +674,11 @@ solo define paleta, tema y exportación.
 | 2026-11-08 | Los métodos, paquetes y funciones se limitan al catálogo `07_Recursos/catalogo_metodos.md` (Labs 11 y 12: limpieza, TF-IDF, DTM, bigramas, correlación entre palabras, LDA con selección de hiperparámetros y validación). Toda ampliación se documenta primero en su "Registro de ampliaciones". | Son las herramientas de texto vistas en clase, como pide el enunciado; mismo esquema que el Taller 2. |
 | 2026-11-08 | El PDF `minutas/2020-04-30_minuta.pdf` se mueve a `Comunicados_Minutas_Banrep/` con el nombre `2020-04-30_informe_tecnico_mercados_capitales.pdf`; no entra al corpus de minutas, pero se conserva en los datos crudos por si se usa aparte. | Es un informe del equipo técnico, no una minuta (ver "Datos"); con 87 mil caracteres distorsionaría cualquier medida de texto sobre minutas. Excepción a "nunca se modifica `01_Crudos/`", autorizada por el usuario: se movió y renombró, sin editar su contenido. |
 | 2026-11-08 | Los PDF del zip se guardan en `01_Datos/01_Crudos/Comunicados_Minutas_Banrep/{comunicados,minutas}/`, sin la carpeta `__MACOSX/`; el zip original queda en la raíz, ignorado por git. | Una carpeta dedicada separa los documentos de la Junta de las series macro que se agregarán después; `__MACOSX/` solo contiene metadatos de macOS. |
+| 2026-11-10 | Ampliación del catálogo: `pdftools::pdf_text()` para extraer el texto de los PDF y `gt` (con Chrome en modo headless) para exportar las tablas. Aprobado por Samuel Escandón; registrado en "Registro de ampliaciones" de `07_Recursos/catalogo_metodos.md`. | Los documentos vienen en PDF y los laboratorios partían de un `.csv`; `gt` es el formato de tablas del Taller 2 (presentación, no método de análisis). |
+| 2026-11-10 | Decisiones **provisionales** de la sesión exploratoria (scripts `01` a `05`), a revisar cuando se fije la pregunta: (i) diez periodos a priori, abiertos por la primera reunión que cambia la dirección de la tasa (`00_funciones_texto.R`; cita de cada decisión en `03_Resultados/Tablas/01_extraer_texto/conjunto_periodos.csv`); (ii) cinco formatos de minuta (cortes en 2014-05-30, 2019-06-21, 2020-07-31 y 2023-03-30) y dos versiones del texto de las minutas: completo y solo la discusión de la Junta, que es la que importa para la pregunta; el preámbulo de asistentes no entra a ningún análisis; (iii) «tasa de intervención» y «tasa de política» se unen en `tasa_intervencion`; «tasa de referencia» queda como token aparte (31 % de sus menciones está en una oración con un referente externo) y las variantes seguidas de un banco central externo pasan a `tasa_externa`; (iv) los tokens con dígitos se eliminan y las cifras no se extraen; (v) no se amplió la lista de palabras vacías de dominio; (vi) recorte de vocabulario para LDA: palabras en 5 o más documentos y en no más del 75 %; (vii) LDA exploratorio en minutas con K = 6 y K = 10, por defecto (VEM) y con Gibbs y los hiperparámetros del Lab 12, sin selección de hiperparámetros. | Conocer el corpus antes de elegir la pregunta. Los periodos se fijaron antes de ver las medidas de texto. El LDA por defecto estima un alfa mayor que 100 y no separa tópicos, por lo que se agregó la versión con Gibbs del catálogo. Nada de esto es todavía una medida del taller. |
+| 2026-11-10 | **Regla de las fronteras de los periodos.** Cada periodo lo abre la primera reunión cuya decisión cambia la dirección de la tasa respecto del ciclo anterior, verificada contra la decisión que anuncia el comunicado (no contra el resto del texto): P1 2007-01-26 (alza), P2 2008-12-19 (primer recorte), P3 2011-02-25 (primera alza), P5 2016-12-16 (primer recorte), P6 2020-03-27 (primer recorte de la pandemia; citado de la minuta porque los datos no traen comunicados entre 2020-01-31 y 2020-05-29), P7 2021-09-30 (primera alza), P8 2023-12-19 (primer recorte), P9 2025-06-27 (primera de cinco reuniones sin cambio en 9,25 %) y P10 2026-01-30 (primera alza). **P4 (2014-09-26) es el único periodo de P1 a P8 que abre con una pausa**: la primera reunión que mantiene la tasa en 4,5 % después de las alzas de abril a agosto de 2014; se usa porque ninguna decisión de tasa marca el comienzo del choque petrolero y las alzas contra la inflación solo empiezan en 2015-09-25. P9 también abre con una pausa, por definición. | Fronteras definidas por un hecho observable y fechado, fijadas antes de ver las medidas de texto. Frente a la propuesta inicial cambiaron P2 (antes 2008-09), P3 (antes 2011-01), P4 (antes 2014-07) y P6. Tabla con las citas: `03_Resultados/Tablas/01_extraer_texto/conjunto_periodos.png`. |
+| 2026-11-10 | **Desviación de lo previsto: LDA con muestreo de Gibbs además del LDA por defecto.** La sesión exploratoria debía usar solo el LDA por defecto de `topicmodels` (VEM, K y semilla). Ese modelo estimó α = 114,3 con K = 6 y α = 87,7 con K = 10 y dejó todas las minutas con un peso casi igual en todos los tópicos (θ cerca de 1/K): no separa temas. Se agregó el LDA con Gibbs del catálogo (sección 6) con α = 0,1, δ = 1, 1.000 iteraciones y 200 de calentamiento. **α y δ son los del Lab 12, sin seleccionar para este corpus**; K = 6 y K = 10 tampoco se eligieron con ningún criterio. Los tópicos no se nombran. | Sin la versión con Gibbs no había tópicos preliminares que revisar. Resultado exploratorio: con la minuta entera como documento, los tópicos separan épocas y formatos, no temas; no es una medida del taller. Queda en la bitácora, sin nota de hallazgo. |
+| 2026-11-10 | **Token `tasa_externa`.** Cualquier forma de nombrar una tasa de política («tasa de [interés de] intervención / política [monetaria] / referencia») que va seguida de «de / en» y un banco central o país externo (Reserva Federal, Fed, BCE, Banco Central Europeo, Estados Unidos, EE. UU., bancos centrales, Banco de Inglaterra, Banco de Japón) se reemplaza por `tasa_externa` antes de unir las demás variantes en `tasa_intervencion` (`unificar_tasas()` en `00_funciones_texto.R`). | «Tasa de política» también nombra la tasa de otros bancos centrales (p. ej. «tasa de interés de política de la Reserva Federal», comunicado 2019-06-21): 9–15 % de sus menciones está en una oración con un referente externo y 2–5 % lo lleva pegado. Sin este token, esas menciones contarían como la tasa del Banco de la República. Conteos en `03_Resultados/Tablas/02_limpiar_texto/conjunto_variantes_tasa.png`. |
 
 ## Análisis descartados
 
