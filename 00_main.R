@@ -64,7 +64,9 @@ carpetas_salida <- c(
   "03_Resultados/Tablas/04_bigramas",
   "03_Resultados/Figuras/04_bigramas",
   "03_Resultados/Tablas/05_lda_exploratorio",
-  "03_Resultados/Figuras/05_lda_exploratorio"
+  "03_Resultados/Figuras/05_lda_exploratorio",
+  "03_Resultados/Tablas/07_graficas_macro",
+  "03_Resultados/Figuras/07_graficas_macro"
 )
 for (carpeta in carpetas_salida) {
   if (!dir.exists(carpeta)) dir.create(carpeta, recursive = TRUE)
@@ -80,7 +82,8 @@ scripts <- c(
   "02_Scripts/03_frecuencias_tfidf.R",
   "02_Scripts/04_bigramas.R",
   "02_Scripts/05_lda_exploratorio.R",
-  "02_Scripts/06_series_macro.R"
+  "02_Scripts/06_series_macro.R",
+  "02_Scripts/07_graficas_macro.R"
 )
 
 # nota: los scripts '00_formato_graficas.R', '00_formato_tablas.R' y

@@ -16,26 +16,44 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **P1.1–P1.4 de `PLAN.md`: gráficas macro y exploración descriptiva breve.**
-   - Archivos: `02_Scripts/07_graficas_macro.R` (agregado a `scripts` y su
-     subcarpeta a `carpetas_salida` en `00_main.R`); figuras de Brent, TRM e
-     inflación 2007–2026 en `03_Resultados/Figuras/07_graficas_macro/`; tabla
-     `macro_descriptiva` por periodo P1–P10 con fechas de pico y valle; regla de
-     alineación escrita en `CLAUDE.md`; nota `M_*` (P1.5) y README actualizados.
-   - *Terminado cuando:* `00_main.R` regenera las figuras y la tabla sin
-     errores y la regla de alineación está escrita.
-2. **P2.1–P2.3 de `PLAN.md`: fijar la fecha de inicio de la crisis** con base
-   en H1 y antes de ver embeddings (candidato: 2014-09-26, inicio de P4).
-   - Archivos: fila en "Decisiones tomadas" de `CLAUDE.md`; línea del corte en
-     las figuras de H1.
-   - *Terminado cuando:* el corte está registrado con su justificación en las
-     series y la salvedad del cambio de formato de minutas (2014-05-30).
-3. **P3.1–P3.2 de `PLAN.md`: decidir ventana y embeddings y registrarlos.**
-   - Archivos: entrada en "Registro de ampliaciones" de
-     `07_Recursos/catalogo_metodos.md` (paquete, funciones, aprobación), fila
-     en "Decisiones tomadas" y `word2vec` (u otro) en el `p_load()`.
-   - *Terminado cuando:* el equipo aprobó la ventana (recomendado 5 + 5 años)
-     y el método (recomendado Word2Vec skip-gram), y quedan registrados.
+1. **H3, P3.1 y P3.3 de `PLAN.md`: medida principal antes/después con
+   `pairwise_cor()`.**
+   - **Recomendación (sesión del 2026-11-19):** usar la correlación entre
+     palabras de `widyr::pairwise_cor()` (catálogo, Lab 11, sección 4) como
+     medida principal. Para cada palabra ancla, comparar con qué palabras
+     aparece antes y después del corte.
+     - Por qué: está en el catálogo, se explica con ejemplos del texto y con
+       este corpus es más estable que entrenar dos modelos de embeddings.
+     - Los embeddings quedan como complemento (objetivo 2).
+   - Archivos:
+     - `02_Scripts/08_correlaciones_antes_despues.R`, en `scripts` y
+       `carpetas_salida` de `00_main.R`;
+     - `widyr` en el `p_load()`;
+     - tablas y figuras en su carpeta.
+   - Insumos ya fijados:
+     - `corte_crisis` (2014-10-30) y `cortes_alternativos` (2014-09-26 y
+       2014-12-19) de `00_funciones_texto.R`;
+     - ventana recomendada de 5 años a cada lado;
+     - anclas de P3.3, fijadas antes de ver resultados;
+     - documento de la unidad oración o reunión, a decidir y registrar.
+   - *Terminado cuando:* hay una tabla de las palabras más correlacionadas con
+     cada ancla antes y después, con los dos cortes alternativos como
+     robustez. Las minutas se normalizan por extensión y se contrastan con los
+     comunicados, y cada cambio lleva un fragmento del texto.
+2. **H3, P3.2 de `PLAN.md`: embeddings como complemento.**
+   - Archivos: fila en el "Registro de ampliaciones" de
+     `07_Recursos/catalogo_metodos.md`, con paquete, funciones y aprobación del
+     equipo; fila en "Decisiones tomadas"; `word2vec` en el `p_load()`.
+   - *Terminado cuando:* la ampliación está registrada **antes** de correr
+     cualquier modelo, y los vecinos de las anclas se repiten en 5 semillas.
+3. **H4 de `PLAN.md`: interpretar con la historia macro.**
+   - Archivos: notas `X_*.md` en `05_Notas/`; borrador del deck en
+     `04_Presentaciones/`.
+   - Insumos: `macro_por_reunion.rds` y la nota
+     `05_Notas/07_graficas_macro/M_cronologia_choque_petrolero.md`.
+   - *Terminado cuando:* cada cambio de temas se cruza con la cronología del
+     choque, con un fragmento del texto y la salvedad de asociación, no
+     causalidad.
 
 **Bloqueos y preguntas abiertas:**
 
@@ -46,6 +64,15 @@ domingo 22 de noviembre de 2026.**
   partirlo en dos épocas; los cambios de formato de las minutas pueden
   confundirse con cambio de temas.
 - Fecha de la retroalimentación a compañeros (no afecta el repositorio).
+- Los dos xlsx de inflación total y meta también quedaron sin versionar en
+  `01_Datos/01_Crudos/` de la carpeta principal del repositorio (en `main`).
+  Al traer `SamuelEscandonC` a esa carpeta, git puede negarse a sobrescribir
+  archivos sin seguimiento: hay que borrarlos o moverlos antes.
+- Supuesto de la alineación: el IPC del mes m se publica el día 8 del mes m+1
+  (sin confirmar mes por mes).
+- En la ventana de 5 años, las minutas tienen la mitad de palabras después del
+  corte (unas 43.800 antes y 23.100 después) por el cambio de formato; los
+  comunicados están equilibrados.
 - La clasificación de la votación y la dirección de la minoría son
   automáticas y no están validadas; la dirección no es codificable en 35 de
   las 101 reuniones decididas por mayoría, casi todas antes de 2016.
@@ -70,44 +97,59 @@ domingo 22 de noviembre de 2026.**
 
 ## Estado actual
 
-- **Pipeline:** `00_main.R` corre desde cero sin errores (unos 5 minutos; 3
-  si ya existe la anotación de `udpipe`). Carga los paquetes con `pacman`,
-  crea las carpetas y ejecuta seis scripts. Requiere Chrome para exportar las
+- **Pipeline:** `00_main.R` corre siete scripts (01 a 07): unos 3 minutos si
+  ya existe la anotación de `udpipe` y unos 5 si no. Requiere Chrome para las
   tablas e internet la primera vez.
-- **Scripts:** `00_formato_graficas.R`, `00_formato_tablas.R` y
-  `00_funciones_texto.R` (periodos, formatos de minuta, diccionario de
-  compuestos, palabras vacías, grupos temáticos); `01_extraer_texto.R`,
-  `02_limpiar_texto.R`, `03_frecuencias_tfidf.R`, `04_bigramas.R` y
-  `05_lda_exploratorio.R` y `06_series_macro.R`.
-- **Datos:** 393 documentos (194 comunicados y 199 minutas), todos con texto
-  extraíble. `01_Datos/02_Procesados/corpus_texto.rds` tiene el texto limpio,
-  el texto de la discusión de la Junta, el formato de cada minuta y el
-  periodo; `01_Datos/03_Listos/` tiene los tokens limpios (176.622) y el vocabulario.
-  Series macro desde 2000 en `01_Datos/03_Listos/`: `macro_brent.rds` (6.511
-  días), `macro_inflacion.rds` y `macro_tcr.rds` (322 meses, hasta 2026-10),
-  y `macro_trm.rds` (TRM diaria, 9.820 días, hasta 2026-11-19), sin transformar
-  ni alinear con las reuniones. Sus crudos están en `01_Crudos/` y documentados
-  en el README.
-- **Lo que se sabe del corpus:** las minutas tienen cinco formatos (cortes en
-  2014-05-30, 2019-06-21, 2020-07-31 y 2023-03-30) y hasta abril de 2019 solo
-  27 a 30 % del texto es discusión de la Junta; hay diez periodos de política
-  monetaria definidos a priori; 188 reuniones tienen los dos documentos.
-- **Resultados:** todos exploratorios, sin cruce con macro. Mapa completo en
-  `README.md`. Tres notas en `05_Notas/` (estructura de la minuta, inflación
-  como validación de las medidas, votación).
-- **Pregunta:** fijada el 2026-11-18 (temas de la Junta antes y después de la
-  crisis del petróleo de 2014), con embeddings previstos pero sin registrar.
-- **Plan:** `PLAN.md` (raíz) con cuatro hitos: H1 gráficas macro y
-  descriptiva, H2 fecha de corte, H3 embeddings, H4 interpretación. Ningún
-  paso terminado.
-- **Reglas:** `CLAUDE.md` tiene la pregunta y las decisiones; las de la
-  exploración (scripts 01 a 05) siguen siendo provisionales. El catálogo
-  registra `pdftools`, `gt` y `readxl`.
-- **Git:** trabajo en la rama `SantiagoMunozM`, con los cambios de `main` hasta
-  el PR #2 de Samuel. Los cambios de la sesión del 2026-11-18 se suben a esa
-  rama.
+- **Scripts:**
+  - de formato y definiciones: `00_formato_graficas.R` (ahora con
+    `capa_periodos()`, `capa_corte()` y `colores_macro`), `00_formato_tablas.R`
+    y `00_funciones_texto.R` (periodos, formatos de minuta, compuestos,
+    palabras vacías, grupos temáticos y la fecha de corte);
+  - de texto: `01_extraer_texto.R` a `05_lda_exploratorio.R`;
+  - de series: `06_series_macro.R` (ahora también inflación total y meta) y
+    `07_graficas_macro.R`.
+- **Datos:**
+  - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios en
+    `01_Datos/03_Listos/`.
+  - Series macro en `01_Datos/03_Listos/`: Brent, TRM, inflación total y
+    básicas, meta por año e índices de tasa de cambio real.
+  - `macro_por_reunion.rds`: las 205 reuniones con el último dato de cada serie
+    que la Junta tenía (regla en `CLAUDE.md`, "Alineación temporal").
+- **Fecha de corte:** 2014-10-30 (regla del Brent 20 % por debajo de su máximo
+  de 12 meses). Alternativas: 2014-09-26 y 2014-12-19. Registrada en
+  "Decisiones tomadas".
+- **Resultados:**
+  - exploratorios de texto (scripts 01 a 05);
+  - de `07`: dos figuras (series 2007–2026 y cronología del choque) y cuatro
+    tablas (descriptiva por periodo, cronología, cortes candidatos y
+    documentos a cada lado del corte).
+  - Mapa completo en `README.md`.
+  - Cuatro notas en `05_Notas/`: estructura de la minuta, inflación como
+    validación, votación y cronología del choque petrolero.
+- **Plan:** `PLAN.md` con H1 y H2 terminados. Siguen H3 (antes/después del
+  corte) y H4 (interpretación y deck).
+- **Reglas:** el catálogo registra `pdftools`, `gt` y `readxl`. Los embeddings
+  siguen sin registrar.
+- **Git:** trabajo en `SamuelEscandonC`, al día con `main` (PR #3).
 
 ## Registro de sesiones
+
+### 2026-11-19: gráficas macro, alineación por reunión y fecha de corte (H1 y H2)
+
+- Samuel Escandón (`SamuelEscandonC`). Se trajo `main` (PR #3). Se agregaron
+  la inflación total y la meta, descargadas por el usuario; las capas de
+  periodos y de corte; y `07_graficas_macro.R`, con dos figuras, cuatro tablas
+  y la alineación por reunión (`macro_por_reunion.rds`).
+- El corte se fijó solo con las series y las decisiones de tasa: 2014-10-30,
+  con alternativas 2014-09-26 y 2014-12-19.
+- Se cerraron P1.1–P1.5 y P2.1–P2.3. Se escribió la nota
+  `M_cronologia_choque_petrolero.md`.
+- Bitácora: [2026-11-19_graficas-macro-y-corte.md](06_Bitacoras/2026-11-19_graficas-macro-y-corte.md)
+- **Siguientes objetivos:**
+  1. H3 con `pairwise_cor()` como medida principal antes/después
+     (`08_correlaciones_antes_despues.R`).
+  2. Embeddings como complemento, registrados antes de usarlos.
+  3. H4: interpretación con la cronología macro y borrador del deck.
 
 ### 2026-11-18 (4): plan de implementación
 

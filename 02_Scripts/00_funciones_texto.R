@@ -351,3 +351,22 @@ temas <- list(
                "tributario", "deficit"),
   "Riesgo e incertidumbre" = c("incertidumbre", "riesgo", "balance_riesgos", "incierto", "volatilidad")
 )
+
+# -----------------------------------------------------------------------------
+# 7. Fecha de corte antes y despues del choque petrolero (H2 de PLAN.md)
+# -----------------------------------------------------------------------------
+
+# aprobada el 2026-11-19 (ver "Decisiones tomadas" de CLAUDE.md). Se fijo solo
+# con las series macro y las decisiones de tasa, sin mirar medidas de texto:
+# es la primera reunion en que el Brent que la Junta tenia (cierre del dia
+# habil anterior) estaba 20 % o mas por debajo de su maximo de los 12 meses
+# previos. '07_graficas_macro.R' la recalcula y verifica que coincida.
+# "Antes" = reuniones anteriores a esta fecha; "despues" = desde esta fecha
+corte_crisis <- as.Date("2014-10-30")
+# cortes alternativos para la robustez de H3: la apertura de P4 (primera
+# reunion sin alza tras el ciclo de abril a agosto de 2014) y la primera
+# reunion con depreciacion anual de la TRM mayor que 20 %
+cortes_alternativos <- c(
+  apertura_p4 = as.Date("2014-09-26"),
+  depreciacion_trm = as.Date("2014-12-19")
+)
