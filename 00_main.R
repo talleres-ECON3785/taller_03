@@ -42,7 +42,8 @@ pacman::p_load(
   udpipe,      # lemas y categorias gramaticales (modelo spanish-gsd)
   tm,          # clase DocumentTermMatrix, entrada de LDA
   topicmodels, # LDA()
-  gt           # formato de las tablas de la presentacion (ampliacion del catalogo)
+  gt,          # formato de las tablas de la presentacion (ampliacion del catalogo)
+  readxl       # read_excel(): leer los xlsx de series macro del BanRep (ampliacion del catalogo)
 )
 
 # -----------------------------------------------------------------------------
@@ -78,7 +79,8 @@ scripts <- c(
   "02_Scripts/02_limpiar_texto.R",
   "02_Scripts/03_frecuencias_tfidf.R",
   "02_Scripts/04_bigramas.R",
-  "02_Scripts/05_lda_exploratorio.R"
+  "02_Scripts/05_lda_exploratorio.R",
+  "02_Scripts/06_series_macro.R"
 )
 
 # nota: los scripts '00_formato_graficas.R', '00_formato_tablas.R' y

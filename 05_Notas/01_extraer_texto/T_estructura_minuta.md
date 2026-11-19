@@ -3,7 +3,7 @@
 - **Estado:** vigente
 - **Tipo / fuente:** T; minutas; descriptivo
 - **Script de origen:** `02_Scripts/01_extraer_texto.R`
-- **Última verificación:** 2026-11-12, con `02_Scripts/01_extraer_texto.R` (corrida completa de `00_main.R`)
+- **Última verificación:** 2026-11-18, con `02_Scripts/01_extraer_texto.R` (corrida completa de `00_main.R`)
 
 ## Evidencia
 
@@ -85,3 +85,4 @@ con el de hace diez años.
 
 - 2026-11-12: nota creada. Primera medición, con la extracción de `pdftools` y
   la separación por encabezados de sección.
+- 2026-11-18: sin cambios en las cifras tras agregar a `02_limpiar_texto.R` el filtro de símbolos y guiones finales (176.750 → 176.622 tokens limpios). Las tablas `.csv` que sostienen la nota quedaron idénticas en la corrida completa de `00_main.R`.

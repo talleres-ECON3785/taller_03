@@ -3,7 +3,7 @@
 - **Estado:** vigente
 - **Tipo / fuente:** T; comunicados y minutas (discusión de la Junta); descriptivo. Sirve de validación de las medidas de texto, no es todavía una relación texto–macro
 - **Script de origen:** `02_Scripts/03_frecuencias_tfidf.R`
-- **Última verificación:** 2026-11-12, con `02_Scripts/03_frecuencias_tfidf.R` (corrida completa de `00_main.R`)
+- **Última verificación:** 2026-11-18, con `02_Scripts/03_frecuencias_tfidf.R` (corrida completa de `00_main.R`)
 
 ## Evidencia
 
@@ -86,3 +86,4 @@ serie de inflación, que todavía no se ha incorporado.
 
 - 2026-11-12: nota creada, como validación de las medidas de texto. Sin series
   macroeconómicas.
+- 2026-11-18: sin cambios en las cifras tras agregar a `02_limpiar_texto.R` el filtro de símbolos y guiones finales (176.750 → 176.622 tokens limpios). `conjunto_temas_por_anio.csv` y `conjunto_temas_por_periodo.csv` quedaron idénticos en la corrida completa de `00_main.R`.

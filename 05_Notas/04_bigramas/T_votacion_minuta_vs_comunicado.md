@@ -3,7 +3,7 @@
 - **Estado:** vigente (clasificación automática, pendiente de validación manual)
 - **Tipo / fuente:** T; comunicados y minutas; descriptivo
 - **Script de origen:** `02_Scripts/04_bigramas.R`
-- **Última verificación:** 2026-11-12, con `02_Scripts/04_bigramas.R` (corrida completa de `00_main.R`)
+- **Última verificación:** 2026-11-18, con `02_Scripts/04_bigramas.R` (corrida completa de `00_main.R`)
 
 ## Evidencia
 
@@ -123,3 +123,4 @@ y cómo cambia en el tiempo.
 - 2026-11-12: nota creada. Clasificación por expresiones y dirección de la
   minoría por lectura de las alternativas en puntos básicos; pendiente la
   validación manual con la muestra de 30 documentos.
+- 2026-11-18: sin cambios en las cifras tras agregar a `02_limpiar_texto.R` el filtro de símbolos y guiones finales. Las tablas de votación y de dirección de la minoría (`.csv`) quedaron idénticas: esa medida se calcula sobre el texto extraído, no sobre los tokens limpios. Siguen pendientes los 30 documentos de validación manual.

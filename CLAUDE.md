@@ -27,7 +27,20 @@ Junta Directiva del Banco de la República (BanRep).
   pregunta**, de la creatividad y el rigor del análisis, y de que el trabajo
   aporte una **perspectiva propia** sobre la comunicación de la Junta y su
   relación con el contexto macroeconómico. La pregunta elegida se registra en
-  "Decisiones tomadas" (**pendiente: definirla**).
+  "Decisiones tomadas" (fijada el 2026-11-18).
+- **Pregunta del equipo (2026-11-18):** *¿Cómo cambiaron los temas de interés de
+  la Junta del Banco de la República antes y después de la crisis del petróleo
+  de 2014 en Colombia?*
+  - **Historia macro** que la ordena: caída del precio del petróleo, aumento de
+    la tasa de cambio (TRM) e impacto sobre la inflación. Las series cuentan la
+    historia; la pregunta central es sobre los **temas** (prioridades y
+    preocupaciones) de la Junta antes y después, no sobre las series.
+  - **Método previsto:** embeddings de palabras (GloVe o Word2Vec) para ver de
+    qué se hablaba antes y después y cómo cambian las prioridades. **No están
+    en el catálogo**: no se usan hasta registrarlos como ampliación (ver
+    "Decisiones tomadas").
+  - **Alcance:** la relación entre la historia macro y el cambio de temas es
+    asociativa, no causal (ver "Asociación no es causalidad").
 - **Dos fuentes de datos**, con roles distintos:
   - **Documentos de la Junta** (dados por el curso): comunicados y minutas en
     PDF. Son la fuente del texto.
@@ -73,7 +86,7 @@ Los enlaces de entrega están en Bloque Neón; el enunciado está en
   - `Comunicados_Minutas_Banrep/comunicados/`  194 comunicados en PDF (2007-01-26 a 2026-09-30)
   - `Comunicados_Minutas_Banrep/minutas/`      199 minutas en PDF (2007-06-15 a 2026-09-30)
   - `Comunicados_Minutas_Banrep/2020-04-30_informe_tecnico_mercados_capitales.pdf`  informe del equipo técnico que el zip traía entre las minutas
-  - las series macroeconómicas descargadas se guardan aquí, en una subcarpeta propia
+  - las series macroeconómicas descargadas se guardan aquí (hoy `brent_2000-26.csv`, `inflacion_variacion_anual_99_26.xlsx`, `tasa_cambio_real_70_26.xlsx` y `TRM.csv`, sueltos en esta carpeta; ver "Datos")
 - `01_Datos/02_Procesados/`  datos limpios o transformados (p. ej. texto extraído de los PDF, series transformadas)
 - `01_Datos/03_Listos/`      bases finales que ingresan al análisis (p. ej. corpus tokenizado, panel documento–macro)
 - `02_Scripts/`              scripts de R
@@ -89,7 +102,7 @@ Los enlaces de entrega están en Bloque Neón; el enunciado está en
   `catalogo_metodos.md`)
 - `08_Entregables/`          presentación final y video
 - `09_Conversaciones/`       registro crudo (`.jsonl`) de las conversaciones con los agentes; en `.gitignore`, no se versiona (cada integrante guarda las suyas localmente; al final se unen por aparte)
-- `.claude/skills/`          skills del proyecto (`bitacora-sesion`, `cerrar-sesion`, `registrar-hallazgo`)
+- `.claude/skills/`          skills del proyecto (`bitacora-sesion`, `cerrar-sesion`, `registrar-hallazgo`; y las de terceros `ponytail`, `caveman`, `hallmark`, ver "Skills de terceros")
 - `00_main.R`                (raíz) script maestro: corre todo el pipeline
 - `HANDOFF.md`               (raíz) estado actual, siguientes objetivos y registro de sesiones
 - `taller_03.Rproj`          proyecto de RStudio (raíz del proyecto)
@@ -334,7 +347,7 @@ sigue.
     objetivos** que quedaron al cerrar. Las entradas anteriores no se editan.
 - **Plan de implementación:** cuando exista, vivirá en `PLAN.md` (raíz),
   organizado en hitos con tareas numeradas (`Pk.n`) y casillas de verificación
-  (**pendiente: crearlo una vez definida la pregunta**). Los "Siguientes
+  (creado el 2026-11-18). Los "Siguientes
   objetivos" se derivan de los próximos pasos sin marcar del plan, citando el
   número de paso, y el registro de cada sesión indica qué pasos del plan avanzó
   o cerró. Las casillas se marcan `[x]` en la misma sesión en que se termina la
@@ -473,6 +486,76 @@ por aparte, fuera del flujo de git, para entregarlas con el material de
 soporte. Los agentes no deben versionar esa carpeta, quitarla del `.gitignore`
 ni intentar unir las conversaciones de otros integrantes.
 
+## Skills de terceros: `ponytail`, `caveman`, `hallmark`
+
+Están copiadas en `.claude/skills/` (versionadas) para que todos los
+integrantes las tengan sin instalar nada. Se invocan con `/ponytail`,
+`/caveman` y `/hallmark`. Ninguna reemplaza las reglas de este archivo: si
+chocan, **gana CLAUDE.md**.
+
+- **`ponytail`** (programar con el menor cambio que resuelva la tarea). **Es
+  el modo por defecto en nivel `full`**: todo agente lo activa al empezar la
+  sesión y lo mantiene hasta que el usuario diga "stop ponytail" o "normal
+  mode". Cambiar de nivel solo lo hace el usuario (`/ponytail lite|ultra`).
+  Aplica al escribir, corregir o refactorizar scripts de R y al elegir
+  dependencias: reutilizar lo que ya existe, no agregar paquetes por pocas
+  líneas, no construir funcionalidad no pedida. Variantes: `/ponytail-review`
+  (revisar un cambio), `/ponytail-audit` (auditar el repo), `/ponytail-debt`
+  (listar los `shortcut:`). Límites:
+  - No recorta lo que este archivo exige: `set.seed(2026)`, carpetas por script,
+    formato de figuras y tablas, `00_main.R`, README, bitácora, notas y
+    validación de las medidas con ejemplos del texto.
+  - Las decisiones de método (pregunta, medidas, series, alineación) no se
+    "simplifican" por cuenta del agente: se ajustan al catálogo de
+    `07_Recursos/catalogo_metodos.md` y las cambia el equipo.
+  - Los comentarios del código y los `shortcut:` van en español.
+  - El auto-chequeo que pide la skill para lógica nueva es un `stopifnot()` al
+    final del script, sin paquetes de pruebas nuevos.
+  - Los dos cierres de línea que pide la skill (qué omitió, qué riesgo) van en
+    el chat, no en los archivos del repo.
+
+- **`caveman`** (respuestas breves en el chat). **Es la forma por defecto en
+  que habla el agente**: todo agente activa la skill al empezar la sesión y la
+  mantiene hasta que el usuario diga "stop caveman" o "normal mode". Solo
+  afecta el tono de lo que el agente le dice al usuario en la conversación; se
+  sigue respondiendo en español. Reglas para este proyecto:
+  - **No se usa** en nada que se guarde fuera del chat: bitácoras, notas de
+    hallazgos, `README.md`, `HANDOFF.md`, `CLAUDE.md`, comentarios de código,
+    mensajes de commit y de PR, diapositivas ni guion del video se escriben en
+    español completo y con la estructura que pide este archivo.
+  - Se sale de caveman, en prosa completa, para: advertencias, acciones
+    irreversibles o hacia afuera (commit, push, borrar, sobrescribir), preguntas
+    u opciones al usuario, y cuando el usuario esté confundido o repita la
+    pregunta.
+  - "Explique lo que va a hacer ANTES de editar o crear archivos" se cumple con
+    una línea antes de la tarea, como pide la propia skill.
+  - Las alertas de contradicción de evidencia (ver "Contrastar la evidencia
+    nueva") y las explicaciones de interpretación económica van completas: la
+    brevedad no puede quitar cifras, unidades, periodos ni la salvedad
+    "asociación no es causalidad".
+
+- **`hallmark`** (diseño de páginas que se ven diseñadas, no generadas). En
+  este proyecto se usa para los **borradores de la presentación**: un deck
+  en HTML (una pantalla = una diapositiva, una idea por pantalla) guardado en
+  `04_Presentaciones/`. Reglas del borrador:
+  - Sigue los principios de la skill (todo color y tipografía como token en
+    `:root`, una dirección visual definida, sin plantillas genéricas) y,
+    además, "Entregable: presentación al cliente" de este archivo: título que
+    comunica la conclusión, *answer-first*, sin código.
+  - Los tokens de color son la paleta del proyecto (`paleta_categorica` y los
+    grises de `00_formato_graficas.R`); no se inventa otra, para que las figuras
+    y el deck se vean como una sola familia.
+  - Las figuras y tablas entran como los `.png` exportados por el pipeline
+    (`03_Resultados/`), sin redibujarlas ni retocarlas en el HTML. Las cifras
+    del texto del slide salen de `03_Resultados/` o de las notas de
+    `05_Notas/`; ninguna se escribe de memoria.
+  - Es un **borrador**: la presentación final y el video salen de las figuras
+    regeneradas por `00_main.R`. Sobre un borrador existente solo se usa
+    `/hallmark redesign <ruta>` o `/hallmark audit <ruta>` si el usuario lo
+    nombra.
+  - No aplica a las figuras ni a las tablas (siguen `00_formato_graficas.R` y
+    `00_formato_tablas.R`).
+
 ## Regla metodológica: herramientas del curso, medidas validadas con el texto
 
 - El enunciado pide usar **las herramientas del curso**. **Catálogo cerrado
@@ -596,7 +679,9 @@ ni intentar unir las conversaciones de otros integrantes.
   en "Definición de variables": por qué se eligió, fuente (con URL), cobertura,
   frecuencia y transformaciones (p. ej. variación anual, brecha frente a la meta
   de inflación). Candidatas naturales para un banco central con meta de
-  inflación (**por decidir**): tasa de intervención, inflación total y
+  inflación (**por decidir**; con la pregunta del 2026-11-18, la historia se
+  cuenta con el precio del petróleo, la tasa de cambio y la inflación; ver
+  "Decisiones tomadas"): tasa de intervención, inflación total y
   básica, expectativas de inflación, meta de inflación, crecimiento del PIB o
   ISE, desempleo, tasa de cambio, tasa de la Fed, precio del petróleo.
 
@@ -679,6 +764,10 @@ solo define paleta, tema y exportación.
 | 2026-11-10 | **Regla de las fronteras de los periodos.** Cada periodo lo abre la primera reunión cuya decisión cambia la dirección de la tasa respecto del ciclo anterior, verificada contra la decisión que anuncia el comunicado (no contra el resto del texto): P1 2007-01-26 (alza), P2 2008-12-19 (primer recorte), P3 2011-02-25 (primera alza), P5 2016-12-16 (primer recorte), P6 2020-03-27 (primer recorte de la pandemia; citado de la minuta porque los datos no traen comunicados entre 2020-01-31 y 2020-05-29), P7 2021-09-30 (primera alza), P8 2023-12-19 (primer recorte), P9 2025-06-27 (primera de cinco reuniones sin cambio en 9,25 %) y P10 2026-01-30 (primera alza). **P4 (2014-09-26) es el único periodo de P1 a P8 que abre con una pausa**: la primera reunión que mantiene la tasa en 4,5 % después de las alzas de abril a agosto de 2014; se usa porque ninguna decisión de tasa marca el comienzo del choque petrolero y las alzas contra la inflación solo empiezan en 2015-09-25. P9 también abre con una pausa, por definición. | Fronteras definidas por un hecho observable y fechado, fijadas antes de ver las medidas de texto. Frente a la propuesta inicial cambiaron P2 (antes 2008-09), P3 (antes 2011-01), P4 (antes 2014-07) y P6. Tabla con las citas: `03_Resultados/Tablas/01_extraer_texto/conjunto_periodos.png`. |
 | 2026-11-10 | **Desviación de lo previsto: LDA con muestreo de Gibbs además del LDA por defecto.** La sesión exploratoria debía usar solo el LDA por defecto de `topicmodels` (VEM, K y semilla). Ese modelo estimó α = 114,3 con K = 6 y α = 87,7 con K = 10 y dejó todas las minutas con un peso casi igual en todos los tópicos (θ cerca de 1/K): no separa temas. Se agregó el LDA con Gibbs del catálogo (sección 6) con α = 0,1, δ = 1, 1.000 iteraciones y 200 de calentamiento. **α y δ son los del Lab 12, sin seleccionar para este corpus**; K = 6 y K = 10 tampoco se eligieron con ningún criterio. Los tópicos no se nombran. | Sin la versión con Gibbs no había tópicos preliminares que revisar. Resultado exploratorio: con la minuta entera como documento, los tópicos separan épocas y formatos, no temas; no es una medida del taller. Queda en la bitácora, sin nota de hallazgo. |
 | 2026-11-10 | **Token `tasa_externa`.** Cualquier forma de nombrar una tasa de política («tasa de [interés de] intervención / política [monetaria] / referencia») que va seguida de «de / en» y un banco central o país externo (Reserva Federal, Fed, BCE, Banco Central Europeo, Estados Unidos, EE. UU., bancos centrales, Banco de Inglaterra, Banco de Japón) se reemplaza por `tasa_externa` antes de unir las demás variantes en `tasa_intervencion` (`unificar_tasas()` en `00_funciones_texto.R`). | «Tasa de política» también nombra la tasa de otros bancos centrales (p. ej. «tasa de interés de política de la Reserva Federal», comunicado 2019-06-21): 9–15 % de sus menciones está en una oración con un referente externo y 2–5 % lo lleva pegado. Sin este token, esas menciones contarían como la tasa del Banco de la República. Conteos en `03_Resultados/Tablas/02_limpiar_texto/conjunto_variantes_tasa.png`. |
+| 2026-11-18 | **Primeras series macro y ampliación `readxl`.** Se incorporan tres fuentes descargadas a mano (inflación anual y tasa de cambio real del Banco de la República; Brent de FRED), todas desde 2000-01-01, guardadas como `.rds` en `03_Listos/` por `06_series_macro.R`. `readxl::read_excel()` se registra en el catálogo y se agrega al `p_load()`. Es un paso de datos: no decide qué series entran al análisis ni cómo se alinean con las reuniones. | Los archivos se descargaron a mano, así que el crudo se versiona y la fuente exacta (URL y fecha de consulta) queda en "Definición de variables" y en el README, como exige "Reproducibilidad". Aprobado por Santiago Muñoz Martínez al pedir el script. |
+| 2026-11-18 | **Paso 4 de la limpieza descarta símbolos, no solo dígitos.** En `02_limpiar_texto.R` un token solo se conserva si cumple `^[a-zñ_]+(-[a-zñ_]+)*$` (letras, `_` de los compuestos y guion interno), y el guion final se quita antes de filtrar (verbos cortados a fin de renglón, «registrar-» → «registrar»). Quedan fuera restos de formato como «-ar», «*estar», «m/n» y «#juntabanrep». Los guiones internos se conservan («minero-energetico», «sub-canasta»). | Medido antes del cambio: 383 tokens (0,2 %) con símbolos y 122 términos afectados. Efecto: 176.750 → 176.622 tokens limpios y 3.884 → 3.807 términos distintos; el paso 4 pasa de quitar 50 a 164 tokens en minutas completas. Es un cambio mecánico, sin juicio de contenido; no se tocaron las listas de palabras vacías. Las tablas que sostienen las tres notas de `05_Notas/` no cambiaron. |
+| 2026-11-18 | **Pregunta del taller:** «¿Cómo cambiaron los temas de interés de la Junta del Banco de la República antes y después de la crisis del petróleo de 2014 en Colombia?». Las series macro (caída del precio del petróleo, aumento de la TRM, efecto sobre la inflación) cuentan la historia y se relacionan con los cambios de temas. Método previsto: embeddings de palabras (GloVe o Word2Vec) para comparar de qué se hablaba antes y después. **Pendiente de definir:** la fecha de corte antes/después (candidato de partida: el periodo P4, que abre el 2014-09-26 y ya está fijado a priori, sin ver medidas de texto; el Brent empieza a caer a mediados de 2014), el tipo de documento (comunicados, minutas o ambos; en minutas, la versión «solo discusión de la Junta»), el paquete de embeddings y su especificación (dimensión, ventana, unidad de texto, cómo comparar dos épocas) y el papel de LDA (ya en el catálogo) frente a los embeddings. | Pregunta acordada por el equipo y comunicada por Santiago Muñoz Martínez. **Los embeddings (GloVe/Word2Vec) están en "Fuera del catálogo" de `07_Recursos/catalogo_metodos.md`**: según la regla metodológica no se usan hasta registrarlos en su "Registro de ampliaciones" con paquete, función y aprobación del equipo. Riesgos a vigilar: (i) el corpus es pequeño (unas 177 mil palabras tras la limpieza, en total) para entrenar embeddings y partirlo en dos épocas; (ii) los cambios de formato de las minutas (ver "Datos") pueden confundirse con cambio de temas; (iii) la historia macro es asociativa, no causal. |
+| 2026-11-18 | **Falta la TRM nominal (resuelto el 2026-11-18: `TRM.csv`, SUAMECA, procesada en `06_series_macro.R`).** Había descargadas tres fuentes (Brent diario de FRED, inflación anual y *tasa de cambio real*; ver "Definición de variables"). La pregunta habla de la TRM (tasa de cambio nominal, COP/USD), que no está descargada: se consigue y documenta (fuente con URL y fecha de consulta) o se justifica usar la tasa de cambio real. | La pregunta menciona explícitamente el aumento de la TRM; el índice de tasa de cambio real no es la misma serie. |
 
 ## Análisis descartados
 
@@ -697,6 +786,10 @@ solo define paleta, tema y exportación.
 | -------- | ---------- | ------ | ---------------------- | ---------------- |
 | `fecha` | Fecha del documento, tomada del nombre del archivo (`YYYY-MM-DD`). | Nombre de los PDF | 2007-01 a 2026-09; por reunión | Ninguna |
 | `tipo_documento` | `comunicado` o `minuta`, según la carpeta y el nombre del archivo. | Nombre de los PDF | Igual | Ninguna |
+| `brent_usd` | Precio spot del petróleo Brent, Europa, en dólares por barril. Se descargó como contexto externo de un país exportador de petróleo; su uso en el análisis no está decidido. | FRED, serie `DCOILBRENTEU` (<https://fred.stlouisfed.org/series/DCOILBRENTEU>), consultada el 2026-11-18; archivo `brent_2000-26.csv` | Diaria, días hábiles, 2000-01-04 a 2026-11-17 | Filtro desde 2000-01-01; se eliminan 500 días sin cotización (`06_series_macro.R`) |
+| Inflación anual: `Inflación núcleo 15, anual`, `Inflación sin alimentos ni regulados, anual`, `Inflación sin alimentos, anual` | Variación porcentual anual del IPC en tres medidas (la núcleo 15 y las dos sin alimentos). Objeto de interés potencial: la inflación que sigue el Banco frente a la meta. | DANE, con cálculos del Banco de la República (<https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/precios-inflacion.html>), consultada el 2026-11-18; archivo `inflacion_variacion_anual_99_26.xlsx` | Mensual, 1999-01 a 2026-10; fecha = fin del mes de referencia | Filtro desde 2000-01-01 (322 meses); sin más transformaciones |
+| `trm_cop_usd` | Tasa Representativa del Mercado (TRM): pesos colombianos por dólar. Es la tasa de cambio nominal de la historia de la pregunta (aumento de la TRM tras la caída del petróleo de 2014). | Banco de la República, SUAMECA (<https://suameca.banrep.gov.co/estadisticas-economicas/informacionSerie/1/tasa_cambio_peso_colombiano_trm_dolar_usd>), consultada el 2026-11-18; archivo `TRM.csv` | Diaria calendario (incluye fines de semana y festivos, que repiten el último valor), 1991-11-27 a 2026-11-19 en el archivo; 2000-01-01 a 2026-11-19 tras el filtro (9.820 días) | Filtro desde 2000-01-01 (`06_series_macro.R`); sin vacíos ni fechas duplicadas |
+| Índices de tasa de cambio real: `... FMI`, `... IPC NT`, `... IPC T`, `... IPP NT`, `... IPP T`, `... de competidores` | Índices de tasa de cambio real del Banco de la República (NT = no transables, T = transables). Contexto externo y de competitividad. | Banco de la República (<https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/tasas-cambio-sector-externo.html>), consultada el 2026-11-18; archivo `tasa_cambio_real_70_26.xlsx` | Mensual, 1970-01 a 2026-10; fecha = fin del mes de referencia | Filtro desde 2000-01-01 (322 meses); los vacíos del archivo (".") quedan como `NA` |
 
 ## Restricciones de muestra
 

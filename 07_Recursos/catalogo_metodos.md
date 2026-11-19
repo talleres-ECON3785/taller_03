@@ -323,15 +323,16 @@ en ["Registro de ampliaciones"](#registro-de-ampliaciones) antes de usarse.
 | Herramienta | Por qué hace falta | Estado |
 | --- | --- | --- |
 | Extracción de texto de PDF (`pdftools::pdf_text()`) | Los documentos de la Junta vienen en PDF; los laboratorios partían de un `.csv` ya con texto | Registrada el 2026-11-10 |
-| Descarga y manejo de series macro (lectura de `.xlsx`/`.csv` con `readxl`/`readr`; fechas con `lubridate`) | El enunciado exige complementar con series macroeconómicas | Pendiente de registrar |
+| Descarga y manejo de series macro (lectura de `.xlsx`/`.csv` con `readxl`/`readr`; fechas con `lubridate`) | El enunciado exige complementar con series macroeconómicas | Registrada el 2026-11-18 (`readxl`; `readr` y `lubridate` ya vienen con `tidyverse`) |
 | Relación medida de texto – variable macro (regresión lineal, `lm`/`fixest`, de laboratorios anteriores; ver catálogo del Taller 2) | Cuantificar cómo se asocia la atención a un tema con el contexto macro | Pendiente de decidir |
 | Diccionarios de tono (p. ej. palabras *hawkish*/*dovish*) | Medir la orientación de la política, no solo el tema | Pendiente de decidir; no se vio en clase |
 | Red de co-ocurrencias (`igraph`, `ggraph`) | Visualizar `pairwise_cor()`; el Lab 11 carga los paquetes pero no la dibuja | Pendiente de decidir |
+| Embeddings de palabras (GloVe o Word2Vec) | Pregunta del equipo (2026-11-18): comparar de qué se hablaba antes y después de la crisis del petróleo de 2014 y cómo cambian las prioridades de la Junta | Elegidos por el equipo; **sin registrar**: falta paquete, funciones y especificación en el "Registro de ampliaciones". No se usan hasta entonces |
 
 ## Fuera del catálogo
 
 No se usan, salvo que se registren como ampliación: embeddings
-(`word2vec`, `text2vec`), modelos de tópicos estructurales (`stm`), modelos de
+(`word2vec`, `text2vec`; **previstos para la pregunta del equipo, ver "Herramientas previstas"**), modelos de tópicos estructurales (`stm`), modelos de
 lenguaje o clasificadores supervisados de texto, y análisis de sentimiento con
 léxicos genéricos.
 
@@ -341,3 +342,4 @@ léxicos genéricos.
 | --- | --- | --- | --- | --- |
 | 2026-11-10 | `pdftools::pdf_text()` | Extraer el texto de los 393 PDF de la Junta en `02_Scripts/01_extraer_texto.R`; los laboratorios partían de un `.csv` con el texto | Paquete `pdftools` (CRAN); previsto en "Herramientas previstas" | Samuel Escandón |
 | 2026-11-10 | `gt` (`gt()`, `tab_header()`, `tab_spanner()`, `fmt_number()`, `gtsave()`) y Chrome/Chromium en modo headless para el `.png` | Exportar las tablas en el formato final de la diapositiva (`02_Scripts/00_formato_tablas.R`). Es presentación, no un método de análisis | `00_formato_tablas.R` del Taller 2 | Samuel Escandón |
+| 2026-11-18 | `readxl::read_excel()` | Leer los `.xlsx` de series históricas del Banco de la República en `02_Scripts/06_series_macro.R` (las demás fuentes macro son `.csv`, que se leen con `readr`) | Paquete `readxl` (CRAN); previsto en "Herramientas previstas" | Santiago Muñoz Martínez (pidió el script) |

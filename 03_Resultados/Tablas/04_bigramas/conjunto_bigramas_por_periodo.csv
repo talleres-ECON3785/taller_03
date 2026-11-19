@@ -300,6 +300,7 @@ Comunicados,P3,continuar mostrar,3,0.12983078720733976
 Comunicados,P3,crecimiento continuar,3,0.12983078720733976
 Comunicados,P3,crecimiento excesivo,3,0.12983078720733976
 Comunicados,P3,crecimiento sostenible,3,0.12983078720733976
+Comunicados,P3,crecimiento sostenido,3,0.12983078720733976
 Comunicados,P3,crecimiento_economico mundial,3,0.12983078720733976
 Comunicados,P3,credito hipotecario,3,0.12983078720733976
 Comunicados,P3,deuda soberano,3,0.12983078720733976
@@ -513,6 +514,7 @@ Comunicados,P5,registrar cambio,11,0.6969965783804334
 Comunicados,P5,cambio leve,10,0.6336332530731212
 Comunicados,P5,condicion externo,10,0.6336332530731212
 Comunicados,P5,decision unanime,10,0.6336332530731212
+Comunicados,P5,expectativas_inflacion registrar,10,0.6336332530731212
 Comunicados,P5,indicador reciente,10,0.6336332530731212
 Comunicados,P5,cambiante condicion,9,0.5702699277658092
 Comunicados,P5,conveniente mantener,9,0.5702699277658092
@@ -538,7 +540,6 @@ Comunicados,P5,desviacion transitorio,6,0.38017995184387277
 Comunicados,P5,inflacion respecto,6,0.38017995184387277
 Comunicados,P5,ingreso externo,6,0.38017995184387277
 Comunicados,P5,ingreso originado,6,0.38017995184387277
-Comunicados,P5,#juanjoseechavarer explicar,5,0.3168166265365606
 Comunicados,P5,apreciar frente,5,0.3168166265365606
 Comunicados,P5,capacidad instalado,5,0.3168166265365606
 Comunicados,P5,continuar favorecer,5,0.3168166265365606
@@ -547,14 +548,12 @@ Comunicados,P5,desaceleracion excesivo,5,0.3168166265365606
 Comunicados,P5,deuda_publica registrar,5,0.3168166265365606
 Comunicados,P5,economia emergente,5,0.3168166265365606
 Comunicados,P5,efecto directo,5,0.3168166265365606
-Comunicados,P5,expectativas_inflacion registrar,5,0.3168166265365606
-Comunicados,P5,expectativas_inflacion registrar-,5,0.3168166265365606
 Comunicados,P5,inflacion continuar,5,0.3168166265365606
 Comunicados,P5,inflacion_basica disminuyr,5,0.3168166265365606
 Comunicados,P5,leve cambio,5,0.3168166265365606
 Comunicados,P5,precio interno,5,0.3168166265365606
 Comunicados,P5,principal economia,5,0.3168166265365606
-Comunicados,P5,registrar- leve,5,0.3168166265365606
+Comunicados,P5,registrar leve,5,0.3168166265365606
 Comunicados,P5,tasa_interes contar,5,0.3168166265365606
 Comunicados,P5,actual nivel,4,0.25345330122924853
 Comunicados,P5,cifra inferior,4,0.25345330122924853
@@ -598,7 +597,7 @@ Comunicados,P5,politica_monetaria seguir,3,0.19008997592193638
 Comunicados,P5,precio_petroleo aumentar,3,0.19008997592193638
 Comunicados,P5,primero mitad,3,0.19008997592193638
 Comunicados,P5,reciente confirmar,3,0.19008997592193638
-Comunicados,P5,registrar- variacion,3,0.19008997592193638
+Comunicados,P5,registrar variacion,3,0.19008997592193638
 Comunicados,P5,riesgo asociado,3,0.19008997592193638
 Comunicados,P5,seguir ampliar,3,0.19008997592193638
 Comunicados,P5,seguir reducir,3,0.19008997592193638
@@ -778,7 +777,7 @@ Minutas: discusión de la Junta,P1,tendencia descendente,6,0.3561253561253561
 Minutas: discusión de la Junta,P1,tener impacto,6,0.3561253561253561
 Minutas: discusión de la Junta,P1,terminos_intercambio seguir,6,0.3561253561253561
 Minutas: discusión de la Junta,P1,actual coyuntura,5,0.29677113010446343
-Minutas: discusión de la Junta,P1,crecimiento sostenido-,5,0.29677113010446343
+Minutas: discusión de la Junta,P1,crecimiento sostenido,5,0.29677113010446343
 Minutas: discusión de la Junta,P1,credito mantener,5,0.29677113010446343
 Minutas: discusión de la Junta,P1,crisis financiero,5,0.29677113010446343
 Minutas: discusión de la Junta,P1,crisis internacional,5,0.29677113010446343
@@ -1842,7 +1841,7 @@ Minutas: texto completo,P1,anual ser,5,0.13993059442516512
 Minutas: texto completo,P1,buen parte,5,0.13993059442516512
 Minutas: texto completo,P1,cartera total,5,0.13993059442516512
 Minutas: texto completo,P1,colombiano seguir,5,0.13993059442516512
-Minutas: texto completo,P1,crecimiento sostenido-,5,0.13993059442516512
+Minutas: texto completo,P1,crecimiento sostenido,5,0.13993059442516512
 Minutas: texto completo,P1,crisis internacional,5,0.13993059442516512
 Minutas: texto completo,P1,cuenta corriente,5,0.13993059442516512
 Minutas: texto completo,P1,demanda_agregada continuar,5,0.13993059442516512
@@ -2265,6 +2264,7 @@ Minutas: texto completo,P2,promedio historico,5,0.0801667468334135
 Minutas: texto completo,P2,rapido disminucion,5,0.0801667468334135
 Minutas: texto completo,P2,reciente informacion,5,0.0801667468334135
 Minutas: texto completo,P2,registrar variacion,5,0.0801667468334135
+Minutas: texto completo,P2,regulado registrar,5,0.0801667468334135
 Minutas: texto completo,P2,restriccion comercial,5,0.0801667468334135
 Minutas: texto completo,P2,segundo mitad,5,0.0801667468334135
 Minutas: texto completo,P2,tasa real,5,0.0801667468334135
@@ -2289,6 +2289,7 @@ Minutas: texto completo,P2,caida consecutivo,4,0.0641333974667308
 Minutas: texto completo,P2,caracter transitorio,4,0.0641333974667308
 Minutas: texto completo,P2,comercial crecer,4,0.0641333974667308
 Minutas: texto completo,P2,consumidor revelar,4,0.0641333974667308
+Minutas: texto completo,P2,consumo registrar,4,0.0641333974667308
 Minutas: texto completo,P2,continuar aumentar,4,0.0641333974667308
 Minutas: texto completo,P2,continuar debilitando,4,0.0641333974667308
 Minutas: texto completo,P2,continuar descender,4,0.0641333974667308
@@ -2352,7 +2353,6 @@ Minutas: texto completo,P2,reduccion importante,4,0.0641333974667308
 Minutas: texto completo,P2,registrar movimiento,4,0.0641333974667308
 Minutas: texto completo,P2,registro frente,4,0.0641333974667308
 Minutas: texto completo,P2,regulado bajar,4,0.0641333974667308
-Minutas: texto completo,P2,regulado registrar-,4,0.0641333974667308
 Minutas: texto completo,P2,reino unido,4,0.0641333974667308
 Minutas: texto completo,P2,revelar signo,4,0.0641333974667308
 Minutas: texto completo,P2,sector agropecuario,4,0.0641333974667308
@@ -2395,7 +2395,6 @@ Minutas: texto completo,P2,colombiano crecer,3,0.0481000481000481
 Minutas: texto completo,P2,comercial aumentar,3,0.0481000481000481
 Minutas: texto completo,P2,comercio internacional,3,0.0481000481000481
 Minutas: texto completo,P2,comportamiento futuro,3,0.0481000481000481
-Minutas: texto completo,P2,consumo registrar,3,0.0481000481000481
 Minutas: texto completo,P2,continuar debil,3,0.0481000481000481
 Minutas: texto completo,P2,continuar exhibir,3,0.0481000481000481
 Minutas: texto completo,P2,continuar recuperando,3,0.0481000481000481
@@ -2666,6 +2665,7 @@ Minutas: texto completo,P3,comportamiento favorable,12,0.09280957794844429
 Minutas: texto completo,P3,demanda global,12,0.09280957794844429
 Minutas: texto completo,P3,mejor desempeno,12,0.09280957794844429
 Minutas: texto completo,P3,mundial continuar,12,0.09280957794844429
+Minutas: texto completo,P3,registrar crecimiento,12,0.09280957794844429
 Minutas: texto completo,P3,ritmo modesto,12,0.09280957794844429
 Minutas: texto completo,P3,sector minero,12,0.09280957794844429
 Minutas: texto completo,P3,seguir mostrar,12,0.09280957794844429
@@ -2709,7 +2709,6 @@ Minutas: texto completo,P3,nivel similar,10,0.0773413149570369
 Minutas: texto completo,P3,permitir prever,10,0.0773413149570369
 Minutas: texto completo,P3,pib potencial,10,0.0773413149570369
 Minutas: texto completo,P3,prestamo desembolsado,10,0.0773413149570369
-Minutas: texto completo,P3,registrar crecimiento,10,0.0773413149570369
 Minutas: texto completo,P3,ritmo favorable,10,0.0773413149570369
 Minutas: texto completo,P3,seguir desacelerando,10,0.0773413149570369
 Minutas: texto completo,P3,servicio financiero,10,0.0773413149570369
@@ -3032,6 +3031,8 @@ Minutas: texto completo,P3,rango estimado,5,0.03867065747851845
 Minutas: texto completo,P3,real seguir,5,0.03867065747851845
 Minutas: texto completo,P3,reciente informacion,5,0.03867065747851845
 Minutas: texto completo,P3,reciente sugerir,5,0.03867065747851845
+Minutas: texto completo,P3,registrar aumento,5,0.03867065747851845
+Minutas: texto completo,P3,registrar cambio,5,0.03867065747851845
 Minutas: texto completo,P3,registro inferior,5,0.03867065747851845
 Minutas: texto completo,P3,ritmo anual,5,0.03867065747851845
 Minutas: texto completo,P3,sector agricola,5,0.03867065747851845
@@ -3187,7 +3188,6 @@ Minutas: texto completo,P3,recuperacion economico,4,0.03093652598281476
 Minutas: texto completo,P3,recuperacion gradual,4,0.03093652598281476
 Minutas: texto completo,P3,recuperacion iniciado,4,0.03093652598281476
 Minutas: texto completo,P3,recuperacion pausado,4,0.03093652598281476
-Minutas: texto completo,P3,registrar aumento,4,0.03093652598281476
 Minutas: texto completo,P3,registrar tasa,4,0.03093652598281476
 Minutas: texto completo,P3,regulado industrial,4,0.03093652598281476
 Minutas: texto completo,P3,regulado pasar,4,0.03093652598281476
@@ -3439,7 +3439,6 @@ Minutas: texto completo,P3,programa anunciado,3,0.02320239448711107
 Minutas: texto completo,P3,promedio superior,3,0.02320239448711107
 Minutas: texto completo,P3,real continuar,3,0.02320239448711107
 Minutas: texto completo,P3,reduccion mensual,3,0.02320239448711107
-Minutas: texto completo,P3,registrar cambio,3,0.02320239448711107
 Minutas: texto completo,P3,registrar mayor,3,0.02320239448711107
 Minutas: texto completo,P3,registro historico,3,0.02320239448711107
 Minutas: texto completo,P3,regulado presentar,3,0.02320239448711107
@@ -3617,6 +3616,7 @@ Minutas: texto completo,P4,principal economia,5,0.13390107388661257
 Minutas: texto completo,P4,principal pais,5,0.13390107388661257
 Minutas: texto completo,P4,producto agricola,5,0.13390107388661257
 Minutas: texto completo,P4,real seguir,5,0.13390107388661257
+Minutas: texto completo,P4,registrar caida,5,0.13390107388661257
 Minutas: texto completo,P4,seguir desacelerando,5,0.13390107388661257
 Minutas: texto completo,P4,venta externa,5,0.13390107388661257
 Minutas: texto completo,P4,actividad real,4,0.10712085910929006
@@ -3785,7 +3785,6 @@ Minutas: texto completo,P4,principal impulso,3,0.08034064433196754
 Minutas: texto completo,P4,pronostico central,3,0.08034064433196754
 Minutas: texto completo,P4,rango estimado,3,0.08034064433196754
 Minutas: texto completo,P4,registrar bajo,3,0.08034064433196754
-Minutas: texto completo,P4,registrar caida,3,0.08034064433196754
 Minutas: texto completo,P4,sector descender,3,0.08034064433196754
 Minutas: texto completo,P4,sector minero-energetico,3,0.08034064433196754
 Minutas: texto completo,P4,sector transable,3,0.08034064433196754

@@ -1,7 +1,7 @@
 topic,top_beta,top_lift,atencion,minutas_principal,palabras_mediana,theta_principal
-1,"internacional, destacar, externo, recuperacion, actividad_economica, contexto","amplio, pandemia, reactivacion, liquidez, preocupacion, expresar, revisar, estimulo",0.09059403580667486,19,408,0.5960884353741497
-2,"puntos_basicos, reduccion, riesgo, reducir, aumento, politica","devaluacion, choque, anclado, horizonte, senda, persistencia, haber, existir",0.23254352309694656,49,449,0.8594674556213019
-3,"efecto, internacional, alimento, siguiente, caida, mostrar","centrar, establecido, venezuela, anclar, generado, fijar, transable, crisis",0.23108555259887262,44,825,0.9690407674885283
-4,"incremento, puntos_basicos, reduccion, aumento, anual, alimento","insistir, salario_minimo, anotar, advertir, restrictivo, revision, macroeconomico, recorte",0.21578858497017986,46,1279,0.8336040464081962
-5,"internacional, credito, tasa, promedio, menor, pais","monitoreo, reitera, evaluacion, accion, cuidadoso, probable, europa, promedio",0.21623233322312152,41,711,0.958152510849349
-6,"afectar, resultar, expectativa, choque_oferta, obedecer, geopolitico","obedecer, derivado, ciclo, choque_oferta, resultar, persistente, hecho, creciente",0.013755970304204567,0,NA,NA
+1,"incremento, puntos_basicos, reduccion, aumento, anual, alimento","agregar, salario_minimo, anotar, advertir, insistir, recorte, desbalance, servicio",0.21373352712696306,45,1282,0.8221890971039182
+2,"destacar, externo, actividad_economica, reduccion, proyeccion, reducir","amplio, reactivacion, debilidad, entorno, brecha, preocupacion, expansivo, decidir",0.18161771031985488,39,408,0.7923197492163009
+3,"efecto, internacional, alimento, mostrar, caida, siguiente","establecido, venezuela, centrar, generado, anclar, transable, fijar, desarrollo",0.2200677346747983,45,821,0.9625394321766562
+4,"puntos_basicos, aumento, incremento, ajuste, riesgo, demanda_interna","devaluacion, choque, anclado, magnitud, normalizacion, mecanismo, balanza_pagos, senda",0.16231810524630777,30,451,0.8680648295386317
+5,"internacional, credito, tasa, alto, pais, promedio","reitera, monitoreo, evaluacion, accion, construccion, cuidadoso, europa, apropiado",0.2107125517306134,40,713.5,0.9661867139743245
+6,"apreciacion, revaluacion, choque_oferta, ciclo, sostener, tasa_interes_real","ciclo, choque_oferta, apreciacion, tasa_interes_real, presente, relevante, restrictivo, deuda",0.011550370901462678,0,NA,NA

@@ -1,11 +1,11 @@
 topic,top_beta,top_lift,atencion,minutas_principal,palabras_mediana,theta_principal
-1,"financiero, caida, efecto, largo_plazo, siguiente, consumidor","fijar, sistema, analisis, titulo, anclar, cartera, crisis, tasa_referencia",0.14286385276965677,25,761,0.9774285714285715
-2,"incremento, puntos_basicos, reduccion, aumento, anual, riesgo","anotar, agregar, advertir, salario_minimo, restrictivo, insistir, recorte, contractivo",0.21666215999476074,47,1276,0.8331412103746398
-3,"destacar, internacional, externo, recuperacion, actividad_economica, proyeccion","pandemia, normalizacion, amplio, liquidez, reactivacion, balanza_pagos, preocupacion, expansivo",0.07928188163070889,15,408,0.6937007874015747
-4,"puntos_basicos, riesgo, reduccion, politica, reducir, ajuste","devaluacion, choque, senda, opinion, anclado, balanza_pagos, horizonte, haber",0.20739953001995426,48,432.5,0.8198410705316783
-5,"alza, converger, converjo, abrupto, externo, mercado_laboral","fortalecimiento, desbalance, expresar, consideracion, evaluar, registrado, anclado, region",0.0032685355123528055,0,NA,NA
-6,"garantizar, bancario, nino, electrico, adoptado, caida","problema, tasa_desempleo, espacio, adoptar, final, empezar, dinamico, venezuela",0.0024896027812358165,0,NA,NA
-7,"revaluacion, exportacion, obedecer, sostener, estructura, incremento","obedecer, registro, insistir, persistente, probabilidad, creciente, choque_oferta, evaluar",0.009937366973714794,0,NA,NA
-8,"internacional, credito, tasa, promedio, crecer, menor","monitoreo, reitera, evaluacion, accion, cuidadoso, apropiado, promedio, probable",0.2118579809104382,44,705,0.9173616688978135
-9,"indicador, facilitar, positivo, continuo, deteriorado, monitorear","derivado, origen, puntos_porcentuales, local, amplio, establecido, vivienda, registrado",0.003541647623635342,0,NA,NA
-10,"internacional, efecto, alimento, futuro, tener, incertidumbre","establecido, combustible, generado, unanime, transable, demanda_agregada, venezuela, rezago",0.12269744178354239,20,847,0.9494581280788177
+1,"financiero, caida, efecto, largo_plazo, siguiente, proyeccion","sistema, fijar, rapido, titulo, analisis, crisis, cartera, caida",0.14508754491597772,26,737,0.9628570541480377
+2,"externo, internacional, destacar, recuperacion, actividad_economica, proyeccion","pandemia, amplio, preocupacion, liquidez, expansivo, reactivacion, revisar, unanime",0.08727657186451067,17,411,0.6957627118644067
+3,"surgir, disponible, reciente, ascendente, decision, garantizar","puntos_porcentuales, relevante, distinto, empresa, sostenido, cambiario, persistente, origen",0.0046689483114077945,0,NA,NA
+4,"internacional, efecto, alimento, futuro, tener, medida","establecido, combustible, rezago, demanda_agregada, generado, transable, centrar, moderar",0.10337168861360427,19,856,0.9665730337078652
+5,"puntos_basicos, reduccion, reducir, riesgo, aumento, politica","devaluacion, senda, choque, persistencia, anclado, variable, haber, balanza_pagos",0.22948886421744566,50,432.5,0.8842531509788146
+6,"incremento, puntos_basicos, reduccion, aumento, anual, tener","agregar, advertir, anotar, salario_minimo, recorte, insistir, macroeconomico, lograr",0.20295047101279096,46,1279,0.8211931588109322
+7,"linea, alimento, permanente, capital, destacar, entrada","linea, posibilidad, empresa, evaluacion, total, expresar, puntos_porcentuales, moderar",0.003210232396010134,0,NA,NA
+8,"internacional, credito, tasa, riesgo, alto, promedio","reitera, monitoreo, evaluacion, accion, cuidadoso, construccion, europa, apropiado",0.2117589735911389,41,711,0.9382775119617225
+9,"apreciacion, choque_oferta, sostener, fertilizante, conflicto, mayoria","choque_oferta, apreciacion, ciclo, restrictivo, tasa_interes_real, productor, deuda, contractivo",0.008942768039108739,0,NA,NA
+10,"relevante, tiempo, proyectado, resultado, tasa, agregado","relevante, vivienda, socio, expresar, coherente, diverso, normalizacion, tiempo",0.0032439370380049582,0,NA,NA
