@@ -327,11 +327,12 @@ en ["Registro de ampliaciones"](#registro-de-ampliaciones) antes de usarse.
 | Relación medida de texto – variable macro (regresión lineal, `lm`/`fixest`, de laboratorios anteriores; ver catálogo del Taller 2) | Cuantificar cómo se asocia la atención a un tema con el contexto macro | Pendiente de decidir |
 | Diccionarios de tono (p. ej. palabras *hawkish*/*dovish*) | Medir la orientación de la política, no solo el tema | Pendiente de decidir; no se vio en clase |
 | Red de co-ocurrencias (`igraph`, `ggraph`) | Visualizar `pairwise_cor()`; el Lab 11 carga los paquetes pero no la dibuja | Pendiente de decidir |
+| Embeddings de palabras (GloVe o Word2Vec) | Pregunta del equipo (2026-11-18): comparar de qué se hablaba antes y después de la crisis del petróleo de 2014 y cómo cambian las prioridades de la Junta | Elegidos por el equipo; **sin registrar**: falta paquete, funciones y especificación en el "Registro de ampliaciones". No se usan hasta entonces |
 
 ## Fuera del catálogo
 
 No se usan, salvo que se registren como ampliación: embeddings
-(`word2vec`, `text2vec`), modelos de tópicos estructurales (`stm`), modelos de
+(`word2vec`, `text2vec`; **previstos para la pregunta del equipo, ver "Herramientas previstas"**), modelos de tópicos estructurales (`stm`), modelos de
 lenguaje o clasificadores supervisados de texto, y análisis de sentimiento con
 léxicos genéricos.
 

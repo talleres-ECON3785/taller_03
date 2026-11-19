@@ -15,9 +15,28 @@ relacionan con el contexto macroeconómico.
 
 **Estado:** el repositorio contiene la base del pipeline y una exploración del
 corpus (palabras frecuentes, vocabulario distintivo, bigramas, votaciones y
-tópicos preliminares). La pregunta del taller todavía no está fijada y aún no
-se cruzan los textos con series macroeconómicas. Todos los resultados actuales
-son exploratorios.
+tópicos preliminares). Aún no se cruzan los textos con series
+macroeconómicas. Todos los resultados actuales son exploratorios y anteriores a
+la pregunta.
+
+## Pregunta de investigación
+
+Fijada por el equipo el 2026-11-18:
+
+> **¿Cómo cambiaron los temas de interés de la Junta del Banco de la República
+> antes y después de la crisis del petróleo de 2014 en Colombia?**
+
+- **Historia macro:** las series cuentan la historia (caída del precio del
+  petróleo, aumento de la tasa de cambio e impacto en la inflación) y se
+  relacionan con los cambios de temas que trata la Junta. La relación es
+  asociativa, no causal.
+- **Método previsto:** embeddings de palabras (GloVe o Word2Vec) para entender
+  de qué se hablaba antes y después y cómo cambian las prioridades o
+  preocupaciones. Todavía no están en el catálogo de métodos
+  (`07_Recursos/catalogo_metodos.md`) y no se usan hasta registrarlos como
+  ampliación.
+- **Por definir:** fecha de corte antes/después, tipo de documento
+  (comunicados, minutas o ambos) y paquete y especificación de los embeddings.
 
 ## Cómo ejecutar
 
@@ -90,19 +109,24 @@ modificar en `01_Datos/01_Crudos/`; `06_series_macro.R` las lee):
 | --- | --- | --- | --- |
 | `inflacion_variacion_anual_99_26.xlsx` | Inflación núcleo 15, anual; inflación sin alimentos ni regulados, anual; inflación sin alimentos, anual (variación porcentual anual) | DANE, con cálculos del Banco de la República. Series históricas de precios e inflación: <https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/precios-inflacion.html> | Mensual, 1999-01 a 2026-10 |
 | `tasa_cambio_real_70_26.xlsx` | Índices de tasa de cambio real: FMI, IPC no transables, IPC transables, IPP no transables, IPP transables y competidores | Banco de la República. Series históricas de tasas de cambio y sector externo: <https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/tasas-cambio-sector-externo.html> | Mensual, 1970-01 a 2026-10 (FMI y competidores traen vacíos al comienzo) |
+| `TRM.csv` | Tasa Representativa del Mercado (TRM), pesos colombianos por dólar (`trm_cop_usd`) | Banco de la República, SUAMECA: <https://suameca.banrep.gov.co/estadisticas-economicas/informacionSerie/1/tasa_cambio_peso_colombiano_trm_dolar_usd> | Diaria calendario (con fines de semana y festivos, que repiten el último valor), 1991-11-27 a 2026-11-19 |
 | `brent_2000-26.csv` | Precio spot del petróleo Brent, Europa (`DCOILBRENTEU`, dólares por barril) | FRED, Federal Reserve Bank of St. Louis: <https://fred.stlouisfed.org/series/DCOILBRENTEU> | Diaria (días hábiles), 2000-01-04 a 2026-11-17 |
 
 - **Transformaciones** (`06_series_macro.R`): solo se filtran las fechas desde
   2000-01-01 y se guardan como `.rds` en `01_Datos/03_Listos/`. En el Brent se
   eliminan los 500 días sin cotización (vacíos en el crudo); no se
-  rellenan. No hay todavía variaciones, brechas ni alineación con las reuniones.
+  rellenan. La TRM solo se filtra (9.820 días, sin vacíos). No hay todavía variaciones, brechas ni alineación con las reuniones.
 - Las fechas mensuales son el fin del mes de referencia, no la de publicación
   del dato (el IPC sale unos días después del cierre del mes). Al cruzar con las
   reuniones de la Junta hay que usar solo lo publicado a la fecha de la reunión.
+- La fecha de la TRM es el día de vigencia, y el archivo llega hasta
+  2026-11-19, un día posterior a la consulta. Al alinear con las reuniones hay
+  que confirmar con el Banco desde qué fecha se conoce cada valor.
 - Los archivos del Banco de la República traen los datos como estaban el
   2026-11-18, es decir, con las revisiones posteriores.
-- Todavía no se decidió qué series entran al análisis; se justificarán cuando
-  se fije la pregunta.
+- Qué series entran al análisis se decide con la pregunta fijada el 2026-11-18
+  (petróleo, tasa de cambio e inflación). La TRM nominal (`TRM.csv`) ya está
+  descargada; el índice de tasa de cambio *real* queda como complemento.
 
 ## Mapa script → resultados
 
@@ -194,7 +218,8 @@ Datos: `01_Datos/02_Procesados/anotado_udpipe.rds` y el modelo de `udpipe`;
 No genera tablas ni figuras. Lee los tres archivos crudos de series macro y
 guarda en `01_Datos/03_Listos/`: `macro_brent.rds` (fecha, `brent_usd`; 6.511
 días), `macro_inflacion.rds` y `macro_tcr.rds` (una columna por serie; 322
-meses, 2000-01 a 2026-10).
+meses, 2000-01 a 2026-10) y `macro_trm.rds` (fecha, `trm_cop_usd`; 9.820
+días, 2000-01-01 a 2026-11-19).
 
 ### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
 

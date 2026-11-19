@@ -6,10 +6,12 @@
 #   brent_2000-26.csv                      Brent, FRED (DCOILBRENTEU), diaria
 #   inflacion_variacion_anual_99_26.xlsx   inflacion anual, BanRep, mensual
 #   tasa_cambio_real_70_26.xlsx            indices de tasa de cambio real, BanRep, mensual
+#   TRM.csv                                TRM (COP por USD), BanRep (SUAMECA), diaria calendario
 # Salidas (01_Datos/03_Listos/), una por fuente, solo con fechas >= 2000-01-01:
 #   macro_brent.rds       fecha, brent_usd
 #   macro_inflacion.rds   fecha (fin de mes) y una columna por serie, en %
 #   macro_tcr.rds         fecha (fin de mes) y una columna por indice
+#   macro_trm.rds         fecha (dia de vigencia), trm_cop_usd
 # No genera tablas ni figuras. No transforma ni alinea las series con las
 # reuniones de la Junta: eso se decide en el script de analisis.
 # =============================================================================
@@ -43,19 +45,28 @@ brent <- drop_na(brent, brent_usd)
 inflacion <- leer_banrep("01_Datos/01_Crudos/inflacion_variacion_anual_99_26.xlsx")
 tcr <- leer_banrep("01_Datos/01_Crudos/tasa_cambio_real_70_26.xlsx")
 
+# la TRM trae un encabezado largo (se salta), fechas "AAAA/MM/DD" y calendario
+# completo: fines de semana y festivos repiten el ultimo valor
+trm <- read_csv("01_Datos/01_Crudos/TRM.csv", skip = 1, col_names = c("fecha", "trm_cop_usd"),
+                col_types = "cd") |>
+  mutate(fecha = ymd(fecha)) |>
+  filter(fecha >= fecha_inicio)
+
 saveRDS(brent, "01_Datos/03_Listos/macro_brent.rds")
 saveRDS(inflacion, "01_Datos/03_Listos/macro_inflacion.rds")
 saveRDS(tcr, "01_Datos/03_Listos/macro_tcr.rds")
+saveRDS(trm, "01_Datos/03_Listos/macro_trm.rds")
 
-for (s in list(brent = brent, inflacion = inflacion, tcr = tcr)) {
+for (s in list(brent = brent, inflacion = inflacion, tcr = tcr, trm = trm)) {
   message(nrow(s), " filas, ", min(s$fecha), " a ", max(s$fecha))
 }
 message("Brent: ", n_brent_festivos, " dias sin cotizacion eliminados")
 
 # auto-chequeo: nada anterior a 2000, fechas unicas y series numericas
 stopifnot(
-  all(map_lgl(list(brent, inflacion, tcr), ~ min(.x$fecha) >= fecha_inicio)),
+  all(map_lgl(list(brent, inflacion, tcr, trm), ~ min(.x$fecha) >= fecha_inicio)),
   !anyDuplicated(brent$fecha), !anyDuplicated(inflacion$fecha), !anyDuplicated(tcr$fecha),
+  !anyDuplicated(trm$fecha), !anyNA(trm), is.numeric(trm$trm_cop_usd),
   is.numeric(brent$brent_usd), all(map_lgl(inflacion[-1], is.numeric)),
   all(map_lgl(tcr[-1], is.numeric))
 )

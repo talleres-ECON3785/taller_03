@@ -16,38 +16,36 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **Fijar la pregunta del taller con el equipo.**
-   - Candidata (todavía no registrada en "Decisiones tomadas"): si la
-     dirección del voto de la minoría y los argumentos de la minuta anticipan
-     la siguiente decisión de tasa más allá de la inflación y las expectativas.
-   - Archivo: fila nueva en "Decisiones tomadas" de `CLAUDE.md` con la
-     pregunta, y tabla "Definición de variables" con cada serie macro (por
-     qué, fuente con URL, cobertura, frecuencia, transformaciones).
-   - *Terminado cuando:* la pregunta es una sola oración que la mesa de renta
-     fija entendería, el equipo la aprobó y cada serie tiene fuente con URL.
-   - Insumos: las tres notas de `05_Notas/` y la bitácora del 2026-11-12.
-2. **Validar a mano la votación.**
-   - Archivo: `03_Resultados/Tablas/04_bigramas/conjunto_votacion_muestra_validacion.csv`
-     con las columnas de revisión llenas (30 documentos), y la nota
-     `05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md` actualizada con
-     el porcentaje de aciertos de la clasificación y de la dirección de la
-     minoría.
-   - *Terminado cuando:* están revisados los 30 documentos y, si la tasa de
-     error lo pide, se corrigieron las expresiones de `04_bigramas.R` o se
-     decidió codificar a mano las reuniones por mayoría (101).
-3. **`PLAN.md` y alineación de las series macro**, una vez fijada la pregunta.
+1. **Cerrar el diseño de la pregunta fijada el 2026-11-18** («¿Cómo cambiaron
+   los temas de interés de la Junta antes y después de la crisis del petróleo
+   de 2014?»; método previsto: GloVe o Word2Vec).
+   - Archivos: entrada en "Registro de ampliaciones" de
+     `07_Recursos/catalogo_metodos.md` y fila en "Decisiones tomadas" de
+     `CLAUDE.md`, con el paquete, la función y la aprobación del equipo; fecha
+     de corte antes/después y tipo de documento.
+   - *Terminado cuando:* los embeddings están registrados como ampliación, y el
+     corte y el tipo de documento están decididos antes de ver resultados.
+2. **`PLAN.md` y alineación de las series macro.**
    - Archivos: `PLAN.md` con hitos y tareas `Pk.n`; la regla de alineación
-     (último dato publicado a la fecha de la reunión) escrita en `CLAUDE.md`, y
-     la lista de series que entran al análisis, con su justificación.
+     (último dato publicado a la fecha de la reunión) escrita en `CLAUDE.md`;
+     lista de series que entran (Brent, TRM, inflación; la tasa de cambio real
+     es complemento).
    - *Terminado cuando:* cada análisis del plan usa una herramienta del
-     catálogo o una ampliación registrada, y está decidido qué series de
-     `01_Datos/03_Listos/macro_*.rds` se usan y cómo se cruzan con las reuniones.
-   - Las tres series ya están documentadas y leídas (`06_series_macro.R`); falta
-     comprobar si alguna reunión cae en un día sin precio del Brent.
+     catálogo o una ampliación registrada, y está confirmado desde qué fecha se
+     conoce cada valor de la TRM y si alguna reunión cae en un día sin Brent.
+3. **Validar a mano la votación**, si el equipo decide que sigue siendo
+   relevante para la nueva pregunta.
+   - Archivo: `03_Resultados/Tablas/04_bigramas/conjunto_votacion_muestra_validacion.csv`
+     con las columnas de revisión llenas (30 documentos) y la nota
+     `05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md` actualizada.
+   - *Terminado cuando:* están revisados los 30 documentos.
 
 **Bloqueos y preguntas abiertas:**
 
 - Roles de los integrantes en el Taller 3.
+- Corpus pequeño (unas 177 mil palabras limpias) para entrenar embeddings y
+  partirlo en dos épocas; los cambios de formato de las minutas pueden
+  confundirse con cambio de temas.
 - Fecha de la retroalimentación a compañeros (no afecta el repositorio).
 - La clasificación de la votación y la dirección de la minoría son
   automáticas y no están validadas; la dirección no es codificable en 35 de
@@ -88,8 +86,9 @@ domingo 22 de noviembre de 2026.**
   periodo; `01_Datos/03_Listos/` tiene los tokens limpios (176.622) y el vocabulario.
   Series macro desde 2000 en `01_Datos/03_Listos/`: `macro_brent.rds` (6.511
   días), `macro_inflacion.rds` y `macro_tcr.rds` (322 meses, hasta 2026-10),
-  sin transformar ni alinear con las reuniones. Sus tres crudos están en
-  `01_Crudos/`, documentados en el README, y sin versionar hasta el commit.
+  y `macro_trm.rds` (TRM diaria, 9.820 días, hasta 2026-11-19), sin transformar
+  ni alinear con las reuniones. Sus crudos están en `01_Crudos/` y documentados
+  en el README.
 - **Lo que se sabe del corpus:** las minutas tienen cinco formatos (cortes en
   2014-05-30, 2019-06-21, 2020-07-31 y 2023-03-30) y hasta abril de 2019 solo
   27 a 30 % del texto es discusión de la Junta; hay diez periodos de política
@@ -97,13 +96,29 @@ domingo 22 de noviembre de 2026.**
 - **Resultados:** todos exploratorios, sin cruce con macro. Mapa completo en
   `README.md`. Tres notas en `05_Notas/` (estructura de la minuta, inflación
   como validación de las medidas, votación).
-- **Reglas:** `CLAUDE.md` tiene las decisiones de la sesión (provisionales
-  hasta fijar la pregunta); el catálogo registra `pdftools`, `gt` y `readxl`.
+- **Pregunta:** fijada el 2026-11-18 (temas de la Junta antes y después de la
+  crisis del petróleo de 2014), con embeddings previstos pero sin registrar.
+- **Reglas:** `CLAUDE.md` tiene la pregunta y las decisiones; las de la
+  exploración (scripts 01 a 05) siguen siendo provisionales. El catálogo
+  registra `pdftools`, `gt` y `readxl`.
 - **Git:** trabajo en la rama `SantiagoMunozM`, con los cambios de `main` hasta
   el PR #2 de Samuel. Los cambios de la sesión del 2026-11-18 se suben a esa
   rama.
 
 ## Registro de sesiones
+
+### 2026-11-18 (3): pregunta del taller y TRM
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). El equipo fijó la pregunta (temas
+  de la Junta antes y después de la crisis del petróleo de 2014, con GloVe o
+  Word2Vec); se registró en `CLAUDE.md`, README, handoff y catálogo, donde los
+  embeddings quedan previstos pero sin registrar como ampliación. Se integró la
+  TRM diaria (SUAMECA) a `06_series_macro.R` (`macro_trm.rds`, 9.820 días).
+  Cumplió el objetivo 1 en cuanto a fijar la pregunta; avanzó el 3 anterior.
+- Bitácora: [2026-11-18_pregunta-y-trm.md](06_Bitacoras/2026-11-18_pregunta-y-trm.md)
+- **Siguientes objetivos:** (1) cerrar el diseño: registrar los embeddings,
+  fijar corte y tipo de documento; (2) `PLAN.md` y alineación de las series;
+  (3) validar la votación si sigue siendo relevante.
 
 ### 2026-11-18 (2): primeras series macro
 
