@@ -9,6 +9,7 @@ Las reglas están en `CLAUDE.md` ("Notas de hallazgos").
 | [01_extraer_texto/T_estructura_minuta.md](01_extraer_texto/T_estructura_minuta.md) | vigente | ¿Qué parte de cada minuta es discusión de la Junta y cuándo cambia el formato? |
 | [03_frecuencias_tfidf/T_inflacion_sigue_episodios.md](03_frecuencias_tfidf/T_inflacion_sigue_episodios.md) | vigente | ¿Las medidas de texto se mueven en los episodios conocidos de inflación? (validación de las medidas) |
 | [04_bigramas/T_votacion_minuta_vs_comunicado.md](04_bigramas/T_votacion_minuta_vs_comunicado.md) | vigente, pendiente de validación manual | ¿Qué dice la minuta sobre la votación que el comunicado no dice, y hacia dónde vota la minoría? |
+| [07_graficas_macro/M_cronologia_choque_petrolero.md](07_graficas_macro/M_cronologia_choque_petrolero.md) | vigente | ¿Cómo y en qué orden llegó el choque petrolero de 2014 a la tasa de cambio, la inflación y la tasa de intervención, y dónde está el corte antes/después? |
 
 Resultados exploratorios sin nota (quedan en la bitácora del 2026-11-12):
 vocabulario propio de la minuta frente al comunicado, vocabulario laboral y

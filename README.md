@@ -111,11 +111,23 @@ modificar en `01_Datos/01_Crudos/`; `06_series_macro.R` las lee):
 | `tasa_cambio_real_70_26.xlsx` | Índices de tasa de cambio real: FMI, IPC no transables, IPC transables, IPP no transables, IPP transables y competidores | Banco de la República. Series históricas de tasas de cambio y sector externo: <https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/tasas-cambio-sector-externo.html> | Mensual, 1970-01 a 2026-10 (FMI y competidores traen vacíos al comienzo) |
 | `TRM.csv` | Tasa Representativa del Mercado (TRM), pesos colombianos por dólar (`trm_cop_usd`) | Banco de la República, SUAMECA: <https://suameca.banrep.gov.co/estadisticas-economicas/informacionSerie/1/tasa_cambio_peso_colombiano_trm_dolar_usd> | Diaria calendario (con fines de semana y festivos, que repiten el último valor), 1991-11-27 a 2026-11-19 |
 | `brent_2000-26.csv` | Precio spot del petróleo Brent, Europa (`DCOILBRENTEU`, dólares por barril) | FRED, Federal Reserve Bank of St. Louis: <https://fred.stlouisfed.org/series/DCOILBRENTEU> | Diaria (días hábiles), 2000-01-04 a 2026-11-17 |
+| `IPC TOTAL_Variación_Porcentual_Anual.xlsx` | Inflación total, anual (variación porcentual anual del IPC total): la serie principal frente a la meta | DANE, con cálculos del Banco de la República. Misma página de precios e inflación, pestaña «IPC total» > «Variación porcentual anual» (consulta 2026-11-19) | Mensual, 1955-07 a 2026-10 |
+| `Meta e inflación anual.xlsx` | Meta de inflación de cada año (y de nuevo la inflación total) | Banco de la República. Misma página, pestaña «Meta e inflación anual» (consulta 2026-11-19) | Anual, repetida en cada mes; hasta 2026 |
 
 - **Transformaciones** (`06_series_macro.R`): solo se filtran las fechas desde
   2000-01-01 y se guardan como `.rds` en `01_Datos/03_Listos/`. En el Brent se
   eliminan los 500 días sin cotización (vacíos en el crudo); no se
-  rellenan. La TRM solo se filtra (9.820 días, sin vacíos). No hay todavía variaciones, brechas ni alineación con las reuniones.
+  rellenan. La TRM solo se filtra (9.820 días, sin vacíos). La inflación total se verifica contra cuatro cifras conocidas (±0,05 pp) y la meta queda con una fila por año; su rango se construye con la nota del archivo (±0,5 pp entre 2003 y 2009, ±1 pp desde 2010).
+- **Transformaciones** (`07_graficas_macro.R`): promedios mensuales del Brent
+  (días con cotización) y de la TRM (lunes a viernes), variación anual en % de
+  cada uno, y brecha de inflación (total y núcleo 15 menos la meta del año, en
+  puntos porcentuales).
+- **Alineación con las reuniones** (`07_graficas_macro.R`, regla en
+  `CLAUDE.md`, «Alineación temporal»): a cada reunión, el Brent del día hábil
+  anterior, la TRM vigente ese día y la inflación del último mes publicado
+  (supuesto: publicada el día 8 del mes siguiente). Resultado:
+  `01_Datos/03_Listos/macro_por_reunion.rds`, una fila por cada una de las 205
+  reuniones.
 - Las fechas mensuales son el fin del mes de referencia, no la de publicación
   del dato (el IPC sale unos días después del cierre del mes). Al cruzar con las
   reuniones de la Junta hay que usar solo lo publicado a la fecha de la reunión.
@@ -218,8 +230,25 @@ Datos: `01_Datos/02_Procesados/anotado_udpipe.rds` y el modelo de `udpipe`;
 No genera tablas ni figuras. Lee los tres archivos crudos de series macro y
 guarda en `01_Datos/03_Listos/`: `macro_brent.rds` (fecha, `brent_usd`; 6.511
 días), `macro_inflacion.rds` y `macro_tcr.rds` (una columna por serie; 322
-meses, 2000-01 a 2026-10) y `macro_trm.rds` (fecha, `trm_cop_usd`; 9.820
-días, 2000-01-01 a 2026-11-19).
+meses, 2000-01 a 2026-10), `macro_trm.rds` (fecha, `trm_cop_usd`; 9.820
+días, 2000-01-01 a 2026-11-19), `macro_inflacion_total.rds` (fecha,
+`inflacion_total`; 322 meses) y `macro_meta.rds` (año, `meta`, `rango_inf`,
+`rango_sup`).
+
+### `07_graficas_macro.R`: series macro, cronología del choque y alineación
+
+Datos: `01_Datos/03_Listos/macro_por_reunion.rds` (una fila por reunión con
+las series alineadas). No lee ninguna medida de texto: del corpus solo toma
+fechas, formato y número de palabras.
+
+| Resultado | Contenido |
+| --- | --- |
+| `Figuras/07_graficas_macro/macro_series_2007_2026.png` | Brent, TRM e inflación total y núcleo 15 con la meta escalonada y su rango, 2007–2026, con los periodos P1–P10 sombreados y la línea del corte (2014-10-30) |
+| `Figuras/07_graficas_macro/macro_cronologia_choque.png` | Zoom 2013–2017: pico y valle del Brent, inicio y pico de la depreciación, pico de la inflación, ciclo de alzas de la tasa y la línea del corte (2014-10-30) |
+| `Tablas/07_graficas_macro/macro_descriptiva.png` | Media, mínimo, máximo y variación de Brent, TRM e inflación por periodo, con la brecha frente a la meta (P3 y P4 resaltados) |
+| `Tablas/07_graficas_macro/macro_cronologia.png` | Cada hito del choque con su fecha, su valor y la cita del comunicado cuando es una decisión de tasa |
+| `Tablas/07_graficas_macro/macro_cortes_candidatos.png` | Fechas de corte candidatas (apertura de P4 y dos reglas mecánicas) con los datos que la Junta tenía ese día |
+| `Tablas/07_graficas_macro/conjunto_ventanas_corte.png` | Minutas del formato B antes de cada corte y reuniones y palabras de la Junta a cada lado, en una ventana de 5 años |
 
 ### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
 

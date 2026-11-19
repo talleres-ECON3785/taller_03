@@ -8,17 +8,17 @@ Pregunta fijada 2026-11-18. Ya existe: texto extraído y limpio (`01`–`05`), s
 
 ## H1 — Gráficas macro + exploración descriptiva breve
 
-- [ ] **P1.1** Script `07_graficas_macro.R` (+ subcarpeta en `carpetas_salida` y `scripts` de `00_main.R`).
-- [ ] **P1.2** Figuras: Brent, TRM, inflación (núcleo 15 vs meta 3 %), 2007–2026, con sombreado de periodos de `00_formato_graficas.R`. Panel conjunto `macro_series_2007_2026.png`.
-- [ ] **P1.3** Descriptiva breve (tabla `macro_descriptiva.png`): por periodo P1–P10 → media, mín, máx, variación % de cada serie. Fechas de pico/valle Brent, salto TRM, pico inflación.
-- [ ] **P1.4** Regla de alineación: último dato publicado a la fecha de reunión. Escribir en `CLAUDE.md`.
-- [ ] **P1.5** Nota `05_Notas/07_graficas_macro/M_*.md` (skill `registrar-hallazgo`).
+- [x] **P1.1** Script `07_graficas_macro.R` (+ subcarpeta en `carpetas_salida` y `scripts` de `00_main.R`).
+- [x] **P1.2** Figuras: Brent, TRM, inflación (total como serie principal y núcleo 15 como complemento, frente a la meta escalonada del año y su rango; 2026-11-19), 2007–2026, con sombreado de periodos de `00_formato_graficas.R`. Panel conjunto `macro_series_2007_2026.png`.
+- [x] **P1.3** Descriptiva breve (tabla `macro_descriptiva.png`): por periodo P1–P10 → media, mín, máx, variación % de cada serie. Fechas de pico/valle Brent, salto TRM, pico inflación.
+- [x] **P1.4** Regla de alineación: último dato publicado a la fecha de reunión. Escribir en `CLAUDE.md`.
+- [x] **P1.5** Nota `05_Notas/07_graficas_macro/M_*.md` (skill `registrar-hallazgo`).
 
 ## H2 — Fecha de inicio de la crisis
 
-- [ ] **P2.1** Fijar corte con base en H1, ANTES de ver embeddings. Candidato: **2014-09-26** (abre P4, ya fijado a priori; primera reunión tras pico Brent jun-2014). Confirmar contra fechas de P1.3.
-- [ ] **P2.2** Añadir línea vertical del corte a las figuras de H1.
-- [ ] **P2.3** Registrar en "Decisiones tomadas" (`CLAUDE.md`). Ojo: minutas cambian formato 2014-05-30 (A→B) ≈ corte → declarar.
+- [x] **P2.1** Fijar corte con base en H1, ANTES de ver embeddings. Candidato: **2014-09-26** (abre P4, ya fijado a priori; primera reunión tras pico Brent jun-2014). Confirmar contra fechas de P1.3. **Fijado el 2026-11-19: 2014-10-30** (regla (i): primera reunión con el Brent 20 % o más por debajo de su máximo de 12 meses); alternativas 2014-09-26 y 2014-12-19 (`corte_crisis` y `cortes_alternativos` en `00_funciones_texto.R`).
+- [x] **P2.2** Añadir línea vertical del corte a las figuras de H1.
+- [x] **P2.3** Registrar en "Decisiones tomadas" (`CLAUDE.md`). Ojo: minutas cambian formato 2014-05-30 (A→B) ≈ corte → declarar.
 
 ## H3 — Embeddings antes/después
 

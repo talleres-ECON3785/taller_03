@@ -122,6 +122,69 @@ capa_cortes_formato <- function(cortes) {
              color = gris_nota, linewidth = 0.4)
 }
 
+# sombreado gris tenue de los periodos de politica monetaria, alternado (uno
+# si, uno no) para que se distingan sin usar colores de categoria. `periodos`
+# es la tabla de 00_funciones_texto.R (columnas periodo, inicio, fin).
+# `etiquetas = TRUE` escribe el nombre corto del periodo (P1, P2...) arriba;
+# solo se usa en el panel superior de una figura. Va antes de las series en
+# la grafica, para quedar detras
+#
+# En una figura con facetas, `panel` es una lista con el nombre y el valor de
+# la variable de facetas donde van los rotulos (p. ej. list(panel = "Brent")),
+# para que no se repitan en cada panel
+capa_periodos <- function(periodos, etiquetas = FALSE, desde = NULL,
+                          hasta = NULL, panel = NULL) {
+  p <- periodos
+  if (!is.null(desde)) p <- p[p$fin >= desde, ]
+  if (!is.null(hasta)) p <- p[p$inicio <= hasta, ]
+  if (!is.null(desde)) p$inicio <- pmax(p$inicio, as.Date(desde))
+  if (!is.null(hasta)) p$fin <- pmin(p$fin, as.Date(hasta))
+  sombreados <- p[seq(1, nrow(p), by = 2), ]
+  capas <- list(
+    annotate("rect", xmin = sombreados$inicio, xmax = sombreados$fin,
+             ymin = -Inf, ymax = Inf, fill = gris_grilla, alpha = 0.55)
+  )
+  if (etiquetas) {
+    rotulos <- tibble(x = p$inicio + (p$fin - p$inicio) / 2,
+                      etiqueta = as.character(p$periodo))
+    for (k in names(panel)) rotulos[[k]] <- panel[[k]]
+    capas <- c(capas, list(geom_text(
+      data = rotulos, aes(x = x, y = Inf, label = etiqueta), inherit.aes = FALSE,
+      vjust = 1.4, size = 2.8, color = gris_secundario
+    )))
+  }
+  capas
+}
+
+# linea vertical continua en la fecha de corte de la pregunta (antes y
+# despues del choque petrolero), con su rotulo. Se distingue de los cortes de
+# formato (punteados y mas claros). `panel` funciona como en capa_periodos()
+capa_corte <- function(fecha, rotulo = NULL, panel = NULL) {
+  capas <- list(geom_vline(xintercept = as.Date(fecha), color = gris_texto,
+                           linewidth = 0.7))
+  if (!is.null(rotulo)) {
+    r <- tibble(x = as.Date(fecha), etiqueta = rotulo)
+    for (k in names(panel)) r[[k]] <- panel[[k]]
+    capas <- c(capas, list(geom_label(
+      data = r, aes(x = x, y = -Inf, label = etiqueta), inherit.aes = FALSE,
+      vjust = -0.3, hjust = -0.03, size = 2.9, color = gris_texto, fill = "white",
+      linewidth = 0, label.padding = unit(0.12, "lines")
+    )))
+  }
+  capas
+}
+
+# colores de las series macroeconomicas: cada serie conserva su color en
+# todas las figuras. La meta va en gris oscuro (es una referencia, no una
+# serie) y su rango en el mismo tono que la inflacion total, muy tenue
+colores_macro <- c(
+  "Brent"               = paleta_categorica[1],
+  "TRM"                 = paleta_categorica[2],
+  "Inflación total"     = paleta_categorica[3],
+  "Inflación núcleo 15" = gris_secundario,
+  "Meta"                = gris_texto
+)
+
 # -----------------------------------------------------------------------------
 # 5. Exportacion
 # -----------------------------------------------------------------------------
