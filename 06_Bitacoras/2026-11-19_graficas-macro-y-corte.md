@@ -33,6 +33,12 @@ Desarrollo:
 5. **H2.** Se propusieron la candidata 2014-09-26 y dos reglas mecánicas. El
    usuario aprobó la regla (i), 2014-10-30. Se registró en `CLAUDE.md`, se
    dibujó en las dos figuras y se escribió la nota de hallazgo.
+6. **Corrida completa.** Antes de llevar la rama a `main`, se corrió
+   `00_main.R` completo: los siete scripts corren sin errores en 3,4 minutos.
+   `main` no había avanzado. Frente a lo ya versionado, solo cambiaron los
+   decimales 15 y 16 de los resultados del LDA (ruido de punto flotante) y los
+   fines de línea de algunos `.csv`. Ninguna cifra de las notas de `05_Notas/`
+   cambia.
 
 Frente a los "Siguientes objetivos" de `HANDOFF.md`:
 - Objetivo 1 (P1.1–P1.5): **cumplido**.
