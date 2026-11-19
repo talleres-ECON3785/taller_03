@@ -347,7 +347,7 @@ sigue.
     objetivos** que quedaron al cerrar. Las entradas anteriores no se editan.
 - **Plan de implementación:** cuando exista, vivirá en `PLAN.md` (raíz),
   organizado en hitos con tareas numeradas (`Pk.n`) y casillas de verificación
-  (**pendiente: crearlo una vez definida la pregunta**). Los "Siguientes
+  (creado el 2026-11-18). Los "Siguientes
   objetivos" se derivan de los próximos pasos sin marcar del plan, citando el
   número de paso, y el registro de cada sesión indica qué pasos del plan avanzó
   o cerró. Las casillas se marcan `[x]` en la misma sesión en que se termina la

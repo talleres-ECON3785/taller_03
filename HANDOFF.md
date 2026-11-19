@@ -16,33 +16,32 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **Cerrar el diseño de la pregunta fijada el 2026-11-18** («¿Cómo cambiaron
-   los temas de interés de la Junta antes y después de la crisis del petróleo
-   de 2014?»; método previsto: GloVe o Word2Vec).
+1. **P1.1–P1.4 de `PLAN.md`: gráficas macro y exploración descriptiva breve.**
+   - Archivos: `02_Scripts/07_graficas_macro.R` (agregado a `scripts` y su
+     subcarpeta a `carpetas_salida` en `00_main.R`); figuras de Brent, TRM e
+     inflación 2007–2026 en `03_Resultados/Figuras/07_graficas_macro/`; tabla
+     `macro_descriptiva` por periodo P1–P10 con fechas de pico y valle; regla de
+     alineación escrita en `CLAUDE.md`; nota `M_*` (P1.5) y README actualizados.
+   - *Terminado cuando:* `00_main.R` regenera las figuras y la tabla sin
+     errores y la regla de alineación está escrita.
+2. **P2.1–P2.3 de `PLAN.md`: fijar la fecha de inicio de la crisis** con base
+   en H1 y antes de ver embeddings (candidato: 2014-09-26, inicio de P4).
+   - Archivos: fila en "Decisiones tomadas" de `CLAUDE.md`; línea del corte en
+     las figuras de H1.
+   - *Terminado cuando:* el corte está registrado con su justificación en las
+     series y la salvedad del cambio de formato de minutas (2014-05-30).
+3. **P3.1–P3.2 de `PLAN.md`: decidir ventana y embeddings y registrarlos.**
    - Archivos: entrada en "Registro de ampliaciones" de
-     `07_Recursos/catalogo_metodos.md` y fila en "Decisiones tomadas" de
-     `CLAUDE.md`, con el paquete, la función y la aprobación del equipo; fecha
-     de corte antes/después y tipo de documento.
-   - *Terminado cuando:* los embeddings están registrados como ampliación, y el
-     corte y el tipo de documento están decididos antes de ver resultados.
-2. **`PLAN.md` y alineación de las series macro.**
-   - Archivos: `PLAN.md` con hitos y tareas `Pk.n`; la regla de alineación
-     (último dato publicado a la fecha de la reunión) escrita en `CLAUDE.md`;
-     lista de series que entran (Brent, TRM, inflación; la tasa de cambio real
-     es complemento).
-   - *Terminado cuando:* cada análisis del plan usa una herramienta del
-     catálogo o una ampliación registrada, y está confirmado desde qué fecha se
-     conoce cada valor de la TRM y si alguna reunión cae en un día sin Brent.
-3. **Validar a mano la votación**, si el equipo decide que sigue siendo
-   relevante para la nueva pregunta.
-   - Archivo: `03_Resultados/Tablas/04_bigramas/conjunto_votacion_muestra_validacion.csv`
-     con las columnas de revisión llenas (30 documentos) y la nota
-     `05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md` actualizada.
-   - *Terminado cuando:* están revisados los 30 documentos.
+     `07_Recursos/catalogo_metodos.md` (paquete, funciones, aprobación), fila
+     en "Decisiones tomadas" y `word2vec` (u otro) en el `p_load()`.
+   - *Terminado cuando:* el equipo aprobó la ventana (recomendado 5 + 5 años)
+     y el método (recomendado Word2Vec skip-gram), y quedan registrados.
 
 **Bloqueos y preguntas abiertas:**
 
 - Roles de los integrantes en el Taller 3.
+- La validación manual de la votación quedó fuera de `PLAN.md`: decidir si se
+  abandona.
 - Corpus pequeño (unas 177 mil palabras limpias) para entrenar embeddings y
   partirlo en dos épocas; los cambios de formato de las minutas pueden
   confundirse con cambio de temas.
@@ -98,6 +97,9 @@ domingo 22 de noviembre de 2026.**
   como validación de las medidas, votación).
 - **Pregunta:** fijada el 2026-11-18 (temas de la Junta antes y después de la
   crisis del petróleo de 2014), con embeddings previstos pero sin registrar.
+- **Plan:** `PLAN.md` (raíz) con cuatro hitos: H1 gráficas macro y
+  descriptiva, H2 fecha de corte, H3 embeddings, H4 interpretación. Ningún
+  paso terminado.
 - **Reglas:** `CLAUDE.md` tiene la pregunta y las decisiones; las de la
   exploración (scripts 01 a 05) siguen siendo provisionales. El catálogo
   registra `pdftools`, `gt` y `readxl`.
@@ -106,6 +108,19 @@ domingo 22 de noviembre de 2026.**
   rama.
 
 ## Registro de sesiones
+
+### 2026-11-18 (4): plan de implementación
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). Se escribió `PLAN.md` con hitos
+  H1–H4 y tareas `Pk.n`: gráficas macro con descriptiva breve, luego el corte
+  de la crisis (orden pedido por el usuario), embeddings antes/después
+  (recomendado: 5 + 5 años y Word2Vec skip-gram, por decidir) e
+  interpretación. Cumple la parte de `PLAN.md` del objetivo 2 anterior; no se
+  escribió código.
+- Bitácora: [2026-11-18_plan-implementacion.md](06_Bitacoras/2026-11-18_plan-implementacion.md)
+- **Siguientes objetivos:** (1) P1.1–P1.4: gráficas macro y descriptiva;
+  (2) P2: fijar el corte de la crisis; (3) P3.1–P3.2: decidir y registrar
+  ventana y embeddings.
 
 ### 2026-11-18 (3): pregunta del taller y TRM
 
