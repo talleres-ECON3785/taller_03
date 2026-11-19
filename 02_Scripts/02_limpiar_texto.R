@@ -14,11 +14,11 @@
 #
 # Sigue la seccion 5 del catalogo, en ese orden: (1) terminos compuestos,
 # (2) lemas con udpipe, (3) filtro de categorias gramaticales, (4) palabras
-# vacias, (5) digitos, (6) tokens de un caracter; y reporta cuantos tokens se
+# vacias, (5) digitos y simbolos, (6) tokens de un caracter; y reporta cuantos tokens se
 # pierden en cada paso. Al final revisa los umbrales del recorte de
 # vocabulario para LDA.
 #
-# CIFRAS: todo token con digitos se elimina. En esta sesion las cifras (tasas,
+# CIFRAS: todo token con digitos o simbolos se elimina (paso 4). En esta sesion las cifras (tasas,
 # inflacion, porcentajes) NO se extraen ni entran a ninguna medida.
 #
 # Se anota por seccion, para poder reportar cada medida con el texto completo
@@ -192,6 +192,11 @@ if (is.null(anotado)) {
 # 4. Filtros, paso a paso
 # -----------------------------------------------------------------------------
 
+# palabra valida: solo letras y "_" de los compuestos, con guion interno
+# permitido ("minero-energetico"). Descarta restos de formato ("-ar", "*estar",
+# "m/n", "#juntabanrep") y cifras
+palabra_valida <- "^[a-zñ_]+(-[a-zñ_]+)*$"
+
 # nombres propios de los asistentes: los nombres propios que udpipe encuentra
 # en el preambulo de las minutas (la lista de asistentes). Son procedimiento
 nombres_asistentes <- anotado %>%
@@ -209,11 +214,13 @@ tokens <- anotado %>%
     es_compuesto = str_detect(token, "_"),
     # los compuestos no se lematizan; el resto usa el lema. Las tildes se
     # quitan DESPUES de lematizar
-    word = sin_tilde(str_to_lower(if_else(es_compuesto | is.na(lemma), token, lemma))),
+    # el guion final es un verbo cortado a fin de renglon ("registrar-")
+    word = sin_tilde(str_to_lower(if_else(es_compuesto | is.na(lemma), token, lemma))) %>%
+      str_remove("-$"),
     p1_categoria = upos %in% c("NOUN", "ADJ", "VERB", "PROPN") | es_compuesto,
     p2_vacias = p1_categoria & !word %in% vacias_generales,
     p3_dominio = p2_vacias & !word %in% vacias_dom,
-    p4_digitos = p3_dominio & !str_detect(word, "[0-9]"),
+    p4_digitos = p3_dominio & str_detect(word, palabra_valida),
     p5_un_caracter = p4_digitos & nchar(str_remove_all(word, "[^a-zñ]")) > 1,
     # el preambulo de las minutas (titulo, asistentes y la frase que anuncia
     # el contenido) es procedimiento: no entra a ningun analisis
@@ -230,7 +237,7 @@ contar_pasos <- function(datos, version) {
       `1. Categoría gramatical: sustantivos, adjetivos, verbos, nombres propios y compuestos` = sum(p1_categoria),
       `2. Sin palabras vacías generales (español e inglés)` = sum(p2_vacias),
       `3. Sin palabras vacías de dominio ni nombres de asistentes` = sum(p3_dominio),
-      `4. Sin tokens con dígitos` = sum(p4_digitos),
+      `4. Sin dígitos ni símbolos (restos de formato)` = sum(p4_digitos),
       `5. Sin tokens de un carácter` = sum(p5_un_caracter),
       `6. Sin el preámbulo de las minutas (asistentes)` = sum(p6_preambulo),
       .groups = "drop"
@@ -290,7 +297,7 @@ write_csv(datos_compuestos, file.path("03_Resultados/Tablas", carpeta_salida, "c
 # de los documentos de un tipo. De estas, solo las de procedimiento o
 # redaccion pasan a `vacias_dominio_ampliacion`; las de contenido se quedan
 candidatas <- tokens %>%
-  filter(p2_vacias, !word %in% c(vacias_dominio, nombres_asistentes), !str_detect(word, "[0-9]"), nchar(word) > 1) %>%
+  filter(p2_vacias, !word %in% c(vacias_dominio, nombres_asistentes), str_detect(word, palabra_valida), nchar(word) > 1) %>%
   distinct(tipo, id, word) %>%
   count(tipo, word, name = "docs") %>%
   mutate(pct_docs = 100 * docs / if_else(tipo == "comunicado", n_com, n_min)) %>%
@@ -393,6 +400,8 @@ saveRDS(
 )
 saveRDS(limpios, "01_Datos/03_Listos/tokens_limpios.rds")
 saveRDS(vocabulario_lda, "01_Datos/03_Listos/vocabulario_lda.rds")
+
+stopifnot(all(str_detect(limpios$word, palabra_valida)))
 
 message("02_limpiar_texto: ", nrow(limpios), " tokens limpios (",
         n_distinct(limpios$word), " palabras distintas) en 01_Datos/03_Listos/tokens_limpios.rds")

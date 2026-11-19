@@ -76,7 +76,7 @@ proyecto (abrir `taller_03.Rproj` y ejecutar `source("00_main.R")`, o
   fin de línea; las minutas se separan en secciones (preámbulo, visión del
   equipo técnico, discusión, decisión); el preámbulo de asistentes no entra a
   ningún análisis; se unen términos compuestos, se
-  lematiza con `udpipe` y se eliminan palabras vacías y tokens con dígitos
+  lematiza con `udpipe` y se eliminan palabras vacías y tokens con dígitos o símbolos
   (las cifras no se extraen).
 - Las minutas cambian de formato en 2014-05-30, 2019-06-21, 2020-07-31 y
   2023-03-30. Hasta abril de 2019 incluyen una sección con la visión del equipo

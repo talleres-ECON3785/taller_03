@@ -42,6 +42,9 @@ domingo 22 de noviembre de 2026.**
    - *Terminado cuando:* cada análisis del plan usa una herramienta del
      catálogo o una ampliación registrada, y la regla de alineación temporal
      entre reuniones y series está escrita.
+   - Ya hay tres archivos crudos sin documentar en `01_Datos/01_Crudos/` (Brent,
+     inflación anual, tasa de cambio real): registrar su fuente y cobertura en
+     "Definición de variables" y en el README.
 
 **Bloqueos y preguntas abiertas:**
 
@@ -56,6 +59,17 @@ domingo 22 de noviembre de 2026.**
   para las demás hay que suponerlo o consultarlo.
 - El LDA con la minuta entera como documento separa épocas y formatos, no
   temas: si la pregunta necesita temas, hay que bajar a párrafo u oración.
+- Lista de palabras vacías de redacción: `mantener`, `continuar`, `seguir`,
+  los verbos de atribución («resaltar», «destacar», «señalar»…) y adjetivos
+  como `anual`, `mayor` o `menor` quedan entre las palabras más frecuentes. Si
+  el equipo quiere sacarlos, hay que fijar el criterio antes de ver el efecto
+  (detalle en la bitácora del 2026-11-18).
+- Tres archivos sin versionar en `01_Datos/01_Crudos/` (`brent_2000-26.csv`,
+  `inflacion_variacion_anual_99_26.xlsx`, `tasa_cambio_real_70_26.xlsx`):
+  falta documentar su fuente, fecha de consulta y cobertura antes de usarlos.
+- Qué pipe usa el equipo: el proyecto usa `%>%`, pero un formateador de
+  VS Code (hay un `.lintr` sin versionar) lo cambia a `|>` y rompe
+  `con_tildes()`. Hay que desactivar esa opción o acordar la convención.
 
 ## Estado actual
 
@@ -71,8 +85,9 @@ domingo 22 de noviembre de 2026.**
 - **Datos:** 393 documentos (194 comunicados y 199 minutas), todos con texto
   extraíble. `01_Datos/02_Procesados/corpus_texto.rds` tiene el texto limpio,
   el texto de la discusión de la Junta, el formato de cada minuta y el
-  periodo; `01_Datos/03_Listos/` tiene los tokens limpios y el vocabulario.
-  Aún no hay series macro.
+  periodo; `01_Datos/03_Listos/` tiene los tokens limpios (176.622) y el vocabulario.
+  Aún no hay series macro versionadas (hay tres archivos crudos sin documentar
+  en `01_Crudos/`, ver bloqueos).
 - **Lo que se sabe del corpus:** las minutas tienen cinco formatos (cortes en
   2014-05-30, 2019-06-21, 2020-07-31 y 2023-03-30) y hasta abril de 2019 solo
   27 a 30 % del texto es discusión de la Junta; hay diez periodos de política
@@ -82,10 +97,25 @@ domingo 22 de noviembre de 2026.**
   como validación de las medidas, votación).
 - **Reglas:** `CLAUDE.md` tiene las decisiones de la sesión (provisionales
   hasta fijar la pregunta); el catálogo registra `pdftools` y `gt`.
-- **Git:** trabajo en la rama `SamuelEscandonC`; `main` tiene la configuración
-  inicial.
+- **Git:** trabajo en la rama `SantiagoMunozM`, con los cambios de `main` hasta
+  el PR #2 de Samuel. Los cambios de la sesión del 2026-11-18 se suben a esa
+  rama.
 
 ## Registro de sesiones
+
+### 2026-11-18: lectura de la exploración, revisión de la limpieza y filtro de símbolos
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). Se revisó la exploración de
+  Samuel (scripts 01 a 05) y la limpieza del texto, y el paso 4 de
+  `02_limpiar_texto.R` pasó a descartar símbolos además de dígitos (176.750 →
+  176.622 tokens limpios). Se revirtió un reformateo con `|>` que rompía
+  `con_tildes()`, se corrió `00_main.R` completo y las tres notas siguen
+  consistentes. No se trabajaron los objetivos de `HANDOFF.md`; `graphify`
+  se probó y se descartó.
+- Bitácora: [2026-11-18_filtro-simbolos-limpieza.md](06_Bitacoras/2026-11-18_filtro-simbolos-limpieza.md)
+- **Siguientes objetivos:** (1) fijar la pregunta con el equipo; (2) validar a
+  mano la votación (30 documentos); (3) `PLAN.md` y series macro, empezando por
+  documentar los tres archivos de `01_Crudos/`.
 
 ### 2026-11-12: base del pipeline y exploración del corpus
 
