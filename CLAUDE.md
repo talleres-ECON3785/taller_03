@@ -89,7 +89,7 @@ Los enlaces de entrega están en Bloque Neón; el enunciado está en
   `catalogo_metodos.md`)
 - `08_Entregables/`          presentación final y video
 - `09_Conversaciones/`       registro crudo (`.jsonl`) de las conversaciones con los agentes; en `.gitignore`, no se versiona (cada integrante guarda las suyas localmente; al final se unen por aparte)
-- `.claude/skills/`          skills del proyecto (`bitacora-sesion`, `cerrar-sesion`, `registrar-hallazgo`)
+- `.claude/skills/`          skills del proyecto (`bitacora-sesion`, `cerrar-sesion`, `registrar-hallazgo`; y las de terceros `ponytail`, `caveman`, `hallmark`, ver "Skills de terceros")
 - `00_main.R`                (raíz) script maestro: corre todo el pipeline
 - `HANDOFF.md`               (raíz) estado actual, siguientes objetivos y registro de sesiones
 - `taller_03.Rproj`          proyecto de RStudio (raíz del proyecto)
@@ -472,6 +472,36 @@ su copia local de `09_Conversaciones/`. Al final del taller, el equipo las une
 por aparte, fuera del flujo de git, para entregarlas con el material de
 soporte. Los agentes no deben versionar esa carpeta, quitarla del `.gitignore`
 ni intentar unir las conversaciones de otros integrantes.
+
+## Skills de terceros: `ponytail`, `caveman`, `hallmark`
+
+Están copiadas en `.claude/skills/` (versionadas) para que todos los
+integrantes las tengan sin instalar nada. Se invocan con `/ponytail`,
+`/caveman` y `/hallmark`. Ninguna reemplaza las reglas de este archivo: si
+chocan, **gana CLAUDE.md**.
+
+- **`ponytail`** (programar con el menor cambio que resuelva la tarea). Úsela
+  al escribir, corregir o refactorizar scripts de R, y para elegir
+  dependencias: reutilizar lo que ya existe, no agregar paquetes por pocas
+  líneas, no construir funcionalidad no pedida. Variantes: `/ponytail-review`
+  (revisar un cambio), `/ponytail-audit` (auditar el repo), `/ponytail-debt`
+  (listar los `shortcut:`). Límites: no recorta lo que este archivo exige
+  (`set.seed(2026)`, carpetas por script, formato de figuras y tablas,
+  `00_main.R`, README, bitácora, notas, validación de las medidas con ejemplos
+  del texto). Los comentarios del código siguen en español.
+- **`caveman`** (respuestas breves en el chat). Solo afecta el tono de lo que el
+  agente le dice al usuario en la conversación. **No se usa** en ningún
+  entregable ni documento del repo: bitácoras, notas de hallazgos, `README.md`,
+  `HANDOFF.md`, comentarios de código, diapositivas ni guion del video se
+  escriben en español completo y con la estructura que pide este archivo.
+  Se activa solo si el usuario la pide (`/caveman`) y se apaga con "normal mode".
+- **`hallmark`** (diseño de páginas web). El proyecto no construye sitios, así
+  que **no aplica** a figuras ni tablas (esas siguen
+  `02_Scripts/00_formato_graficas.R` y `00_formato_tablas.R`, con su paleta) ni
+  a las diapositivas. Solo se usa si el usuario pide una página HTML o un
+  artifact (p. ej. una página para compartir resultados), y nunca sobre un
+  diseño existente sin que el usuario la nombre. Esa página usa la paleta del
+  proyecto y no incluye código en el contenido visible.
 
 ## Regla metodológica: herramientas del curso, medidas validadas con el texto
 
