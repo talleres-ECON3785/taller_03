@@ -45,7 +45,7 @@ proyecto (abrir `taller_03.Rproj` y ejecutar `source("00_main.R")`, o
 
 | Carpeta | Contenido |
 | --- | --- |
-| `01_Datos/01_Crudos/` | Datos originales; nunca se modifican. `Comunicados_Minutas_Banrep/` tiene los PDF de la Junta |
+| `01_Datos/01_Crudos/` | Datos originales; nunca se modifican. `Comunicados_Minutas_Banrep/` tiene los PDF de la Junta; los `.xlsx` y el `.csv` sueltos son las series macro |
 | `01_Datos/02_Procesados/` | Texto extraído y limpio, modelo y anotación de `udpipe` (se generan con `00_main.R`) |
 | `01_Datos/03_Listos/` | Tokens limpios y vocabulario que entran al análisis (se generan con `00_main.R`) |
 | `02_Scripts/` | Scripts de R |
@@ -83,9 +83,26 @@ proyecto (abrir `taller_03.Rproj` y ejecutar `source("00_main.R")`, o
   técnico; por eso cada medida se reporta con el texto completo y solo con la
   discusión de la Junta.
 
-**Series macroeconómicas:** todavía no se han incorporado. Se elegirán y
-documentarán (fuente, cobertura, frecuencia y transformaciones) cuando se fije
-la pregunta.
+**Series macroeconómicas** (descargadas a mano el 2026-11-18 y guardadas sin
+modificar en `01_Datos/01_Crudos/`; `06_series_macro.R` las lee):
+
+| Archivo crudo | Series | Fuente (consulta 2026-11-18) | Frecuencia y cobertura en el archivo |
+| --- | --- | --- | --- |
+| `inflacion_variacion_anual_99_26.xlsx` | Inflación núcleo 15, anual; inflación sin alimentos ni regulados, anual; inflación sin alimentos, anual (variación porcentual anual) | DANE, con cálculos del Banco de la República. Series históricas de precios e inflación: <https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/precios-inflacion.html> | Mensual, 1999-01 a 2026-10 |
+| `tasa_cambio_real_70_26.xlsx` | Índices de tasa de cambio real: FMI, IPC no transables, IPC transables, IPP no transables, IPP transables y competidores | Banco de la República. Series históricas de tasas de cambio y sector externo: <https://uba.banrep.gov.co/htmlcommons/SeriesHistoricas/tasas-cambio-sector-externo.html> | Mensual, 1970-01 a 2026-10 (FMI y competidores traen vacíos al comienzo) |
+| `brent_2000-26.csv` | Precio spot del petróleo Brent, Europa (`DCOILBRENTEU`, dólares por barril) | FRED, Federal Reserve Bank of St. Louis: <https://fred.stlouisfed.org/series/DCOILBRENTEU> | Diaria (días hábiles), 2000-01-04 a 2026-11-17 |
+
+- **Transformaciones** (`06_series_macro.R`): solo se filtran las fechas desde
+  2000-01-01 y se guardan como `.rds` en `01_Datos/03_Listos/`. En el Brent se
+  eliminan los 500 días sin cotización (vacíos en el crudo); no se
+  rellenan. No hay todavía variaciones, brechas ni alineación con las reuniones.
+- Las fechas mensuales son el fin del mes de referencia, no la de publicación
+  del dato (el IPC sale unos días después del cierre del mes). Al cruzar con las
+  reuniones de la Junta hay que usar solo lo publicado a la fecha de la reunión.
+- Los archivos del Banco de la República traen los datos como estaban el
+  2026-11-18, es decir, con las revisiones posteriores.
+- Todavía no se decidió qué series entran al análisis; se justificarán cuando
+  se fije la pregunta.
 
 ## Mapa script → resultados
 
@@ -171,6 +188,13 @@ Datos: `01_Datos/02_Procesados/anotado_udpipe.rds` y el modelo de `udpipe`;
 | `Figuras/04_bigramas/minutas_desacuerdo_por_anio.png` | Expresiones de desacuerdo y votación en las minutas, por año |
 | `Tablas/04_bigramas/minutas_desacuerdo_por_anio.csv`, `minutas_desacuerdo_por_documento.csv` | Ídem, cifras |
 | `Tablas/04_bigramas/minutas_desacuerdo_por_formato.png` | Uso de cada expresión según el formato de la minuta |
+
+### `06_series_macro.R`: series macroeconómicas desde 2000
+
+No genera tablas ni figuras. Lee los tres archivos crudos de series macro y
+guarda en `01_Datos/03_Listos/`: `macro_brent.rds` (fecha, `brent_usd`; 6.511
+días), `macro_inflacion.rds` y `macro_tcr.rds` (una columna por serie; 322
+meses, 2000-01 a 2026-10).
 
 ### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
 

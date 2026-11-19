@@ -35,16 +35,15 @@ domingo 22 de noviembre de 2026.**
    - *Terminado cuando:* están revisados los 30 documentos y, si la tasa de
      error lo pide, se corrigieron las expresiones de `04_bigramas.R` o se
      decidió codificar a mano las reuniones por mayoría (101).
-3. **`PLAN.md` y series macro**, una vez fijada la pregunta.
-   - Archivos: `PLAN.md` con hitos y tareas `Pk.n`; series en
-     `01_Datos/01_Crudos/` (o su script de descarga) y filas en el "Registro de
-     ampliaciones" del catálogo para lo que haga falta.
+3. **`PLAN.md` y alineación de las series macro**, una vez fijada la pregunta.
+   - Archivos: `PLAN.md` con hitos y tareas `Pk.n`; la regla de alineación
+     (último dato publicado a la fecha de la reunión) escrita en `CLAUDE.md`, y
+     la lista de series que entran al análisis, con su justificación.
    - *Terminado cuando:* cada análisis del plan usa una herramienta del
-     catálogo o una ampliación registrada, y la regla de alineación temporal
-     entre reuniones y series está escrita.
-   - Ya hay tres archivos crudos sin documentar en `01_Datos/01_Crudos/` (Brent,
-     inflación anual, tasa de cambio real): registrar su fuente y cobertura en
-     "Definición de variables" y en el README.
+     catálogo o una ampliación registrada, y está decidido qué series de
+     `01_Datos/03_Listos/macro_*.rds` se usan y cómo se cruzan con las reuniones.
+   - Las tres series ya están documentadas y leídas (`06_series_macro.R`); falta
+     comprobar si alguna reunión cae en un día sin precio del Brent.
 
 **Bloqueos y preguntas abiertas:**
 
@@ -64,9 +63,10 @@ domingo 22 de noviembre de 2026.**
   como `anual`, `mayor` o `menor` quedan entre las palabras más frecuentes. Si
   el equipo quiere sacarlos, hay que fijar el criterio antes de ver el efecto
   (detalle en la bitácora del 2026-11-18).
-- Tres archivos sin versionar en `01_Datos/01_Crudos/` (`brent_2000-26.csv`,
-  `inflacion_variacion_anual_99_26.xlsx`, `tasa_cambio_real_70_26.xlsx`):
-  falta documentar su fuente, fecha de consulta y cobertura antes de usarlos.
+- Brent (FRED): 500 de 7.011 días hábiles sin precio, 335 de ellos entre 2000
+  y 2006 y sin causa documentada (desde 2007 parecen feriados de Londres). El
+  README y `CLAUDE.md` aún los llaman "festivos"; falta corregir la redacción.
+  El equipo decidió quedarse con FRED (la EIA trae los mismos vacíos).
 - Qué pipe usa el equipo: el proyecto usa `%>%`, pero un formateador de
   VS Code (hay un `.lintr` sin versionar) lo cambia a `|>` y rompe
   `con_tildes()`. Hay que desactivar esa opción o acordar la convención.
@@ -75,19 +75,21 @@ domingo 22 de noviembre de 2026.**
 
 - **Pipeline:** `00_main.R` corre desde cero sin errores (unos 5 minutos; 3
   si ya existe la anotación de `udpipe`). Carga los paquetes con `pacman`,
-  crea las carpetas y ejecuta cinco scripts. Requiere Chrome para exportar las
+  crea las carpetas y ejecuta seis scripts. Requiere Chrome para exportar las
   tablas e internet la primera vez.
 - **Scripts:** `00_formato_graficas.R`, `00_formato_tablas.R` y
   `00_funciones_texto.R` (periodos, formatos de minuta, diccionario de
   compuestos, palabras vacías, grupos temáticos); `01_extraer_texto.R`,
   `02_limpiar_texto.R`, `03_frecuencias_tfidf.R`, `04_bigramas.R` y
-  `05_lda_exploratorio.R`.
+  `05_lda_exploratorio.R` y `06_series_macro.R`.
 - **Datos:** 393 documentos (194 comunicados y 199 minutas), todos con texto
   extraíble. `01_Datos/02_Procesados/corpus_texto.rds` tiene el texto limpio,
   el texto de la discusión de la Junta, el formato de cada minuta y el
   periodo; `01_Datos/03_Listos/` tiene los tokens limpios (176.622) y el vocabulario.
-  Aún no hay series macro versionadas (hay tres archivos crudos sin documentar
-  en `01_Crudos/`, ver bloqueos).
+  Series macro desde 2000 en `01_Datos/03_Listos/`: `macro_brent.rds` (6.511
+  días), `macro_inflacion.rds` y `macro_tcr.rds` (322 meses, hasta 2026-10),
+  sin transformar ni alinear con las reuniones. Sus tres crudos están en
+  `01_Crudos/`, documentados en el README, y sin versionar hasta el commit.
 - **Lo que se sabe del corpus:** las minutas tienen cinco formatos (cortes en
   2014-05-30, 2019-06-21, 2020-07-31 y 2023-03-30) y hasta abril de 2019 solo
   27 a 30 % del texto es discusión de la Junta; hay diez periodos de política
@@ -96,12 +98,23 @@ domingo 22 de noviembre de 2026.**
   `README.md`. Tres notas en `05_Notas/` (estructura de la minuta, inflación
   como validación de las medidas, votación).
 - **Reglas:** `CLAUDE.md` tiene las decisiones de la sesión (provisionales
-  hasta fijar la pregunta); el catálogo registra `pdftools` y `gt`.
+  hasta fijar la pregunta); el catálogo registra `pdftools`, `gt` y `readxl`.
 - **Git:** trabajo en la rama `SantiagoMunozM`, con los cambios de `main` hasta
   el PR #2 de Samuel. Los cambios de la sesión del 2026-11-18 se suben a esa
   rama.
 
 ## Registro de sesiones
+
+### 2026-11-18 (2): primeras series macro
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). Se documentaron las fuentes de los
+  tres crudos macro (README, `CLAUDE.md`), se registró `readxl` y se escribió
+  `06_series_macro.R`, que filtra desde 2000 y guarda tres `.rds` en `03_Listos/`.
+  Se revisaron los 500 días sin precio del Brent: la EIA trae los mismos y se
+  mantiene FRED. Avanzó el objetivo 3; no se trabajaron el 1 ni el 2.
+- Bitácora: [2026-11-18_series-macro-crudas_2.md](06_Bitacoras/2026-11-18_series-macro-crudas_2.md)
+- **Siguientes objetivos:** (1) fijar la pregunta con el equipo; (2) validar a
+  mano la votación (30 documentos); (3) `PLAN.md` y alineación de las series macro.
 
 ### 2026-11-18: lectura de la exploración, revisión de la limpieza y filtro de símbolos
 
