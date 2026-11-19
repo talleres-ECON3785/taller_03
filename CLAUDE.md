@@ -480,28 +480,68 @@ integrantes las tengan sin instalar nada. Se invocan con `/ponytail`,
 `/caveman` y `/hallmark`. Ninguna reemplaza las reglas de este archivo: si
 chocan, **gana CLAUDE.md**.
 
-- **`ponytail`** (programar con el menor cambio que resuelva la tarea). Úsela
-  al escribir, corregir o refactorizar scripts de R, y para elegir
+- **`ponytail`** (programar con el menor cambio que resuelva la tarea). **Es
+  el modo por defecto en nivel `full`**: todo agente lo activa al empezar la
+  sesión y lo mantiene hasta que el usuario diga "stop ponytail" o "normal
+  mode". Cambiar de nivel solo lo hace el usuario (`/ponytail lite|ultra`).
+  Aplica al escribir, corregir o refactorizar scripts de R y al elegir
   dependencias: reutilizar lo que ya existe, no agregar paquetes por pocas
   líneas, no construir funcionalidad no pedida. Variantes: `/ponytail-review`
   (revisar un cambio), `/ponytail-audit` (auditar el repo), `/ponytail-debt`
-  (listar los `shortcut:`). Límites: no recorta lo que este archivo exige
-  (`set.seed(2026)`, carpetas por script, formato de figuras y tablas,
-  `00_main.R`, README, bitácora, notas, validación de las medidas con ejemplos
-  del texto). Los comentarios del código siguen en español.
-- **`caveman`** (respuestas breves en el chat). Solo afecta el tono de lo que el
-  agente le dice al usuario en la conversación. **No se usa** en ningún
-  entregable ni documento del repo: bitácoras, notas de hallazgos, `README.md`,
-  `HANDOFF.md`, comentarios de código, diapositivas ni guion del video se
-  escriben en español completo y con la estructura que pide este archivo.
-  Se activa solo si el usuario la pide (`/caveman`) y se apaga con "normal mode".
-- **`hallmark`** (diseño de páginas web). El proyecto no construye sitios, así
-  que **no aplica** a figuras ni tablas (esas siguen
-  `02_Scripts/00_formato_graficas.R` y `00_formato_tablas.R`, con su paleta) ni
-  a las diapositivas. Solo se usa si el usuario pide una página HTML o un
-  artifact (p. ej. una página para compartir resultados), y nunca sobre un
-  diseño existente sin que el usuario la nombre. Esa página usa la paleta del
-  proyecto y no incluye código en el contenido visible.
+  (listar los `shortcut:`). Límites:
+  - No recorta lo que este archivo exige: `set.seed(2026)`, carpetas por script,
+    formato de figuras y tablas, `00_main.R`, README, bitácora, notas y
+    validación de las medidas con ejemplos del texto.
+  - Las decisiones de método (pregunta, medidas, series, alineación) no se
+    "simplifican" por cuenta del agente: se ajustan al catálogo de
+    `07_Recursos/catalogo_metodos.md` y las cambia el equipo.
+  - Los comentarios del código y los `shortcut:` van en español.
+  - El auto-chequeo que pide la skill para lógica nueva es un `stopifnot()` al
+    final del script, sin paquetes de pruebas nuevos.
+  - Los dos cierres de línea que pide la skill (qué omitió, qué riesgo) van en
+    el chat, no en los archivos del repo.
+
+- **`caveman`** (respuestas breves en el chat). **Es la forma por defecto en
+  que habla el agente**: todo agente activa la skill al empezar la sesión y la
+  mantiene hasta que el usuario diga "stop caveman" o "normal mode". Solo
+  afecta el tono de lo que el agente le dice al usuario en la conversación; se
+  sigue respondiendo en español. Reglas para este proyecto:
+  - **No se usa** en nada que se guarde fuera del chat: bitácoras, notas de
+    hallazgos, `README.md`, `HANDOFF.md`, `CLAUDE.md`, comentarios de código,
+    mensajes de commit y de PR, diapositivas ni guion del video se escriben en
+    español completo y con la estructura que pide este archivo.
+  - Se sale de caveman, en prosa completa, para: advertencias, acciones
+    irreversibles o hacia afuera (commit, push, borrar, sobrescribir), preguntas
+    u opciones al usuario, y cuando el usuario esté confundido o repita la
+    pregunta.
+  - "Explique lo que va a hacer ANTES de editar o crear archivos" se cumple con
+    una línea antes de la tarea, como pide la propia skill.
+  - Las alertas de contradicción de evidencia (ver "Contrastar la evidencia
+    nueva") y las explicaciones de interpretación económica van completas: la
+    brevedad no puede quitar cifras, unidades, periodos ni la salvedad
+    "asociación no es causalidad".
+
+- **`hallmark`** (diseño de páginas que se ven diseñadas, no generadas). En
+  este proyecto se usa para los **borradores de la presentación**: un deck
+  en HTML (una pantalla = una diapositiva, una idea por pantalla) guardado en
+  `04_Presentaciones/`. Reglas del borrador:
+  - Sigue los principios de la skill (todo color y tipografía como token en
+    `:root`, una dirección visual definida, sin plantillas genéricas) y,
+    además, "Entregable: presentación al cliente" de este archivo: título que
+    comunica la conclusión, *answer-first*, sin código.
+  - Los tokens de color son la paleta del proyecto (`paleta_categorica` y los
+    grises de `00_formato_graficas.R`); no se inventa otra, para que las figuras
+    y el deck se vean como una sola familia.
+  - Las figuras y tablas entran como los `.png` exportados por el pipeline
+    (`03_Resultados/`), sin redibujarlas ni retocarlas en el HTML. Las cifras
+    del texto del slide salen de `03_Resultados/` o de las notas de
+    `05_Notas/`; ninguna se escribe de memoria.
+  - Es un **borrador**: la presentación final y el video salen de las figuras
+    regeneradas por `00_main.R`. Sobre un borrador existente solo se usa
+    `/hallmark redesign <ruta>` o `/hallmark audit <ruta>` si el usuario lo
+    nombra.
+  - No aplica a las figuras ni a las tablas (siguen `00_formato_graficas.R` y
+    `00_formato_tablas.R`).
 
 ## Regla metodológica: herramientas del curso, medidas validadas con el texto
 
