@@ -16,48 +16,46 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **H3, P3.1 y P3.3 de `PLAN.md`: medida principal antes/después con
-   `pairwise_cor()`.**
-   - **Recomendación (sesión del 2026-11-19):** usar la correlación entre
-     palabras de `widyr::pairwise_cor()` (catálogo, Lab 11, sección 4) como
-     medida principal. Para cada palabra ancla, comparar con qué palabras
-     aparece antes y después del corte.
-     - Por qué: está en el catálogo, se explica con ejemplos del texto y con
-       este corpus es más estable que entrenar dos modelos de embeddings.
-     - Los embeddings quedan como complemento (objetivo 2).
-   - Archivos:
-     - `02_Scripts/08_correlaciones_antes_despues.R`, en `scripts` y
-       `carpetas_salida` de `00_main.R`;
-     - `widyr` en el `p_load()`;
-     - tablas y figuras en su carpeta.
-   - Insumos ya fijados:
-     - `corte_crisis` (2014-10-30) y `cortes_alternativos` (2014-09-26 y
-       2014-12-19) de `00_funciones_texto.R`;
-     - ventana recomendada de 5 años a cada lado;
-     - anclas de P3.3, fijadas antes de ver resultados;
-     - documento de la unidad oración o reunión, a decidir y registrar.
+1. **H3, P3.1 a P3.3 de `PLAN.md`: LDA con balance perplejidad–coherencia.**
+   - Archivos: fila en "Decisiones tomadas" de `CLAUDE.md` con la regla de
+     selección (**antes** de correr); `partir_mitades()`, `perplejidad()` y
+     `coherencia()` en `00_funciones_texto.R`; `02_Scripts/08_lda.R`, en
+     `scripts` y `carpetas_salida` de `00_main.R`.
+   - Insumos: `vocabulario_lda.rds` (grupo `minuta_junta`), `tokens_limpios.rds`
+     y los ayudantes de `05_lda_exploratorio.R`.
+   - *Terminado cuando:* hay una tabla y una figura de perplejidad y coherencia
+     por K, un K elegido con la regla registrada, y tópicos con top beta, lift
+     y fragmentos de minutas; las tablas de `05` salen iguales tras el
+     refactor; `08_lda.R` corre dos veces con la misma perplejidad.
+2. **H4, P4.1 y P4.3 de `PLAN.md`: medida antes/después con `pairwise_cor()`.**
+   - Recomendación (2026-11-19): correlación entre palabras de
+     `widyr::pairwise_cor()` (catálogo, Lab 11, sección 4) para cada ancla,
+     antes y después del corte; está en el catálogo y es más estable que dos
+     modelos de embeddings con este corpus.
+   - Archivos: `02_Scripts/09_correlaciones_antes_despues.R` (en `scripts` y
+     `carpetas_salida`), `widyr` en el `p_load()`.
+   - Insumos: `corte_crisis` (2014-10-30) y `cortes_alternativos` de
+     `00_funciones_texto.R`; ventana de 5 años a cada lado; anclas de P4.3
+     fijadas antes de ver resultados; unidad oración o reunión, a registrar.
    - *Terminado cuando:* hay una tabla de las palabras más correlacionadas con
      cada ancla antes y después, con los dos cortes alternativos como
-     robustez. Las minutas se normalizan por extensión y se contrastan con los
-     comunicados, y cada cambio lleva un fragmento del texto.
-2. **H3, P3.2 de `PLAN.md`: embeddings como complemento.**
+     robustez, minutas normalizadas por extensión y contrastadas con los
+     comunicados, y un fragmento del texto por cada cambio.
+3. **H4, P4.2 de `PLAN.md`: embeddings como complemento.**
    - Archivos: fila en el "Registro de ampliaciones" de
      `07_Recursos/catalogo_metodos.md`, con paquete, funciones y aprobación del
-     equipo; fila en "Decisiones tomadas"; `word2vec` en el `p_load()`.
+     equipo; fila en "Decisiones tomadas"; `word2vec` en el `p_load()`;
+     `10_embeddings.R`.
    - *Terminado cuando:* la ampliación está registrada **antes** de correr
      cualquier modelo, y los vecinos de las anclas se repiten en 5 semillas.
-3. **H4 de `PLAN.md`: interpretar con la historia macro.**
-   - Archivos: notas `X_*.md` en `05_Notas/`; borrador del deck en
-     `04_Presentaciones/`.
-   - Insumos: `macro_por_reunion.rds` y la nota
-     `05_Notas/07_graficas_macro/M_cronologia_choque_petrolero.md`.
-   - *Terminado cuando:* cada cambio de temas se cruza con la cronología del
-     choque, con un fragmento del texto y la salvedad de asociación, no
-     causalidad.
 
 **Bloqueos y preguntas abiertas:**
 
 - Roles de los integrantes en el Taller 3.
+- La regla de balance del LDA (suma de rangos de perplejidad y coherencia,
+  empate al K menor) es propuesta de la sesión del 2026-11-21: el equipo debe
+  aprobarla antes de correr. Los objetivos de H5 (interpretación y deck) quedan
+  fuera de la lista por el máximo de tres.
 - La validación manual de la votación quedó fuera de `PLAN.md`: decidir si se
   abandona.
 - Corpus pequeño (unas 177 mil palabras limpias) para entrenar embeddings y
@@ -126,13 +124,26 @@ domingo 22 de noviembre de 2026.**
   - Mapa completo en `README.md`.
   - Cuatro notas en `05_Notas/`: estructura de la minuta, inflación como
     validación, votación y cronología del choque petrolero.
-- **Plan:** `PLAN.md` con H1 y H2 terminados. Siguen H3 (antes/después del
-  corte) y H4 (interpretación y deck).
+- **Plan:** `PLAN.md` con H1 y H2 terminados. Siguen H3 (LDA con balance
+  perplejidad–coherencia), H4 (antes/después del corte) y H5 (interpretación y
+  deck).
 - **Reglas:** el catálogo registra `pdftools`, `gt` y `readxl`. Los embeddings
   siguen sin registrar.
-- **Git:** trabajo en `SamuelEscandonC`, al día con `main` (PR #3).
+- **Git:** trabajo en `SantiagoMunozM`, al día con `main` (PR #4). Cambios de la sesión del 2026-11-21 sin mergear a `main`.
 
 ## Registro de sesiones
+
+### 2026-11-21: formato de la nota al pie y nuevo hito H3 (LDA)
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). La nota al pie de las figuras de
+  `07_graficas_macro.R` queda con una oración por renglón y las fuentes al
+  final (reglas en `CLAUDE.md`). Se agregó el hito H3 (LDA con balance
+  perplejidad–coherencia) a `PLAN.md` y se corrieron los demás: embeddings
+  pasa a H4 e interpretación a H5. No se escribió código de análisis.
+- Bitácora: [2026-11-21_formato-notas-y-plan-lda.md](06_Bitacoras/2026-11-21_formato-notas-y-plan-lda.md)
+- **Siguientes objetivos:** (1) H3, P3.1–P3.3: regla de selección y
+  `08_lda.R`; (2) H4, P4.1 y P4.3: `pairwise_cor()` antes/después;
+  (3) H4, P4.2: registrar los embeddings como ampliación.
 
 ### 2026-11-19: gráficas macro, alineación por reunión y fecha de corte (H1 y H2)
 

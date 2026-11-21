@@ -363,7 +363,7 @@ temas <- list(
 # previos. '07_graficas_macro.R' la recalcula y verifica que coincida.
 # "Antes" = reuniones anteriores a esta fecha; "despues" = desde esta fecha
 corte_crisis <- as.Date("2014-10-30")
-# cortes alternativos para la robustez de H3: la apertura de P4 (primera
+# cortes alternativos para la robustez de H4: la apertura de P4 (primera
 # reunion sin alza tras el ciclo de abril a agosto de 2014) y la primera
 # reunion con depreciacion anual de la TRM mayor que 20 %
 cortes_alternativos <- c(
