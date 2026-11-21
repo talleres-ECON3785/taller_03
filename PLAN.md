@@ -4,7 +4,7 @@
 
 ## Contexto
 
-Pregunta fijada 2026-11-18. Ya existe: texto extraído y limpio (`01`–`05`), series Brent/TRM/inflación en `03_Listos/` (`06_series_macro.R`). Falta: gráficas macro, corte, LDA (H3), embeddings (no registrados en catálogo), interpretación.
+Pregunta fijada 2026-11-18. Ya existe: texto extraído y limpio (`01`–`05`), series macro (`06`), gráficas macro, alineación por reunión y fecha de corte (`07`, H1 y H2). Falta: las medidas antes/después (H3: `08`, `09`, `10`) y la interpretación con la historia macro (H4).
 
 ## H1 — Gráficas macro + exploración descriptiva breve
 
@@ -20,68 +20,81 @@ Pregunta fijada 2026-11-18. Ya existe: texto extraído y limpio (`01`–`05`), s
 - [x] **P2.2** Añadir línea vertical del corte a las figuras de H1.
 - [x] **P2.3** Registrar en "Decisiones tomadas" (`CLAUDE.md`). Ojo: minutas cambian formato 2014-05-30 (A→B) ≈ corte → declarar.
 
-## H3 — LDA: tópicos legibles con balance perplejidad–coherencia
+## H3 — ¿Qué cambió antes y después del corte?
 
-Corpus: minutas, solo discusión de la Junta (`minuta_junta`, 199 documentos); documento = minuta entera. Comunicados solo como chequeo posterior. Entrada: `vocabulario_lda.rds`, `tokens_limpios.rds`.
+Medidas acordadas por el equipo el 2026-11-21. Corte: **2014-10-30** (`corte_crisis` en `00_funciones_texto.R`). Cada parte tiene su script, para trabajar en paralelo; las cuatro comparten la robustez de H3d.
 
-- [ ] **P3.1** Registrar la regla de selección en "Decisiones tomadas" (`CLAUDE.md`) **antes de correr y de ver tópicos**:
-  - Rejilla: K ∈ {4, 6, 8, 10, 12, 16} × α ∈ {0,1; 0,5; 1}, δ = 1 (valor del lab), Gibbs con 300 iteraciones, 3 pliegues, `set.seed(2026)` y `control$seed = 2026`. Después, con K elegido, comparar δ ∈ {0,1; 1} (procedimiento del lab). 54 ajustes en la primera rejilla, no los 162 del lab.
-  - Regla de balance: para cada K, el mejor α; se ordenan los K por perplejidad (menor mejor) y por coherencia UMass media (más cercana a cero mejor); se elige el K con menor **suma de rangos** (empate: el K menor). Se reportan también los K vecinos, para ver la sensibilidad.
-  - Chequeo de legibilidad (después de elegir K, no cambia la regla): si un tópico concentra más de 70 % de su peso en un solo formato de minuta (A a E), se marca como posible artefacto de formato y se informa; no se descarta en silencio.
-  - Declarar que la perplejidad es criterio de selección del modelo, no un pronóstico, así que los pliegues son aleatorios por documento (no hay predicción de una serie en el tiempo).
-- [ ] **P3.2** Funciones auxiliares en `02_Scripts/00_funciones_texto.R`: `partir_mitades()`, `perplejidad()` (document completion con `posterior(modelo, newdata = A)`, `exp(-Σ log p / N)`) y `coherencia()` (UMass, 10 palabras principales). Mover ahí desde `05_lda_exploratorio.R` `estimar_lda()`, `resumen_topicos()` y `documentos_representativos()`, con sus entradas como argumentos; `05` las llama. Criterio: las tablas de `05` salen iguales (`git diff` de sus `.csv` sin cambios).
-- [ ] **P3.3** Script `02_Scripts/08_lda.R` (+ `08_lda` en `carpetas_salida` y `scripts` de `00_main.R`):
-  1. Rejilla y selección de K con la regla de P3.1. Tabla `minutas_lda_seleccion_k.png` (perplejidad, costo % frente al mínimo, coherencia, suma de rangos, K elegido) y figura `minutas_lda_perplejidad_coherencia.png` (las dos medidas por K, K elegido marcado).
-  2. Estimar el LDA final con el K elegido (Gibbs, 1.000 iteraciones, 200 de calentamiento).
-  3. Validación de tópicos: tabla top beta y lift, tabla de las 3 minutas más representativas con fragmento (fecha + tipo), peso por formato A a E. **Los nombres se asignan solo con esos ejemplos.**
-  4. Guardar `01_Datos/03_Listos/lda_theta.rds` (θ por minuta) para H5.
-  5. `stopifnot()` al final: 199 minutas, filas de θ suman 1, coherencia ≤ 0, perplejidad menor que el tamaño del vocabulario (la de un modelo uniforme).
-- [ ] **P3.4** Atención por tópico antes y después del corte (2014-10-30): θ medio por lado, normalizado por extensión, con la figura del formato de `05`. Es entrada de H5; la lectura es asociativa.
-- [ ] **P3.5** Nota `05_Notas/08_lda/T_*.md` (skill `registrar-hallazgo`), contrastada con las notas de `03_frecuencias_tfidf` y con los episodios de política monetaria; README (mapa script → salidas) y "Decisiones tomadas" actualizados.
+Reglas comunes a H3a, H3b y H3c:
 
-Riesgos del hito: (i) corpus chico (62 mil tokens, 199 documentos): θ ruidoso en minutas cortas (formato C, unas 400 palabras) y tópicos inestables; mitigación: reportar K vecinos y repetir la estimación final con 3 semillas, informando solo tópicos que se repiten; (ii) el corte 2014-10-30 casi coincide con el cambio de formato A→B (2014-05-30).
+- **Ventana:** 5 años a cada lado → antes 2009-10-30 a 2014-10-29; después 2014-10-30 a 2019-10-29.
+- **Documentos:** minutas (solo discusión de la Junta) y comunicados **por separado**. Las minutas tienen la mitad de palabras después del corte (unas 43.800 frente a 23.100): todo se normaliza por extensión y se contrasta con los comunicados.
+- **Validación:** toda medida va con fragmentos del texto (fecha + tipo de documento). Sin ejemplo, no entra.
 
-## H4 — Embeddings antes/después
+### H3a — `08_antes_despues.R`: palabras, temas y bigramas
 
-### P4.1 Ventana (años)
+- [ ] **P3a.1** Script `02_Scripts/08_antes_despues.R` (+ `08_antes_despues` en `carpetas_salida` y `scripts` de `00_main.R`).
+- [ ] **P3a.2** TF-IDF con dos grupos (antes / después), dentro de cada tipo de documento. Con 2 grupos el idf solo toma dos valores: complementar con la razón de frecuencias por 1.000 palabras, como en `03_frecuencias_tfidf.R`, y declararlo.
+- [ ] **P3a.3** Atención a cada tema con el diccionario `temas` de `00_funciones_texto.R`: apariciones por 1.000 palabras, **por reunión** (la reunión es la unidad), promedio antes y después.
+- [ ] **P3a.4** Bigramas más frecuentes antes y después, filtrados con el vocabulario limpio (catálogo, sección 4).
+- [ ] **P3a.5** Nota `05_Notas/08_antes_despues/T_*.md` (skill `registrar-hallazgo`), contrastada con las notas de `03_frecuencias_tfidf`.
 
-- [ ] Recomendado: **5 años a cada lado** → antes 2009-09-26 a 2014-09-25; después 2014-09-26 a 2019-09-25.
-  - Por qué: simétrico, deja fuera crisis 2008 y pandemia 2020.
-  - Alternativa: antes = todo desde 2007 (7,7 años), después = hasta 2020-03 (5,5 años).
-- [ ] Contar docs y tokens por época; si un lado < ~40 mil tokens, ampliar ventana.
+### H3b — `09_lda_oraciones.R`: LDA antes y después
 
-### P4.2 Qué embeddings
+Por qué no se repite el LDA de `05`: en la exploración, con la minuta entera como documento, los tópicos separaban épocas y formatos, no temas. Un LDA antes/después hecho así muestra «cambio» por construcción. Por eso la unidad baja a párrafo o bloque de oraciones y se estima un solo modelo.
 
-- [ ] Recomendado: **Word2Vec skip-gram, paquete `word2vec`** (`word2vec::word2vec()`, `predict(type="nearest")`). Rinde mejor que GloVe en corpus chico.
-- [ ] Spec inicial: dim 50–100, ventana 5, min_count 5, iter 20+, `set.seed(2026)` y `threads = 1` (reproducible).
-- [ ] Documento: minutas, versión «solo discusión de la Junta» + comunicados como chequeo. Unidad = oración.
-- [ ] Registrar ampliación en `07_Recursos/catalogo_metodos.md` + "Decisiones tomadas" **antes** de correr. Agregar `word2vec` a `p_load()`.
+- [ ] **P3b.1** Unidad de documento: **párrafo**, si la extracción de `01` conserva los saltos de párrafo de forma confiable (verificarlo en 5 minutas de formatos distintos); si no, **bloques de oraciones consecutivas de 60 a 100 palabras** con `partir_oraciones()`. Texto: discusión de la Junta en las minutas y comunicados completos. Cada bloque conserva fecha, tipo y época.
+- [ ] **P3b.2** Un solo modelo para todo el corpus 2007–2026 (no uno por época). El cambio se mide comparando el peso de cada tópico (θ) antes y después, no comparando dos modelos.
+- [ ] **P3b.3** Vocabulario: sustantivos, adjetivos, nombres propios y compuestos. **Sin verbos**, porque los verbos de atribución separaban épocas en `05`. Recorte de 5 documentos y 75 %, revisado para la nueva unidad.
+- [ ] **P3b.4** Selección de K (catálogo, sección 7), con la regla escrita en "Decisiones tomadas" **antes** de ver los tópicos:
+  - Gibbs con α = 0,1 y δ = 0,1; K ∈ {6, 8, 10, 12, 15}.
+  - Perplejidad por *document completion* con 3 pliegues y coherencia UMass, con las funciones `partir_mitades()`, `perplejidad()` y `coherencia()` del Lab 12.
+  - Se elige el **K más pequeño cuya perplejidad está a menos del 5 % del mínimo**, y se descarta si su coherencia media es la peor de la rejilla.
+  - Semilla 2026 en `set.seed()` y en `control`.
+- [ ] **P3b.5** Nombrar los tópicos con el top 8 por lift, el top 6 por beta y los 3 bloques más representativos con su fecha y tipo. Sin fragmento, el tópico no se nombra.
+- [ ] **P3b.6** Medida antes/después: promedio de θ **por reunión** (la reunión es la unidad, no el bloque) y diferencia de medias antes y después con IC 95 %, por tipo de documento. Ventana de 5 años a cada lado.
+- [ ] **P3b.7** Validación cruzada con H3a: correlación por reunión entre el θ de cada tópico y la atención al tema equivalente del diccionario. Si no coinciden, se reporta y se reconcilia (heurística H2).
+- [ ] **P3b.8** Robustez (H3d): los dos cortes alternativos; minutas frente a comunicados; y las 4 o 5 minutas del formato B anteriores al corte, que permiten ver el cambio de tema con el formato fijo.
+- [ ] **P3b.9** Salidas:
+  - tabla de tópicos con nombre, palabras y fragmento;
+  - figura de θ antes/después con IC por tópico y tipo;
+  - figura de θ por reunión 2007–2026 con el corte y los cortes de formato marcados (`capa_corte()`, `capa_cortes_formato()`);
+  - nota `05_Notas/09_lda_oraciones/T_*.md`.
+- [ ] **P3b.10** Límite de tiempo: 3 horas. Si la selección de K no termina, se usa K = 10 y se declara.
 
-### P4.3 Modelo y comparación
+Riesgos del hito: corpus chico, así que θ es ruidoso en minutas cortas (formato C, unas 400 palabras) y los tópicos pueden ser inestables.
 
-- [ ] Script `10_embeddings.R` (el 08 es el LDA y el 09 queda para las correlaciones entre palabras): un modelo por época, mismo preprocesamiento (`02_limpiar_texto.R`).
-- [ ] Palabras ancla fijadas antes: `petroleo`, `inflacion`, `tasa_cambio`/`devaluacion`, `tasa_intervencion`, `crecimiento`, `deficit`, `expectativas`.
-- [ ] Medida: vecinos más cercanos por época + solapamiento (Jaccard top-10) → palabras que más cambian de contexto.
-- [ ] Estabilidad: repetir con 5 semillas; reportar solo vecinos que se repiten.
-- [ ] Complemento barato (ya en catálogo): frecuencia relativa de anclas por 1.000 palabras, antes vs después.
-- [ ] Tablas `conjunto_vecinos_antes_despues.png`, figura de cambio por ancla.
+### H3c — `10_word2vec.R`: contexto de las palabras ancla
 
-## H5 — Interpretación con historia macro
+- [ ] **P3c.1** Registrar la ampliación en `07_Recursos/catalogo_metodos.md` y en "Decisiones tomadas" **antes** de correr. Agregar `word2vec` y `widyr` al `p_load()`.
+- [ ] **P3c.2** Word2Vec skip-gram, paquete `word2vec` (`word2vec::word2vec()`, `predict(type = "nearest")`). Especificación inicial: dimensión 50–100, ventana 5, `min_count` 5, 20 o más iteraciones, `set.seed(2026)` y `threads = 1` (reproducible).
+- [ ] **P3c.3** **Un solo modelo con todo el corpus**, con las anclas marcadas por época en el texto (`petroleo_antes`, `petroleo_despues`), en vez de un modelo por época. Así los dos vectores de cada ancla viven en el mismo espacio y se comparan directamente.
+- [ ] **P3c.4** Palabras ancla fijadas antes de ver resultados: `petroleo`, `inflacion`, `tasa_cambio`/`devaluacion`, `tasa_intervencion`, `crecimiento`, `deficit`, `expectativas`. Documento: minutas (solo discusión de la Junta) y comunicados como chequeo; unidad = oración.
+- [ ] **P3c.5** Medida: vecinos más cercanos de cada ancla antes y después, y solapamiento (Jaccard del top 10). Estabilidad: repetir con 5 semillas y reportar solo los vecinos que se repiten.
+- [ ] **P3c.6** Contraste con `pairwise_cor()` (`widyr`; catálogo, Lab 11, sección 4) sobre las mismas anclas, antes y después: las palabras más correlacionadas con cada ancla deberían coincidir en parte con los vecinos de Word2Vec. Si no coinciden, se reporta.
+- [ ] **P3c.7** Salidas: tabla `conjunto_vecinos_antes_despues.png` (vecinos y correlaciones por ancla y época) y figura del cambio por ancla. Nota `05_Notas/10_word2vec/T_*.md`.
 
-- [ ] **P5.1** Cruzar cambios de vecinos con H1 (p. ej. `tasa_cambio` pasa de «competitividad» a «traspaso/inflación»?).
-- [ ] **P5.2** Fragmentos textuales de cada cambio (fecha + tipo doc). Sin ejemplo, no entra.
-- [ ] **P5.3** Descartar formato: comparar con minutas formato B vs comunicados; normalizar por extensión.
-- [ ] **P5.4** Notas `X_*.md`; asociativo, no causal.
-- [ ] **P5.5** Deck borrador `04_Presentaciones/` → final `08_Entregables/` (answer-first, ≤15 min).
+### H3d — Robustez común a H3a, H3b y H3c
+
+- [ ] **P3d.1** Los dos cortes alternativos (`cortes_alternativos`: 2014-09-26 y 2014-12-19). Se reporta si cambia la dirección del resultado.
+- [ ] **P3d.2** Comunicados como control del cambio de formato de las minutas: un cambio que aparece en minutas pero no en comunicados puede ser de formato.
+- [ ] **P3d.3** Ventana de 5 años a cada lado (la misma para los tres scripts) y, si alcanza el tiempo, la ventana completa como alternativa.
+
+## H4 — Interpretación con historia macro
+
+- [ ] **P4.1** Cruzar con H1 los resultados de H3a, H3b y H3c (no solo los vecinos): p. ej. ¿la atención a la tasa de cambio sube después del corte?, ¿`tasa_cambio` pasa de «competitividad» a «traspaso/inflación»?
+- [ ] **P4.2** Fragmentos textuales de cada cambio (fecha + tipo doc). Sin ejemplo, no entra.
+- [ ] **P4.3** Descartar formato: comparar con minutas formato B vs comunicados; normalizar por extensión.
+- [ ] **P4.4** Notas `X_*.md`; asociativo, no causal.
+- [ ] **P4.5** Deck borrador `04_Presentaciones/` → final `08_Entregables/` (answer-first, ≤15 min).
 
 ## Riesgos
 
-- Corpus chico → vecinos ruidosos. Mitiga: semillas múltiples + frecuencias.
-- Corte ≈ cambio formato minutas → confusión tema/formato.
-- Tiempo: 4 días. Orden H1 → H2 → H3 → H4 → H5.
+- Corpus chico → vecinos ruidosos y tópicos inestables. Mitiga: semillas múltiples, un solo modelo para todo el corpus y contraste entre medidas (H3a, H3b y H3c).
+- Corte ≈ cambio formato minutas → confusión tema/formato. Mitiga: comunicados como control y minutas del formato B (H3d).
+- **Tiempo:** análisis congelado el sábado 21 a las 8 p. m.; domingo 22, diapositivas y video.
 
 ## Verificación
 
 - `00_main.R` desde cero sin errores, regenera figuras/tablas nuevas.
-- `stopifnot()` al final de `07`/`08`/`10` (n docs por época, anclas presentes).
+- `stopifnot()` al final de `07`, `08`, `09` y `10`: reuniones por época, anclas presentes, θ que suma 1 por bloque.
 - README con mapa script → salidas actualizado.

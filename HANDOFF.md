@@ -16,38 +16,34 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **H3, P3.1 a P3.3 de `PLAN.md`: LDA con balance perplejidad–coherencia.**
-   - Archivos: fila en "Decisiones tomadas" de `CLAUDE.md` con la regla de
-     selección (**antes** de correr); `partir_mitades()`, `perplejidad()` y
-     `coherencia()` en `00_funciones_texto.R`; `02_Scripts/08_lda.R`, en
-     `scripts` y `carpetas_salida` de `00_main.R`.
-   - Insumos: `vocabulario_lda.rds` (grupo `minuta_junta`), `tokens_limpios.rds`
-     y los ayudantes de `05_lda_exploratorio.R`.
-   - *Terminado cuando:* hay una tabla y una figura de perplejidad y coherencia
-     por K, un K elegido con la regla registrada, y tópicos con top beta, lift
-     y fragmentos de minutas; las tablas de `05` salen iguales tras el
-     refactor; `08_lda.R` corre dos veces con la misma perplejidad.
-2. **H4, P4.1 y P4.3 de `PLAN.md`: medida antes/después con `pairwise_cor()`.**
-   - Recomendación (2026-11-19): correlación entre palabras de
-     `widyr::pairwise_cor()` (catálogo, Lab 11, sección 4) para cada ancla,
-     antes y después del corte; está en el catálogo y es más estable que dos
-     modelos de embeddings con este corpus.
-   - Archivos: `02_Scripts/09_correlaciones_antes_despues.R` (en `scripts` y
-     `carpetas_salida`), `widyr` en el `p_load()`.
-   - Insumos: `corte_crisis` (2014-10-30) y `cortes_alternativos` de
-     `00_funciones_texto.R`; ventana de 5 años a cada lado; anclas de P4.3
-     fijadas antes de ver resultados; unidad oración o reunión, a registrar.
-   - *Terminado cuando:* hay una tabla de las palabras más correlacionadas con
-     cada ancla antes y después, con los dos cortes alternativos como
-     robustez, minutas normalizadas por extensión y contrastadas con los
-     comunicados, y un fragmento del texto por cada cambio.
-3. **H4, P4.2 de `PLAN.md`: embeddings como complemento.**
-   - Archivos: fila en el "Registro de ampliaciones" de
-     `07_Recursos/catalogo_metodos.md`, con paquete, funciones y aprobación del
-     equipo; fila en "Decisiones tomadas"; `word2vec` en el `p_load()`;
-     `10_embeddings.R`.
-   - *Terminado cuando:* la ampliación está registrada **antes** de correr
-     cualquier modelo, y los vecinos de las anclas se repiten en 5 semillas.
+1. **H3a y H3b de `PLAN.md`, en paralelo (análisis congelado el sábado 21 a
+   las 8 p. m.).**
+   - H3a: `02_Scripts/08_antes_despues.R`, con TF-IDF antes/después, atención
+     a cada tema del diccionario `temas` por reunión y bigramas, en minutas
+     (solo discusión de la Junta) y comunicados por separado.
+   - H3b: `02_Scripts/09_lda_oraciones.R`, con un solo LDA para 2007–2026,
+     unidad de párrafo o bloque de 60 a 100 palabras, sin verbos y K elegido
+     con la regla de P3b.4. La regla se registra en "Decisiones tomadas"
+     **antes** de ver los tópicos. Límite de 3 horas; si no alcanza, K = 10.
+   - Insumos: `corte_crisis` (2014-10-30), ventana de 5 años a cada lado y la
+     robustez de H3d (`cortes_alternativos`, comunicados como control).
+   - *Terminado cuando:* cada script está en `scripts` y `carpetas_salida` de
+     `00_main.R`, corre con su `stopifnot()` (reuniones por época, θ que suma 1
+     por bloque) y su resultado tiene nota en `05_Notas/` con fragmentos.
+2. **H3c de `PLAN.md`: `02_Scripts/10_word2vec.R`.**
+   - Primero la ampliación en `07_Recursos/catalogo_metodos.md` y en
+     "Decisiones tomadas"; `word2vec` y `widyr` en el `p_load()`.
+   - Un solo modelo con las anclas marcadas por época (`petroleo_antes`,
+     `petroleo_despues`), contrastado con `pairwise_cor()` sobre las mismas
+     anclas.
+   - *Terminado cuando:* los vecinos de cada ancla se repiten en 5 semillas y
+     la tabla `conjunto_vecinos_antes_despues.png` trae vecinos y
+     correlaciones por época.
+3. **H4 de `PLAN.md`: interpretación y deck (domingo 22).**
+   - Cruzar con la cronología macro (H1) los resultados de H3a, H3b y H3c;
+     notas `X_*.md`; deck en `04_Presentaciones/` y final en `08_Entregables/`.
+   - *Terminado cuando:* cada cambio de tema tiene un fragmento del texto y la
+     salvedad de asociación, no causalidad, y el video dura máximo 15 minutos.
 
 **Bloqueos y preguntas abiertas:**
 
@@ -132,6 +128,19 @@ domingo 22 de noviembre de 2026.**
 - **Git:** trabajo en `SantiagoMunozM`, al día con `main` (PR #4). Cambios de la sesión del 2026-11-21 sin mergear a `main`.
 
 ## Registro de sesiones
+
+### 2026-11-21 (2): H3 reorganizado con las medidas del equipo
+
+- Samuel Escandón (`SamuelEscandonC`). Sesión de planeación, sin código. Se
+  reorganizó H3 de `PLAN.md` en cuatro partes con su script: H3a
+  `08_antes_despues.R` (TF-IDF, temas y bigramas), H3b `09_lda_oraciones.R`
+  (un solo LDA por párrafo o bloque, P3b.1–P3b.10), H3c `10_word2vec.R` (un
+  solo modelo con anclas por época y `pairwise_cor()`) y H3d (robustez común).
+  El LDA por minuta entera y los embeddings de los hitos anteriores quedan
+  dentro de H3; la interpretación vuelve a H4. Decisión registrada en
+  `CLAUDE.md`. Sin bitácora (sesión de 15 minutos).
+- **Siguientes objetivos:** (1) H3a y H3b en paralelo; (2) H3c con la
+  ampliación de Word2Vec; (3) H4, interpretación y deck.
 
 ### 2026-11-21: formato de la nota al pie y nuevo hito H3 (LDA)
 
