@@ -257,13 +257,16 @@ capa_meta <- list(
 )
 
 n_reuniones <- nrow(macro_por_reunion)
-nota_series <- paste0(
-  "Fuentes: Brent, FRED (DCOILBRENTEU), promedio mensual de los días con cotización; TRM, Banco de la República ",
-  "(SUAMECA), promedio mensual de lunes a viernes; inflación total y núcleo 15, DANE con cálculos del Banco de la ",
-  "República, variación anual; meta, Banco de la República (punto y rango: ±0,5 pp hasta 2009, ±1 pp desde 2010). ",
-  "Sombreado alterno: periodos de política monetaria P1 a P10, abiertos por la primera reunión que cambia la ",
-  "dirección de la tasa. Línea vertical continua: corte antes/después del choque petrolero (", format(corte_crisis, "%d-%m-%Y"),
-  "), primera reunión en que el Brent que tenía la Junta estaba 20 % o más por debajo de su máximo de 12 meses."
+# una oración por renglón ("\n"); guardar_figura() parte cada una por aparte
+nota_series <- paste(
+  paste0("Sombreado alterno: periodos de política monetaria P1 a P10, abiertos por la primera reunión que cambia la ",
+         "dirección de la tasa."),
+  paste0("Línea vertical continua: corte antes/después del choque petrolero (", format(corte_crisis, "%d-%m-%Y"),
+         "), primera reunión en que el Brent que tenía la Junta estaba 20 % o más por debajo de su máximo de 12 meses."),
+  paste0("Fuentes: Brent, FRED (DCOILBRENTEU), promedio mensual de los días con cotización; TRM, Banco de la República ",
+         "(SUAMECA), promedio mensual de lunes a viernes; inflación total y núcleo 15, DANE con cálculos del Banco de la ",
+         "República, variación anual; meta, Banco de la República (punto y rango: ±0,5 pp hasta 2009, ±1 pp desde 2010)."),
+  sep = "\n"
 )
 
 fig_series <- ggplot(series_fig, aes(fecha, valor, color = serie)) +
@@ -355,13 +358,16 @@ fig_crono <- ggplot(series_z, aes(fecha, valor, color = serie)) +
     title = "El choque petrolero de 2014: del precio del crudo a la inflación",
     subtitle = "Brent y TRM diarios; inflación total mensual con la meta (línea punteada) y su rango. 2013–2017",
     x = NULL, y = NULL,
-    caption = paste0(
-      "Línea vertical continua: corte antes/después del choque (", format(corte_crisis, "%d-%m-%Y"),
-      "), primera reunión con el Brent 20 % o más por debajo de su máximo de 12 meses. ",
-      "Franja gris: ciclo de alzas de la tasa de intervención, de la primera (", format(primera_alza$fecha, "%d-%m-%Y"),
-      ") a la última alza (", format(ultima_alza$fecha, "%d-%m-%Y"), "), según los comunicados de la Junta. ",
-      "Hitos definidos con reglas sobre las series: pico del Brent en 2014, valle en 2015–2016; TRM más baja de 2014 y más alta de 2015–2016; ",
-      "inflación más alta de 2015–2017. Fuentes: FRED (Brent), Banco de la República (TRM, meta), DANE (inflación)."
+    # una oración por renglón ("\n"); guardar_figura() parte cada una por aparte
+    caption = paste(
+      paste0("Línea vertical continua: corte antes/después del choque (", format(corte_crisis, "%d-%m-%Y"),
+             "), primera reunión con el Brent 20 % o más por debajo de su máximo de 12 meses."),
+      paste0("Franja gris: ciclo de alzas de la tasa de intervención, de la primera (", format(primera_alza$fecha, "%d-%m-%Y"),
+             ") a la última alza (", format(ultima_alza$fecha, "%d-%m-%Y"), "), según los comunicados de la Junta."),
+      paste0("Hitos definidos con reglas sobre las series: pico del Brent en 2014, valle en 2015–2016; TRM más baja de 2014 y más alta de 2015–2016; ",
+             "inflación más alta de 2015–2017."),
+      "Fuentes: FRED (Brent), Banco de la República (TRM, meta), DANE (inflación).",
+      sep = "\n"
     )
   ) +
   tema_presentacion + tema_paneles +

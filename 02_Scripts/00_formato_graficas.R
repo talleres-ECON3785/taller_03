@@ -199,9 +199,12 @@ guardar_figura <- function(nombre_archivo, grafica, carpeta,
                            width = 9, height = 6, dpi = 300) {
   # la nota al pie se parte en renglones segun el ancho de la figura (unos 17
   # caracteres por pulgada con el tamano de letra de la nota); si no, ggplot
-  # la corta en el borde derecho
+  # la corta en el borde derecho. Cada "\n" del texto separa una oracion (o
+  # nota) en su propio renglon: se parte cada una por aparte, porque str_wrap
+  # trata los saltos de linea como espacios
   if (!is.null(grafica$labels$caption)) {
-    grafica$labels$caption <- str_wrap(grafica$labels$caption, width = round(width * 17))
+    renglones <- strsplit(grafica$labels$caption, "\n", fixed = TRUE)[[1]]
+    grafica$labels$caption <- paste(str_wrap(renglones, width = round(width * 17)), collapse = "\n")
   }
   ggsave(
     file.path("03_Resultados/Figuras", carpeta, nombre_archivo),
