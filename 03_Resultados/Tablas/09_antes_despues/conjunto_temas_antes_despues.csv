@@ -1,0 +1,13 @@
+grupo,tema,media_antes,media_despues,diferencia,ic,cambio_pct,lectura
+Comunicados (54 reuniones antes y 53 después),Inflación,17.952547576028845,22.06490029033305,4.112352714304205,"[1,5; 6,7]",22.906791901753415,Matizada
+Comunicados (54 reuniones antes y 53 después),Actividad económica,24.280692030993553,17.839399039961584,-6.441292991031968,"[-8,8; -4,1]",-26.52845719063467,Robusta
+Comunicados (54 reuniones antes y 53 después),Entorno externo,15.368164362148582,21.8697317322439,6.501567370095318,"[3,6; 9,4]",42.30542579378264,Robusta
+Comunicados (54 reuniones antes y 53 después),Mercado laboral,0.9467491586470178,0.2585685082109909,-0.6881806504360268,"[-1,1; -0,2]",-72.68880507055253,Matizada
+Comunicados (54 reuniones antes y 53 después),Fiscal,1.580858145169709,4.055702403269428,2.4748442580997185,"[1,5; 3,4]",156.55068518712903,Robusta
+Comunicados (54 reuniones antes y 53 después),Riesgo e incertidumbre,3.435211077405215,4.650518643330545,1.2153075659253303,"[0,0; 2,5]",35.37795898245974,Robusta
+Minutas: discusión de la Junta (59 reuniones antes y 53 después),Inflación,18.739354894149145,19.41997329459616,0.6806184004470168,"[-2,1; 3,5]",3.632026845596064,Matizada
+Minutas: discusión de la Junta (59 reuniones antes y 53 después),Actividad económica,23.342155657684753,15.485290996989068,-7.856864660695685,"[-10,7; -5,0]",-33.659550454197365,Robusta
+Minutas: discusión de la Junta (59 reuniones antes y 53 después),Entorno externo,12.660819111683589,14.720392171219244,2.059573059535655,"[-0,8; 4,9]",16.267297094822645,Matizada
+Minutas: discusión de la Junta (59 reuniones antes y 53 después),Mercado laboral,1.4666226584828437,0.9620692496371218,-0.5045534088457219,"[-1,1; 0,1]",-34.4024010489283,Matizada
+Minutas: discusión de la Junta (59 reuniones antes y 53 después),Fiscal,1.734841920901891,2.5981351233898717,0.8632932024879807,"[0,0; 1,7]",49.76206719971241,Robusta
+Minutas: discusión de la Junta (59 reuniones antes y 53 después),Riesgo e incertidumbre,4.549940203328088,4.91749891623495,0.36755871290686226,"[-1,0; 1,8]",8.07831963677256,Robusta

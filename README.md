@@ -250,6 +250,33 @@ fechas, formato y número de palabras.
 | `Tablas/07_graficas_macro/macro_cortes_candidatos.png` | Fechas de corte candidatas (apertura de P4 y dos reglas mecánicas) con los datos que la Junta tenía ese día |
 | `Tablas/07_graficas_macro/conjunto_ventanas_corte.png` | Minutas del formato B antes de cada corte y reuniones y palabras de la Junta a cada lado, en una ventana de 5 años |
 
+### `09_antes_despues.R`: palabras, bigramas, atención por tema y correlaciones antes y después del corte
+
+Hito H3b de `PLAN.md`. Épocas: 5 años antes y 5 años después del 2014-10-30
+(2009-10-30 a 2019-10-29). Minutas: solo la discusión de la Junta;
+comunicados en paralelo como control del cambio de formato de las minutas.
+Todo por 1.000 palabras. Robustez (solo tablas): muestra completa 2007–2026 y
+cortes 2014-09-26 y 2014-12-19. La construcción de bigramas se movió a
+`construir_bigramas()` de `00_funciones_texto.R` (la usan `04` y `09`).
+
+| Resultado | Contenido |
+| --- | --- |
+| `Figuras/09_antes_despues/conjunto_palabras_distintivas.png` | Las 15 palabras que más ganan y las 15 que más pierden peso después del corte (razón de frecuencias), por tipo de documento |
+| `Figuras/09_antes_despues/conjunto_bigramas_cambio.png` | Los 10 bigramas que más ganan y los 10 que más pierden, por tipo |
+| `Figuras/09_antes_despues/conjunto_temas_antes_despues.png` | Atención media por reunión a cada tema del diccionario `temas`, antes y después, con IC 95 % |
+| `Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png` | Atención al entorno externo y a la inflación por reunión, 2007–2026, con Brent, TRM e inflación total en paneles alineados, corte y periodos marcados |
+| `Tablas/09_antes_despues/conjunto_documentos_por_epoca.png` | Reuniones y palabras a cada lado del corte en los cuatro escenarios |
+| `Tablas/09_antes_despues/conjunto_fragmentos_palabras.png` | Las 5 palabras que más ganan y más pierden, con su lectura de robustez y un fragmento |
+| `Tablas/09_antes_despues/{comunicados,minutas}_palabras_robustez.png` | Las 30 palabras de la figura con su frecuencia, la razón en el otro tipo de documento y en los tres escenarios de robustez |
+| `Tablas/09_antes_despues/conjunto_fragmentos_bigramas.png` | Ídem para los bigramas |
+| `Tablas/09_antes_despues/conjunto_bigramas_frecuentes_epoca.png` | Los 12 bigramas más frecuentes en cada época, por tipo |
+| `Tablas/09_antes_despues/conjunto_temas_antes_despues.png` | Media antes y después, diferencia, IC 95 % (prueba t de Welch por reunión) y lectura de cada tema |
+| `Tablas/09_antes_despues/conjunto_temas_robustez.png` | La diferencia por tema en los cuatro escenarios |
+| `Tablas/09_antes_despues/conjunto_fragmentos_temas.png` | Un fragmento por tema, época y tipo de documento |
+| `Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png` | Reunión en que toca su extremo cada serie (texto y macro), 2013–2018 |
+| `Tablas/09_antes_despues/{comunicados,minutas}_correlaciones_anclas.png` | Las 8 palabras más correlacionadas (phi, `pairwise_cor()`, documento = oración) con cada palabra ancla, antes y después |
+| `Tablas/09_antes_despues/*.csv` | Cifras sin formato de cada tabla; además el detalle completo de palabras y bigramas (`*_cambio_detalle.csv`, con TF-IDF de dos grupos), la atención por reunión (`conjunto_temas_por_reunion.csv`) y los fragmentos de las anclas (`conjunto_fragmentos_anclas.csv`) |
+
 ### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
 
 Exploratorio, sin selección de hiperparámetros. `<m>` es `vem` (LDA por

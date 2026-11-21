@@ -370,3 +370,21 @@ cortes_alternativos <- c(
   apertura_p4 = as.Date("2014-09-26"),
   depreciacion_trm = as.Date("2014-12-19")
 )
+
+# -----------------------------------------------------------------------------
+# 8. Bigramas (los usan '04_bigramas.R' y '09_antes_despues.R')
+# -----------------------------------------------------------------------------
+
+# pares de tokens contiguos (token_id consecutivo) dentro de la misma oracion,
+# con las dos palabras en el vocabulario limpio (catalogo, sec. 4). `anotados`
+# es tokens_anotados.rds. Devuelve una fila por bigrama con su documento
+construir_bigramas <- function(anotados) {
+  anotados %>%
+    mutate(token_id = as.integer(token_id)) %>%
+    arrange(unidad, sentence_id, token_id) %>%
+    group_by(unidad, sentence_id) %>%
+    mutate(palabra2 = lead(word), limpio2 = lead(limpio), contiguo = lead(token_id) == token_id + 1) %>%
+    ungroup() %>%
+    filter(limpio, limpio2, contiguo) %>%
+    transmute(id, tipo, fecha, periodo, es_junta, bigrama = paste(word, palabra2))
+}

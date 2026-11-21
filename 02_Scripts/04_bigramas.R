@@ -39,16 +39,9 @@ fmt_es <- function(tabla, columnas, decimales_n) {
 # 1. Bigramas
 # -----------------------------------------------------------------------------
 
-# pares de tokens contiguos (token_id consecutivo) dentro de la misma oracion,
-# con las dos palabras en el vocabulario limpio
-bigramas <- anotados %>%
-  mutate(token_id = as.integer(token_id)) %>%
-  arrange(unidad, sentence_id, token_id) %>%
-  group_by(unidad, sentence_id) %>%
-  mutate(palabra2 = lead(word), limpio2 = lead(limpio), contiguo = lead(token_id) == token_id + 1) %>%
-  ungroup() %>%
-  filter(limpio, limpio2, contiguo) %>%
-  transmute(id, tipo, fecha, periodo, es_junta, bigrama = paste(word, palabra2))
+# pares de tokens contiguos con las dos palabras en el vocabulario limpio
+# (`construir_bigramas()` en 00_funciones_texto.R)
+bigramas <- construir_bigramas(anotados)
 
 fuentes <- c(com = "Comunicados", junta = "Minutas: discusión de la Junta", completo = "Minutas: texto completo")
 bigramas_fuente <- bind_rows(

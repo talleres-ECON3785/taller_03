@@ -30,14 +30,6 @@ Reglas comunes a H3a, H3b y H3c:
 - **Documentos:** minutas (solo discusión de la Junta) y comunicados **por separado**. Las minutas tienen la mitad de palabras después del corte (unas 43.800 frente a 23.100): todo se normaliza por extensión y se contrasta con los comunicados.
 - **Validación:** toda medida va con fragmentos del texto (fecha + tipo de documento). Sin ejemplo, no entra.
 
-### H3a — `08_antes_despues.R`: palabras, temas y bigramas
-
-- [ ] **P3a.1** Script `02_Scripts/08_antes_despues.R` (+ `08_antes_despues` en `carpetas_salida` y `scripts` de `00_main.R`).
-- [ ] **P3a.2** TF-IDF con dos grupos (antes / después), dentro de cada tipo de documento. Con 2 grupos el idf solo toma dos valores: complementar con la razón de frecuencias por 1.000 palabras, como en `03_frecuencias_tfidf.R`, y declararlo.
-- [ ] **P3a.3** Atención a cada tema con el diccionario `temas` de `00_funciones_texto.R`: apariciones por 1.000 palabras, **por reunión** (la reunión es la unidad), promedio antes y después.
-- [ ] **P3a.4** Bigramas más frecuentes antes y después, filtrados con el vocabulario limpio (catálogo, sección 4).
-- [ ] **P3a.5** Nota `05_Notas/08_antes_despues/T_*.md` (skill `registrar-hallazgo`), contrastada con las notas de `03_frecuencias_tfidf`.
-
 ### H3b — `09_lda_oraciones.R`: LDA antes y después
 
 Por qué no se repite el LDA de `05`: en la exploración, con la minuta entera como documento, los tópicos separaban épocas y formatos, no temas. Un LDA antes/después hecho así muestra «cambio» por construcción. Por eso la unidad baja a párrafo o bloque de oraciones y se estima un solo modelo.
@@ -62,6 +54,19 @@ Por qué no se repite el LDA de `05`: en la exploración, con la minuta entera c
 - [ ] **P3b.10** Límite de tiempo: 3 horas. Si la selección de K no termina, se usa K = 10 y se declara.
 
 Riesgos del hito: corpus chico, así que θ es ruidoso en minutas cortas (formato C, unas 400 palabras) y los tópicos pueden ser inestables.
+
+### H3b — Qué cambió antes y después: palabras, bigramas, atención y co-ocurrencias (`09_antes_despues.R`)
+
+Samuel Escandón, 2026-11-21. Reemplaza el antiguo H3a (`08_antes_despues.R`): el 08 queda para el LDA y el 10 para los embeddings, que hacen otros integrantes. Reglas comunes de H3 (ventana de 5 años a cada lado del 2014-10-30, minutas solo con la discusión de la Junta, comunicados en paralelo como control de formato, todo por 1.000 palabras, fragmento textual para cada palabra, bigrama o tema de una figura).
+
+- [x] **P3b.1** Script `02_Scripts/09_antes_despues.R` (+ `09_antes_despues` en `carpetas_salida` y `scripts` de `00_main.R`; `widyr` en el `p_load()`). Si algo de `03` o `04` sirve, se mueve a `00_funciones_texto.R` sin cambiar sus salidas.
+- [x] **P3b.2** Palabras distintivas: medida principal = razón de frecuencias por 1.000 palabras (después / antes, +0,5 a cada lado, mínimo de apariciones declarado); TF-IDF con dos grupos como complemento. Figura de las 15 que más ganan y las 15 que más pierden, por tipo.
+- [x] **P3b.3** Bigramas (vocabulario limpio, como en `04`): más frecuentes y los que más cambian, por tipo.
+- [x] **P3b.4** Atención por tema (diccionario `temas`, sin modificarlo): por reunión, media antes y después, diferencia e IC 95 % (`t.test` por reunión), por tipo. Figuras: (a) barras antes/después por tema; (b) serie por reunión 2007–2026 de «Entorno externo» e «Inflación» con Brent, TRM e inflación total de `macro_por_reunion.rds` en paneles alineados, corte y periodos marcados (lectura asociativa).
+- [x] **P3b.5** Correlaciones entre palabras (`pairwise_cor()`, Lab 11; documento = oración; umbral declarado): 8 palabras más correlacionadas antes y después con `petroleo`, `inflacion`, `tasa_cambio`, `tasa_intervencion`, `crecimiento`, `expectativas_inflacion` y `deficit`. Tabla lado a lado; es el contraste dentro del catálogo para los embeddings (10).
+- [x] **P3b.6** Robustez en tablas de apoyo: muestra completa 2007–2026 y los dos cortes alternativos; marcar como posible artefacto de formato lo que cambia en minutas y no en comunicados.
+- [x] **P3b.7** `stopifnot()` (reuniones por época, anclas presentes, temas sin NA), README con el mapa de salidas, revisión visual de cada figura y tabla.
+- [x] **P3b.8** Notas `05_Notas/09_antes_despues/T_*.md` (skill `registrar-hallazgo`) solo para las conclusiones robustas o matizadas.
 
 ### H3c — `10_word2vec.R`: contexto de las palabras ancla
 
