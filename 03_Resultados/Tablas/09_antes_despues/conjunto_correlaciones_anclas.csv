@@ -1,0 +1,209 @@
+fuente,epoca,ancla,palabra,correlacion
+Comunicados,Antes,crecimiento,pib,0.27792265759336476
+Comunicados,Antes,crecimiento,hacer,0.2153146215546876
+Comunicados,Antes,crecimiento,empleo,0.20737350017460188
+Comunicados,Antes,crecimiento,depender,0.20592108003323564
+Comunicados,Antes,crecimiento,reitera,0.19802530840506966
+Comunicados,Antes,crecimiento,nuevo,0.1972510784409511
+Comunicados,Antes,crecimiento,cuidadoso,0.1963386618899296
+Comunicados,Antes,crecimiento,disponible,0.19081010414854235
+Comunicados,Antes,expectativas_inflacion,analista,0.38055058540289094
+Comunicados,Antes,expectativas_inflacion,deuda_publica,0.30578147667784994
+Comunicados,Antes,expectativas_inflacion,meta_inflacion,0.302219349007461
+Comunicados,Antes,expectativas_inflacion,papel,0.295277684891325
+Comunicados,Antes,expectativas_inflacion,encontrar,0.21547763290622543
+Comunicados,Antes,expectativas_inflacion,medida,0.2020006732795985
+Comunicados,Antes,expectativas_inflacion,inflacion_basica,0.1907815052674206
+Comunicados,Antes,expectativas_inflacion,economico,0.1869789608347865
+Comunicados,Antes,inflacion,proyeccion,0.5012920015898158
+Comunicados,Antes,inflacion,cuidadoso,0.4800087330719839
+Comunicados,Antes,inflacion,monitoreo,0.4702100201614725
+Comunicados,Antes,inflacion,hacer,0.45648894140893653
+Comunicados,Antes,inflacion,situacion,0.4462879309504784
+Comunicados,Antes,inflacion,comportamiento,0.3887169100169058
+Comunicados,Antes,inflacion,activo,0.3815196963665904
+Comunicados,Antes,inflacion,mercado,0.3396010611494161
+Comunicados,Antes,petroleo,precio,0.2651038866808959
+Comunicados,Antes,petroleo,internacional,0.22173246533297286
+Comunicados,Antes,petroleo,subir,0.17679746039514355
+Comunicados,Antes,petroleo,oferta,0.17679746039514355
+Comunicados,Antes,petroleo,basico,0.161708870132557
+Comunicados,Antes,petroleo,produccion,0.15910729532751863
+Comunicados,Antes,petroleo,elevado,0.15910729532751863
+Comunicados,Antes,petroleo,colombia,0.15319828080766354
+Comunicados,Antes,tasa_intervencion,decidir,0.49084614752713673
+Comunicados,Antes,tasa_intervencion,inalterado,0.47619732114512003
+Comunicados,Antes,tasa_intervencion,puntos_basicos,0.4211155247246362
+Comunicados,Antes,tasa_intervencion,evaluacion,0.3633278716697219
+Comunicados,Antes,tasa_intervencion,acuerdo,0.3307921353922378
+Comunicados,Antes,tasa_intervencion,mantener,0.3141672835216275
+Comunicados,Antes,tasa_intervencion,balance_riesgos,0.2853610696206895
+Comunicados,Antes,tasa_intervencion,incrementar,0.27264101237857413
+Comunicados,Después,crecimiento,comercial,0.2741578175175602
+Comunicados,Después,crecimiento,socio,0.27150350254559485
+Comunicados,Después,crecimiento,equipo_tecnico,0.2588161971172645
+Comunicados,Después,crecimiento,probable,0.23583703647667695
+Comunicados,Después,crecimiento,bajo,0.21897856247913577
+Comunicados,Después,crecimiento,producto,0.2111912646280956
+Comunicados,Después,crecimiento,rango,0.21093700756728512
+Comunicados,Después,crecimiento,neta,0.18811982895787105
+Comunicados,Después,deficit,cuenta_corriente,0.7858843687403617
+Comunicados,Después,deficit,pib,0.4132225977174797
+Comunicados,Después,deficit,millon,0.40204562539157024
+Comunicados,Después,deficit,coherencia,0.3634301759962535
+Comunicados,Después,deficit,ajuste,0.353505300813524
+Comunicados,Después,deficit,general,0.35131978785738394
+Comunicados,Después,deficit,balanza_pagos,0.3377765187052362
+Comunicados,Después,deficit,seguimiento,0.3307813826499754
+Comunicados,Después,expectativas_inflacion,analista,0.5071115596723667
+Comunicados,Después,expectativas_inflacion,derivar,0.34038924130811493
+Comunicados,Después,expectativas_inflacion,cambio,0.2893580278334466
+Comunicados,Después,expectativas_inflacion,activacion,0.26912244847609285
+Comunicados,Después,expectativas_inflacion,deuda_publica,0.26669123896795965
+Comunicados,Después,expectativas_inflacion,encontrar,0.2658695987155018
+Comunicados,Después,expectativas_inflacion,papel,0.2537264345016613
+Comunicados,Después,expectativas_inflacion,fenomeno_nino,0.22912678347446816
+Comunicados,Después,inflacion,meta,0.5096281972341452
+Comunicados,Después,inflacion,convergencia,0.3937918115292757
+Comunicados,Después,inflacion,anual,0.31296339355730607
+Comunicados,Después,inflacion,transitorio,0.3103152641919709
+Comunicados,Después,inflacion,expectativa,0.294552640143839
+Comunicados,Después,inflacion,situacion,0.2922967859818267
+Comunicados,Después,inflacion,cuidadoso,0.28742232389259326
+Comunicados,Después,inflacion,monitoreo,0.28742232389259326
+Comunicados,Después,petroleo,internacional,0.3977862973947643
+Comunicados,Después,petroleo,precio,0.30589302089018006
+Comunicados,Después,petroleo,caer,0.249770733875425
+Comunicados,Después,petroleo,basico,0.17064512608232768
+Comunicados,Después,petroleo,aumentar,0.14609405912845744
+Comunicados,Después,petroleo,produccion,0.13657361903176338
+Comunicados,Después,petroleo,corrido,0.1298221668391803
+Comunicados,Después,petroleo,ingreso,0.11968935132360285
+Comunicados,Después,precio_petroleo,caida,0.3617161927136706
+Comunicados,Después,precio_petroleo,compatible,0.23936086776035664
+Comunicados,Después,precio_petroleo,nivel,0.23842882647890376
+Comunicados,Después,precio_petroleo,registrado,0.18913765646520075
+Comunicados,Después,precio_petroleo,deterioro,0.1850893150524589
+Comunicados,Después,precio_petroleo,debilidad,0.18340542320679265
+Comunicados,Después,precio_petroleo,negativo,0.1823765813953432
+Comunicados,Después,precio_petroleo,creciente,0.1823765813953432
+Comunicados,Después,tasa_cambio,presion,0.2858565035458646
+Comunicados,Después,tasa_cambio,alza,0.24769245649548183
+Comunicados,Después,tasa_cambio,sintesis,0.20841567881617695
+Comunicados,Después,tasa_cambio,adicional,0.16586491542763157
+Comunicados,Después,tasa_cambio,alimento,0.16311387924367532
+Comunicados,Después,tasa_cambio,caida,0.1583110108336329
+Comunicados,Después,tasa_cambio,mayor,0.14202435460892895
+Comunicados,Después,tasa_cambio,presentar,0.1366264617176179
+Comunicados,Después,tasa_intervencion,decidir,0.7126252075471127
+Comunicados,Después,tasa_intervencion,puntos_basicos,0.3609432181992117
+Comunicados,Después,tasa_intervencion,bajar,0.2709091824589637
+Comunicados,Después,tasa_intervencion,dejar,0.25977501353184046
+Comunicados,Después,tasa_intervencion,mantener,0.2587526769793201
+Comunicados,Después,tasa_intervencion,incrementar,0.19080079118708446
+Comunicados,Después,tasa_intervencion,unanimidad,0.18798415860735604
+Comunicados,Después,tasa_intervencion,contar,0.18357103237223182
+Minutas: discusión de la Junta,Antes,crecimiento,pib,0.2454613037707829
+Minutas: discusión de la Junta,Antes,crecimiento,segundo,0.1570573521237793
+Minutas: discusión de la Junta,Antes,crecimiento,economia,0.14287000417995602
+Minutas: discusión de la Junta,Antes,crecimiento,sugirir,0.13721665072239914
+Minutas: discusión de la Junta,Antes,crecimiento,proyectado,0.1336633031915171
+Minutas: discusión de la Junta,Antes,crecimiento,pronostico,0.12552405802832872
+Minutas: discusión de la Junta,Antes,crecimiento,proyeccion,0.12427514371081783
+Minutas: discusión de la Junta,Antes,crecimiento,socio,0.12211797546882627
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,meta,0.3708955868734952
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,anclar,0.3586173775998636
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,credibilidad,0.3481647773952905
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,autoridad,0.2870695569040662
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,analista,0.2563070654295745
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,necesidad,0.2400579680448886
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,largo_plazo,0.2213874223424156
+Minutas: discusión de la Junta,Antes,expectativas_inflacion,monetario,0.19732859902043534
+Minutas: discusión de la Junta,Antes,inflacion,proyeccion,0.35427743506076215
+Minutas: discusión de la Junta,Antes,inflacion,cuidadoso,0.29017308986655527
+Minutas: discusión de la Junta,Antes,inflacion,monitoreo,0.29017308986655527
+Minutas: discusión de la Junta,Antes,inflacion,punto,0.26310368747311175
+Minutas: discusión de la Junta,Antes,inflacion,meta_inflacion,0.260593094052803
+Minutas: discusión de la Junta,Antes,inflacion,situacion,0.2464791467833905
+Minutas: discusión de la Junta,Antes,inflacion,siguiente,0.24338536094108873
+Minutas: discusión de la Junta,Antes,inflacion,alimento,0.24112353853304558
+Minutas: discusión de la Junta,Antes,petroleo,cafe,0.26991030580188247
+Minutas: discusión de la Junta,Antes,petroleo,internacional,0.2292053663264078
+Minutas: discusión de la Junta,Antes,petroleo,precio,0.20995587238445787
+Minutas: discusión de la Junta,Antes,petroleo,subir,0.16020946429131325
+Minutas: discusión de la Junta,Antes,petroleo,basico,0.15143498419431645
+Minutas: discusión de la Junta,Antes,petroleo,alto,0.13394008575617639
+Minutas: discusión de la Junta,Antes,petroleo,oferta,0.12509515386991377
+Minutas: discusión de la Junta,Antes,petroleo,colombia,0.12304182283998236
+Minutas: discusión de la Junta,Antes,tasa_cambio,transable,0.4023766464075258
+Minutas: discusión de la Junta,Antes,tasa_cambio,sector,0.36664123846588176
+Minutas: discusión de la Junta,Antes,tasa_cambio,efecto,0.3142518640640488
+Minutas: discusión de la Junta,Antes,tasa_cambio,producto,0.19271440745646476
+Minutas: discusión de la Junta,Antes,tasa_cambio,inflacion,0.16418113495659084
+Minutas: discusión de la Junta,Antes,tasa_cambio,evolucion,0.12374593400056333
+Minutas: discusión de la Junta,Antes,tasa_cambio,programa,0.11772025901899896
+Minutas: discusión de la Junta,Antes,tasa_cambio,impacto,0.09239984195484148
+Minutas: discusión de la Junta,Antes,tasa_intervencion,acordar,0.46953323862792423
+Minutas: discusión de la Junta,Antes,tasa_intervencion,puntos_basicos,0.43850835987980114
+Minutas: discusión de la Junta,Antes,tasa_intervencion,inalterado,0.42919072285078796
+Minutas: discusión de la Junta,Antes,tasa_intervencion,unanimidad,0.3421664865980908
+Minutas: discusión de la Junta,Antes,tasa_intervencion,evaluacion,0.3336737537866645
+Minutas: discusión de la Junta,Antes,tasa_intervencion,apropiado,0.3261994346196799
+Minutas: discusión de la Junta,Antes,tasa_intervencion,mantener,0.3199704539473268
+Minutas: discusión de la Junta,Antes,tasa_intervencion,incrementar,0.3103408278119614
+Minutas: discusión de la Junta,Después,crecimiento,bajo,0.2680887785135881
+Minutas: discusión de la Junta,Después,crecimiento,demanda_interna,0.25106446992808124
+Minutas: discusión de la Junta,Después,crecimiento,menor,0.24360452104301777
+Minutas: discusión de la Junta,Después,crecimiento,producto,0.2222133223513578
+Minutas: discusión de la Junta,Después,crecimiento,pib,0.2102234750043909
+Minutas: discusión de la Junta,Después,crecimiento,equipo_tecnico,0.17731171647934435
+Minutas: discusión de la Junta,Después,crecimiento,esperar,0.16756555784955451
+Minutas: discusión de la Junta,Después,crecimiento,terminos_intercambio,0.14255004608359315
+Minutas: discusión de la Junta,Después,deficit,cuenta_corriente,0.9230515472257632
+Minutas: discusión de la Junta,Después,deficit,balanza_pagos,0.5699515995788901
+Minutas: discusión de la Junta,Después,deficit,vulnerabilidad,0.2932378952652944
+Minutas: discusión de la Junta,Después,deficit,contribuir,0.23895743185526916
+Minutas: discusión de la Junta,Después,deficit,financiamiento,0.23526016679211417
+Minutas: discusión de la Junta,Después,deficit,dinamismo,0.15652025189490565
+Minutas: discusión de la Junta,Después,deficit,nivel,0.15343641602613348
+Minutas: discusión de la Junta,Después,deficit,factor,0.15086594327109648
+Minutas: discusión de la Junta,Después,expectativas_inflacion,anclaje,0.29061766592440746
+Minutas: discusión de la Junta,Después,expectativas_inflacion,anclado,0.2739739906492528
+Minutas: discusión de la Junta,Después,expectativas_inflacion,meta,0.2665203681245698
+Minutas: discusión de la Junta,Después,expectativas_inflacion,aumento,0.13316224298480958
+Minutas: discusión de la Junta,Después,expectativas_inflacion,encontrar,0.11741010374226452
+Minutas: discusión de la Junta,Después,expectativas_inflacion,indexacion,0.11741010374226452
+Minutas: discusión de la Junta,Después,expectativas_inflacion,futuro,0.11352997393019232
+Minutas: discusión de la Junta,Después,expectativas_inflacion,termino,0.10339456827667119
+Minutas: discusión de la Junta,Después,inflacion,meta,0.33601261105922864
+Minutas: discusión de la Junta,Después,inflacion,convergencia,0.30361389161383456
+Minutas: discusión de la Junta,Después,inflacion,persistencia,0.20230742920627703
+Minutas: discusión de la Junta,Después,inflacion,indexacion,0.17200183530270943
+Minutas: discusión de la Junta,Después,inflacion,proyeccion,0.16111031169853157
+Minutas: discusión de la Junta,Después,inflacion,meta_inflacion,0.15267777180974035
+Minutas: discusión de la Junta,Después,inflacion,expectativa,0.1481662939968143
+Minutas: discusión de la Junta,Después,inflacion,horizonte,0.14257697716343518
+Minutas: discusión de la Junta,Después,precio_petroleo,caida,0.2394327970300882
+Minutas: discusión de la Junta,Después,precio_petroleo,devaluacion,0.23453658403397015
+Minutas: discusión de la Junta,Después,precio_petroleo,peso,0.20067887056423822
+Minutas: discusión de la Junta,Después,precio_petroleo,impacto,0.18648675582862353
+Minutas: discusión de la Junta,Después,precio_petroleo,contribuir,0.18025007782136096
+Minutas: discusión de la Junta,Después,precio_petroleo,asociado,0.1633262411081849
+Minutas: discusión de la Junta,Después,precio_petroleo,negativo,0.15509681984816545
+Minutas: discusión de la Junta,Después,precio_petroleo,sector,0.1466034981716239
+Minutas: discusión de la Junta,Después,tasa_cambio,asociado,0.24222027130374815
+Minutas: discusión de la Junta,Después,tasa_cambio,razon,0.15639762121950646
+Minutas: discusión de la Junta,Después,tasa_cambio,economico,0.15639762121950646
+Minutas: discusión de la Junta,Después,tasa_cambio,precio,0.14786846556358135
+Minutas: discusión de la Junta,Después,tasa_cambio,estados_unidos,0.14016728877917323
+Minutas: discusión de la Junta,Después,tasa_cambio,tener,0.1346486318691637
+Minutas: discusión de la Junta,Después,tasa_cambio,externo,0.12826774964173157
+Minutas: discusión de la Junta,Después,tasa_cambio,cambio,0.09703897435852252
+Minutas: discusión de la Junta,Después,tasa_intervencion,decidir,0.449884368077332
+Minutas: discusión de la Junta,Después,tasa_intervencion,inalterado,0.40686144407143554
+Minutas: discusión de la Junta,Después,tasa_intervencion,mantener,0.4025345079418153
+Minutas: discusión de la Junta,Después,tasa_intervencion,unanimidad,0.3434930623538145
+Minutas: discusión de la Junta,Después,tasa_intervencion,puntos_basicos,0.29149615866813516
+Minutas: discusión de la Junta,Después,tasa_intervencion,mayoria,0.2825040182561137
+Minutas: discusión de la Junta,Después,tasa_intervencion,situar,0.19892693896243913
+Minutas: discusión de la Junta,Después,tasa_intervencion,incrementar,0.1930522114032165
