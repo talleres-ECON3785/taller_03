@@ -118,7 +118,7 @@ def caja_texto(s, x, y, w, h, parrafos, tam=22, color=TEXTO, fuente=CUERPO_FUENT
 
 
 def titulo(s, texto, color=TEXTO):
-    caja_texto(s, MARGEN, 0.55, ANCHO - 2 * MARGEN, 1.9, [texto], tam=40, color=color,
+    caja_texto(s, MARGEN, 0.55, ANCHO - 2 * MARGEN, 1.55, [texto], tam=40, color=color,
                fuente=TITULO_FUENTE, ancla=MSO_ANCHOR.TOP)
 
 
@@ -148,9 +148,10 @@ def notas(s, presentador, duracion, frase, cifras, frag):
 def diapositiva_figura(texto_titulo, ruta, frag_corto, nota):
     s = nueva()
     titulo(s, texto_titulo)
-    imagen(s, ruta, MARGEN, 2.55, ANCHO - 2 * MARGEN, 7.25)
+    # la figura ocupa todo el alto libre bajo el título; con su proporción, lo más ancha posible
+    imagen(s, ruta, MARGEN, 2.15, ANCHO - 2 * MARGEN, 8.2)
     if frag_corto:
-        fragmento(s, frag_corto)
+        caja_texto(s, MARGEN, 10.4, ANCHO - 2 * MARGEN, 0.8, [frag_corto], tam=18, color=GRIS, cursiva=True)
     notas(s, *nota)
     return s
 
@@ -163,15 +164,17 @@ notas(portada, "1", "0:15", "Presentación del equipo y de la pregunta.",
 s = nueva(OSCURO)
 titulo(s, "Después del choque petrolero, la Junta dejó de hablar del mundo y del crédito y pasó a "
           "discutir cómo el choque entraba a Colombia", color="FFFFFF")
-caja_texto(s, MARGEN, 3.6, 16.5, 6.5, [
+caja_texto(s, MARGEN, 3.2, 17.5, 7.6, [
     ("Entraron el déficit externo y la depreciación que se trasladaba a la inflación.", {}),
     ("Salieron la economía mundial, el crédito, el detalle de la actividad interna y el seguimiento "
      "de la inflación básica frente a la meta.", {}),
-    ("El cambio aparece en comunicados y minutas, con tres fechas de corte, y se leyó primero en "
+    ("El cambio aparece en comunicados y minutas, con tres fechas de corte, y se ve con más fuerza en "
      "los comunicados.", {}),
-], tam=30, color="FFFFFF", espacio=26)
+    ("Para la mesa: el comunicado es la lectura más directa de hacia dónde mira la Junta, y en 2026 vale "
+     "la pena vigilar si reaparece el lenguaje de 2015.", {"negrita": True}),
+], tam=28, color="FFFFFF", espacio=24)
 notas(s, "1", "1:00",
-      "Esta es la respuesta: cambió de qué habla la Junta, y el cambio se vio primero en los comunicados.",
+      "Esta es la respuesta: cambió de qué habla la Junta, y el cambio se ve con más fuerza en los comunicados.",
       "Mensaje principal de 04_Presentaciones/hallazgos_y_figuras.txt, sección 1. Cifras en las "
       "diapositivas siguientes.", "No aplica (diapositiva de síntesis).")
 
@@ -234,7 +237,7 @@ diapositiva_figura(
     "«…el déficit en la cuenta corriente de la balanza de pagos del país se ha ampliado.» "
     "Comunicado, 20-02-2015",
     ("2", "1:15",
-     "El déficit externo pasó de 2 % a 16 % del peso de los comunicados; la cuenta corriente, que "
+     "El déficit externo pasó de 2 % a 16 % del peso de los temas en cada reunión; la cuenta corriente, que "
      "antes no se mencionaba, aparece unas dos veces por cada mil palabras.",
      "Tópico 6: comunicados 2,3 → 16,4 % (+14,1 pp [11,4; 16,8]), minutas 2,6 → 12,0 % (+9,4 pp). "
      "Tópico 10: comunicados 16,1 → 5,5 % (−10,6 pp), minutas 13,5 → 4,2 % (−9,3 pp) "
@@ -251,8 +254,8 @@ diapositiva_figura(
     D11 / "conjunto_lda_credito_actividad_1_2.png",
     "«El crecimiento del crédito a los hogares permanece alto…» Comunicado, 30-04-2012",
     ("2", "1:15",
-     "Lo que dominaba en 2010–2013 casi desaparece: el crédito pasa de 11 % a menos de 2 % de los "
-     "comunicados.",
+     "Lo que dominaba en 2010–2013 casi desaparece: el crédito pasa de 11 % a menos de 2 % del "
+     "peso de los temas en cada reunión.",
      "Tópico 2: comunicados 10,7 → 1,5 % (−9,2 pp [−10,9; −7,5]), minutas 12,3 → 3,3 % (−9,0 pp). "
      "Tópico 1: comunicados 15,2 → 11,6 % (−3,6 pp), minutas 14,8 → 7,9 % (−6,9 pp) "
      "(03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv). Tema «Actividad "
@@ -324,7 +327,7 @@ diapositiva_figura(
 # --- 9. Comunicado frente a minuta ----------------------------------------------------------
 diapositiva_figura(
     "El comunicado registró el cambio de agenda con más fuerza que la minuta",
-    FIG / "09_antes_despues" / "conjunto_temas_antes_despues.png",
+    D11 / "conjunto_temas_antes_despues.png",
     "«…contribuir a la reducción en el déficit de la cuenta corriente, la Junta Directiva decidió "
     "aumentar en 50 pb…» Comunicado, 29-04-2016",
     ("3", "1:00",
@@ -367,7 +370,7 @@ notas(s, "4", "1:00",
 # --- 11. 2026 --------------------------------------------------------------------------------
 diapositiva_figura(
     "En 2026 la Junta vuelve a subir tasas, y la mesa puede vigilar si reaparece el lenguaje de 2015",
-    FIG / "07_graficas_macro" / "macro_series_2007_2026.png",
+    D11 / "macro_series_2007_2026.png",
     "«…decidió por mayoría incrementar en 100 puntos básicos (pbs) la tasa de interés de política "
     "monetaria a 10,25%.» Comunicado, 30-01-2026",
     ("4", "1:15",

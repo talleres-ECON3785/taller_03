@@ -291,6 +291,81 @@ if (sostiene) {
 }
 
 # -----------------------------------------------------------------------------
+# 5b. Atencion a cada tema antes y despues (version de diapositiva de la figura de 09)
+# -----------------------------------------------------------------------------
+
+temas_ad <- leer("03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues_detalle.csv") %>%
+  filter(str_starts(escenario, "Principal")) %>%
+  transmute(fuente = factor(fuente, levels = fuentes_09), tema,
+            Antes_media = media_antes, Antes_inf = ic_antes_inf, Antes_sup = ic_antes_sup,
+            `Después_media` = media_despues, `Después_inf` = ic_despues_inf, `Después_sup` = ic_despues_sup) %>%
+  pivot_longer(-c(fuente, tema), names_to = c("epoca", ".value"), names_sep = "_") %>%
+  mutate(epoca = factor(epoca, levels = c("Antes", "Después")),
+         tema = factor(tema, levels = rev(unique(tema))))
+fig_temas <- ggplot(temas_ad, aes(media, tema, fill = fuente, alpha = epoca)) +
+  geom_col(aes(group = fct_rev(epoca)), position = position_dodge(width = 0.8), width = 0.75) +
+  geom_errorbar(aes(xmin = inf, xmax = sup, group = fct_rev(epoca)), position = position_dodge(width = 0.8),
+                width = 0.3, color = gris_secundario, linewidth = 0.5) +
+  geom_text(aes(x = sup, label = num_es(media), group = fct_rev(epoca)), position = position_dodge(width = 0.8),
+            hjust = -0.25, size = 4.6, color = gris_texto, alpha = 1) +
+  facet_wrap(~ fuente) +
+  scale_fill_manual(values = color_fuente, guide = "none") +
+  scale_alpha_manual(values = c("Antes" = 0.4, "Después" = 1)) +
+  scale_x_continuous(labels = scales::label_number(decimal.mark = ","), expand = expansion(mult = c(0, 0.15))) +
+  guides(alpha = guide_legend(override.aes = list(fill = gris_secundario))) +
+  labs(title = "Atención a cada tema antes y después del corte, por tipo de documento",
+       subtitle = "Comunicados y minutas (solo la discusión de la Junta), 5 años antes y 5 años después del 2014-10-30.",
+       x = "Palabras del tema por cada 1.000 palabras (media por reunión)", y = NULL,
+       caption = paste("Barras claras: antes; oscuras: después. Líneas: intervalo de confianza del 95 % de la media por reunión. Temas: diccionario fijado a priori.",
+                       n_reuniones, fuente_txt, sep = "\n")) +
+  tema_presentacion + tema_paneles + tema_barras_h + tema_diapositiva +
+  theme(axis.text.y = element_text(size = 16, color = gris_texto))
+guardar_figura("conjunto_temas_antes_despues.png", fig_temas, carpeta_salida, width = ancho, height = alto)
+
+# -----------------------------------------------------------------------------
+# 5c. Brent, TRM e inflacion 2007-2026, con P10 destacado
+# -----------------------------------------------------------------------------
+
+meta_anual <- readRDS("01_Datos/03_Listos/macro_meta.rds")
+paneles_s <- c("Brent (dólares por barril)", "TRM (pesos por dólar)", "Inflación total anual (%)")
+series <- bind_rows(
+  macro %>% transmute(fecha, valor = brent, serie = "Brent", panel = paneles_s[1]),
+  macro %>% transmute(fecha, valor = trm, serie = "TRM", panel = paneles_s[2]),
+  macro %>% transmute(fecha, valor = inflacion_total, serie = "Inflación total", panel = paneles_s[3])
+) %>% filter(!is.na(valor)) %>% mutate(panel = factor(panel, levels = paneles_s))
+# meta y rango del ano de cada reunion (solo en el panel de inflacion)
+meta_reunion <- macro %>%
+  transmute(fecha, anio = as.integer(format(fecha, "%Y"))) %>%
+  left_join(meta_anual, by = "anio") %>%
+  mutate(panel = factor(paneles_s[3], levels = paneles_s))
+p10 <- periodos %>% filter(periodo == "P10")
+fig_series <- ggplot(series, aes(fecha, valor)) +
+  capa_periodos(periodos) +
+  annotate("rect", xmin = p10$inicio, xmax = p10$fin, ymin = -Inf, ymax = Inf, fill = gris_secundario, alpha = 0.4) +
+  geom_text(data = tibble(fecha = p10$inicio, panel = factor(paneles_s[1], levels = paneles_s)),
+            aes(x = fecha, y = Inf, label = "P10"), inherit.aes = FALSE, vjust = 1.4, hjust = 1.15, size = 5, fontface = "bold",
+            color = gris_texto) +
+  geom_ribbon(data = meta_reunion, aes(x = fecha, ymin = rango_inf, ymax = rango_sup), inherit.aes = FALSE,
+              fill = colores_macro_diapositiva[["Inflación total"]], alpha = 0.15) +
+  geom_step(data = meta_reunion, aes(x = fecha, y = meta), inherit.aes = FALSE, linetype = "dashed",
+            color = gris_texto, linewidth = 0.6) +
+  capa_corte(corte_crisis) +
+  geom_line(aes(color = serie), linewidth = 1, show.legend = FALSE) +
+  facet_wrap(~ panel, ncol = 1, scales = "free_y") +
+  scale_color_manual(values = colores_macro_diapositiva) +
+  scale_x_date(date_breaks = "2 years", date_labels = "%Y", expand = expansion(mult = 0.01)) +
+  scale_y_continuous(labels = scales::label_number(decimal.mark = ",", big.mark = ".")) +
+  labs(title = "Brent, TRM e inflación total por reunión, 2007 a 2026",
+       subtitle = "Series macro alineadas con cada reunión de la Junta; franja oscura: periodo P10 (alzas de 2026).",
+       x = NULL, y = NULL,
+       caption = paste("Último dato que la Junta tenía el día de cada reunión. Inflación: línea punteada = meta del año; franja verde = rango meta.",
+                       "Sombreado tenue: periodos de política monetaria P1 a P10. Línea negra: corte del 30-10-2014.",
+                       "Fuentes: Brent, FRED (DCOILBRENTEU); TRM y meta, Banco de la República; inflación, DANE.", sep = "\n")) +
+  tema_presentacion + tema_paneles + tema_diapositiva +
+  theme(strip.text = element_text(size = 15), axis.text.y = element_text(size = 13), panel.spacing.y = unit(0.4, "lines"))
+guardar_figura("macro_series_2007_2026.png", fig_series, carpeta_salida, width = ancho, height = alto)
+
+# -----------------------------------------------------------------------------
 # 6. Chequeos
 # -----------------------------------------------------------------------------
 
@@ -299,7 +374,9 @@ stopifnot(
   nrow(palabras) == 40,
   all(c("déficit", "devaluación", "indexación", "cuenta corriente") %in% palabras$etiqueta),
   nrow(cor_inf) == 32, # 2 anclas x 2 epocas x 8 palabras
-  nrow(verificacion) == 4, all(is.finite(verificacion$maximo_antes))
+  nrow(verificacion) == 4, all(is.finite(verificacion$maximo_antes)),
+  nrow(temas_ad) == 24, # 6 temas x 2 fuentes x 2 epocas
+  nrow(p10) == 1
 )
 
 message("11_figuras_diapositiva: listo. Verificación antes de alzas: ", if (sostiene) "se sostiene" else "no se sostiene")

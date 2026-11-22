@@ -316,6 +316,8 @@ que no se confunden con los de comunicados y minutas
 | `Figuras/11_figuras_diapositiva/conjunto_externo_macro_2013_2018.png` | Atención al entorno externo, Brent, TRM e inflación por reunión, 2013–2018, con el corte, el ciclo de alzas y los extremos fechados |
 | `Figuras/11_figuras_diapositiva/conjunto_palabras_10_10.png` | Las 10 palabras que más ganan y las 10 que más pierden, con tildes |
 | `Figuras/11_figuras_diapositiva/minutas_correlaciones_inflacion.png` | Palabras más correlacionadas con «inflación» y «expectativas de inflación» en las minutas, antes y después |
+| `Figuras/11_figuras_diapositiva/conjunto_temas_antes_despues.png` | Atención media por reunión a cada tema del diccionario, antes y después, comunicados y minutas, con IC 95 % (versión de diapositiva de la figura de `09`) |
+| `Figuras/11_figuras_diapositiva/macro_series_2007_2026.png` | Brent, TRM e inflación total por reunión, 2007–2026, con la meta y su rango, el corte y el periodo P10 destacado |
 | `Tablas/11_figuras_diapositiva/conjunto_verificacion_antes_alzas.csv` | Primera reunión en que la media móvil del tópico 4 y del tema «Entorno externo» supera su máximo de los 5 años antes del corte, frente a la primera alza (2015-09-25). La figura `conjunto_cambio_antes_alzas.png` solo se genera si las dos medidas lo superan antes de la alza en comunicados y en minutas; con los datos actuales no se genera |
 
 ### Borrador de la presentación (fuera del pipeline)
