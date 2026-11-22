@@ -74,7 +74,9 @@ carpetas_salida <- c(
   "03_Resultados/Figuras/08_lda_oraciones",
   "03_Resultados/Tablas/09_antes_despues",
   "03_Resultados/Figuras/09_antes_despues",
-  "03_Resultados/Tablas/10_glove"
+  "03_Resultados/Tablas/10_glove",
+  "03_Resultados/Tablas/11_figuras_diapositiva",
+  "03_Resultados/Figuras/11_figuras_diapositiva"
 )
 for (carpeta in carpetas_salida) {
   if (!dir.exists(carpeta)) dir.create(carpeta, recursive = TRUE)
@@ -94,7 +96,8 @@ scripts <- c(
   "02_Scripts/07_graficas_macro.R",
   "02_Scripts/08_lda_oraciones.R",
   "02_Scripts/09_antes_despues.R",
-  "02_Scripts/10_glove.R"
+  "02_Scripts/10_glove.R",
+  "02_Scripts/11_figuras_diapositiva.R"
 )
 
 # nota: los scripts '00_formato_graficas.R', '00_formato_tablas.R' y

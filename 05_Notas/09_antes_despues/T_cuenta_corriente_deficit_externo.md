@@ -20,7 +20,7 @@ n = 59 minutas antes y 53 después; 54 comunicados antes y 53 después.
 | Término | Minutas antes → después (por 1.000 palabras) | Comunicados antes → después |
 | --- | --- | --- |
 | cuenta corriente | 0,00 → 2,03 (0 → 47 apariciones) | 0,00 → 1,41 (0 → 43) |
-| déficit | 0,02 → 2,21 (1 → 51) | 0,03 → 2,14 (1 → 65) |
+| déficit | 0,02 → 2,21 (1 → 51) | 0,03 → 2,12 (1 → 65) |
 | balanza de pagos | 0,00 → 0,87 | razón después/antes 30,05 |
 
 - Razón de frecuencias después / antes (con 0,5 apariciones sumadas a cada
@@ -83,3 +83,4 @@ los reportes técnicos.
 ## Historial
 
 - 2026-11-21: nota creada con la primera corrida de `09_antes_despues.R`.
+- 2026-11-21: corregida la cifra de «déficit» en comunicados después del corte: 2,12 por 1.000 palabras (65 apariciones sobre 30.601 palabras), no 2,14, según `03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv`. La conclusión no cambia.

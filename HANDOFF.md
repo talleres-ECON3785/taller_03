@@ -16,34 +16,22 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **H4 de `PLAN.md` (P4.1–P4.5): interpretación y deck, todo el equipo
-   (domingo 22).**
-   - Insumos listos: las notas de `05_Notas/08_lda_oraciones/` (LDA) y de
-     `05_Notas/09_antes_despues/` (diccionario, palabras, bigramas), con
-     cifras, fragmentos y lectura de robustez. Las figuras por reunión del LDA
-     (`conjunto_lda_theta_por_reunion_topicos_1_4.png` y `_6_10.png`) ya
-     están en formato de diapositiva.
-   - Embeddings (`10_glove.R`): una línea de confirmación en la diapositiva 7
-     y `conjunto_glove_vecinos.png` como apéndice A9. Solo se afirma lo que
-     coincide en GloVe y Word2Vec (ver la nota de `05_Notas/10_glove/`).
-   - *Terminado cuando:* el borrador en `04_Presentaciones/` tiene cada cambio
-     de tema con su fragmento y la salvedad «asociación, no causalidad», y el
-     video dura máximo 15 minutos.
-2. **H3d de `PLAN.md` (P3d.1–P3d.3): cerrar la robustez común (integrante por
-   definir).**
-   - `08` y `09` ya tienen los cortes alternativos, los comunicados como
-     control y la ventana de 5 años. `10` solo tiene robustez entre métodos
-     (GloVe frente a Word2Vec); no se le corrieron los cortes alternativos.
-   - *Terminado cuando:* P3d.1–P3d.3 quedan marcados en `PLAN.md`, y el alcance
-     de `10` queda declarado en «Decisiones tomadas» o se agregan los cortes
-     alternativos a `10_glove.R`.
-3. **Llevar `SantiagoMunozM` a `main` con un pull request (lo pide Santiago
-   Muñoz Martínez, no el agente).**
-   - Antes: correr `00_main.R` completo con la robustez de Word2Vec ya
-     agregada a `10_glove.R` (diez scripts) y traer `main` si avanzó,
-     resolviendo conflictos en `PLAN.md`, `CLAUDE.md` y `HANDOFF.md`.
-   - *Terminado cuando:* el PR está mergeado y `00_main.R` corre sin errores
-     en `main`.
+1. **H4 de `PLAN.md` (P4.5): deck final y video, todo el equipo (domingo 22).**
+   - Borrador: `04_Presentaciones/borrador_presentacion.pptx` (13 diapositivas principales y
+     14 de apéndice), generado por `python 04_Presentaciones/construir_borrador.py`. Guion:
+     `04_Presentaciones/guion_presentacion.txt` (14:20 estimados), copiado a las notas del orador.
+   - Faltan: revisarlo en PowerPoint (Codec Pro no está en LibreOffice), poner los nombres de los
+     presentadores, cronometrar un ensayo, pasar la versión final a `08_Entregables/` y grabar.
+   - *Terminado cuando:* el video dura máximo 15 minutos, los cuatro integrantes exponen y cada
+     hallazgo lleva su fragmento y la salvedad «asociación, no causalidad».
+2. **H3d de `PLAN.md` (P3d.1–P3d.3): cerrar la robustez común (integrante por definir).**
+   - `08` y `09` ya tienen los cortes alternativos y los comunicados como control. `10` solo tiene
+     robustez entre métodos (GloVe frente a Word2Vec).
+   - *Terminado cuando:* P3d.1–P3d.3 quedan marcados en `PLAN.md` y el alcance de `10` queda
+     declarado en «Decisiones tomadas».
+3. **Correr `00_main.R` completo (01 a 11) y abrir el PR de `SamuelEscandonC` a `main` (Samuel
+   Escandón).**
+   - *Terminado cuando:* `00_main.R` termina sin errores y el PR está abierto.
 
 **Bloqueos y preguntas abiertas:**
 
@@ -85,8 +73,11 @@ domingo 22 de noviembre de 2026.**
   con los tópicos 6 + 10).
 - `00_main.R` emite un warning de ggplot (`position_stack()` con intervalos
   que se solapan); no se revisó de qué figura sale.
-- `04_Presentaciones/indicaciones_deck.md` está sin seguimiento y no lo creó
-  esta rama: confirmar de quién es antes de versionarlo.
+- El guion estima 14:20 con 140 palabras por minuto; falta un ensayo cronometrado. Menciona tres
+  hechos de contexto sin `.csv` propio (alzas de la Reserva Federal, Colombia exportador de
+  petróleo, umbral de mercado bajista).
+- La figura de verificación «el discurso cambió antes de las alzas» no se generó: la regla solo se
+  cumple para el entorno externo (ver `05_Notas/11_figuras_diapositiva/`).
 - Lista de palabras vacías de redacción: `mantener`, `continuar`, `seguir`,
   los verbos de atribución («resaltar», «destacar», «señalar»…) y adjetivos
   como `anual`, `mayor` o `menor` quedan entre las palabras más frecuentes. Si
@@ -102,17 +93,13 @@ domingo 22 de noviembre de 2026.**
 
 ## Estado actual
 
-- **Pipeline:** `00_main.R` corre diez scripts (01 a 10) en unos 5 minutos si
-  ya existe la anotación de `udpipe`. La corrida completa del 2026-11-21 (4,8
-  minutos) fue antes de agregar la robustez con Word2Vec; después solo se
-  corrió `10_glove.R`. Requiere Chrome para las tablas e internet la primera
-  vez.
+- **Pipeline:** `00_main.R` corre once scripts (01 a 11).
+  - La corrida completa de 01 a 10 tardó 4,8 minutos (2026-11-21), antes de agregar la robustez con
+    Word2Vec a `10`; `11` suma unos 10 segundos. La corrida completa con los once no se ha hecho.
+  - Requiere Chrome para las tablas e internet la primera vez.
 - **Scripts:**
-  - de formato y definiciones: `00_formato_graficas.R`, `00_formato_tablas.R`
-    (desde el 2026-11-21: encabezados y cifras centrados, texto a la izquierda,
-    márgenes de 8 px) y `00_funciones_texto.R` (periodos, formatos de minuta,
-    compuestos, palabras vacías, temas, corte, `construir_bigramas()`,
-    `asignar_epoca()`, `escenarios` y `texto_original()`);
+  - de formato y definiciones: `00_formato_graficas.R` (incluye `tema_diapositiva` y
+    `colores_macro_diapositiva`), `00_formato_tablas.R` y `00_funciones_texto.R`;
   - de texto: `01_extraer_texto.R` a `05_lda_exploratorio.R`;
   - de series: `06_series_macro.R` y `07_graficas_macro.R`;
   - antes/después del corte:
@@ -126,6 +113,8 @@ domingo 22 de noviembre de 2026.**
       (inflación, expectativas de inflación, crecimiento y tasa de
       intervención), vecinos y coseno antes–después, más la robustez con
       Word2Vec.
+  - `11_figuras_diapositiva.R`: versiones 16:9 de las figuras para la presentación y la
+    verificación del momento del cambio.
 - **Datos:**
   - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios y
     anotados en `01_Datos/03_Listos/`.
@@ -154,11 +143,27 @@ domingo 22 de noviembre de 2026.**
 - **Reglas:** el catálogo incluye los Labs 11, 12 y 13 (Word2Vec y GloVe) y
   registra como ampliaciones `pdftools`, `gt` y `readxl`. `widyr`, `text2vec`
   y `word2vec` están en el `p_load()`.
-- **Git:** el trabajo del LDA está en `SantiagoMunozM` y el de `09` en
-  `SamuelEscandonC` (mergeado a `main` en el PR #6); `SantiagoMunozM` no está
-  mergeado a `main`.
+- **Presentación** (en `04_Presentaciones/`): documento base `hallazgos_y_figuras.txt`, reglas
+  `indicaciones_deck.md`, plantilla `plantilla_presentacion.pptx`, borrador
+  `borrador_presentacion.pptx` (lo genera `construir_borrador.py`; 13 principales, con una
+  diapositiva de embeddings, y apéndice A1 a A9) y guion `guion_presentacion.txt` (14:20, cuatro
+  presentadores, cinco preguntas probables).
+- **Git:** `main` incluye `SantiagoMunozM` hasta los embeddings (PR #10) y `SamuelEscandonC` hasta
+  el documento de hallazgos (PR #9). `SamuelEscandonC` ya trae `main` y tiene sin mergear el script
+  `11`, el deck y el guion.
 
 ## Registro de sesiones
+
+### 2026-11-21 (6): diapositiva de embeddings y guion del video
+
+- Samuel Escandón (`SamuelEscandonC`). Avanza H4 (P4.5, sin cerrar). Se trajo `main` (embeddings,
+  PR #10) conservando lo de las dos ramas. `11` suma la figura de cosenos GloVe / Word2Vec y el
+  deck pasa a tener una diapositiva propia de embeddings (solo lo que coincide en los dos métodos)
+  y el apéndice A9. Se escribió `guion_presentacion.txt` (13 diapositivas, 14:20, cuatro
+  presentadores, cinco preguntas), copiado a las notas del orador. No se corrió `00_main.R`.
+- Bitácora: [2026-11-21_diapositiva-embeddings-y-guion.md](06_Bitacoras/2026-11-21_diapositiva-embeddings-y-guion.md)
+- **Siguientes objetivos:** (1) deck final y video (P4.5); (2) H3d, robustez y alcance de `10`;
+  (3) `00_main.R` completo y PR de `SamuelEscandonC` a `main`.
 
 ### 2026-11-21 (5): embeddings antes y después del corte (H3c)
 
@@ -172,6 +177,21 @@ domingo 22 de noviembre de 2026.**
 - Bitácora: [2026-11-21_embeddings-glove.md](06_Bitacoras/2026-11-21_embeddings-glove.md)
 - **Siguientes objetivos:** (1) H4, interpretación y deck; (2) H3d, cerrar la
   robustez y declarar el alcance de `10`; (3) PR de `SantiagoMunozM` a `main`.
+
+### 2026-11-21 (5): documento de hallazgos, figuras para diapositiva y borrador del deck
+
+- Samuel Escandón (`SamuelEscandonC`). Avanza H4 (P4.2 y P4.5, sin cerrar). Se escribieron:
+  - `hallazgos_y_figuras.txt`;
+  - `11_figuras_diapositiva.R`, con versiones 16:9 de las figuras de 07 a 09 y una verificación:
+    el entorno externo supera su máximo previo antes de la primera alza y la inflación por
+    depreciación después;
+  - el borrador del deck sobre la plantilla del equipo, con `python-pptx` y el guion en las notas.
+  Se corrigieron dos discrepancias de las notas de `09`. No se corrió `00_main.R` completo.
+- Bitácora: [2026-11-21_figuras-diapositiva-y-borrador.md](06_Bitacoras/2026-11-21_figuras-diapositiva-y-borrador.md)
+- **Siguientes objetivos:**
+  1. Deck final y video (P4.5).
+  2. Word2Vec (H3c) u omitirlo.
+  3. `00_main.R` completo y PR de `SamuelEscandonC` a `main`.
 
 ### 2026-11-21 (4): LDA con bloques de oraciones (H3a)
 

@@ -4,7 +4,8 @@ Base del borrador de la presentación a la mesa de renta fija (video de máximo 
 
 Preparado el 2026-11-21 a partir de las notas de 05_Notas/ y de los .csv de 03_Resultados/.
 No crea hallazgos nuevos: cada cifra sale de una nota y se verificó contra el .csv que se cita.
-Los embeddings (script 10_glove.R) se agregaron el 2026-11-21 en la sección 5.
+Los embeddings (script 10_glove.R) se agregaron el 2026-11-21 en la sección 5; desde la segunda
+versión del deck tienen diapositiva propia (8), y el orden de la sección 6 sigue el guion.
 
 Convenciones del documento
 - Pregunta del equipo: ¿cómo cambiaron los temas de interés de la Junta del Banco de la República
@@ -562,7 +563,7 @@ Preguntas abiertas
 
 
 ====================================================================================================
-5. EMBEDDINGS (script 10_glove.R)        >>> LISTO: UNA LÍNEA EN LA DIAPOSITIVA 7 <<<
+5. EMBEDDINGS (script 10_glove.R)        >>> LISTO: DIAPOSITIVA 8 PROPIA <<<
 ====================================================================================================
 
 Estado: terminado el 2026-11-21 (Santiago Muñoz Martínez).
@@ -617,157 +618,74 @@ Fragmentos para el video
   de la meta.»
 - Comunicado del 2018-10-26: «La inflación observada y su convergencia esperada a la meta del 3%.»
 
-En qué diapositivas entran (decidido el 2026-11-21)
-- Diapositiva 7 (inflación): una línea de confirmación debajo de la figura del LDA. El presentador
-  la dice en unos 10 segundos:
-  «Una tercera medida lo confirma: después de 2014, las expectativas de inflación son la palabra
-  cuyo uso más cambia, y la inflación se discute junto a la meta y la convergencia.»
-- Apéndice A9: la tabla conjunto_glove_vecinos.png, para preguntas.
-- Diapositiva 10 (alcance): como argumento de rigor, tres medidas distintas (palabras, tópicos y
-  embeddings) apuntan en la misma dirección.
+En qué diapositivas entran (actualizado el 2026-11-21, segunda versión del deck)
+- Diapositiva 8 propia (PowerPoint 8), presentador 3, 1:20. Título: «Las expectativas de inflación
+  son la palabra cuyo contexto más cambió, y la inflación pasó a discutirse junto a la meta».
+  - Figura: Figuras/11_figuras_diapositiva/conjunto_glove_cosenos.png (coseno antes–después de las
+    cuatro anclas con GloVe y Word2Vec, de menor a mayor, línea «1 = mismo contexto»).
+  - Texto nativo con los vecinos estables de GloVe (los que se repiten en las tres semillas):
+    «inflación», antes proyección, comportamiento, meta de inflación, mercado, resultado, proyectado
+    y anual; después meta, expectativa, convergencia, proyección, desviar y comportamiento.
+    «Expectativas de inflación», antes anclar, analista, encontrar e inflación básica; después
+    anclaje, desanclaje, analista, meta y derivar.
+  - Matiz: «El «anclaje / desanclaje» de las expectativas solo aparece con GloVe.»
+  - Fragmento: minuta del 2015-01-30 (desviar transitoriamente la inflación de la meta).
+- Diapositiva 3 (cómo lo medimos): «Tres medidas: un diccionario de temas fijado de antemano, un
+  modelo de tópicos (LDA) y embeddings que miden el contexto de cada palabra.»
+- Diapositiva 11 (alcance): los embeddings entran en «Respaldado» como tercera medida y en
+  «Requiere más análisis»: «Los embeddings cambian según el método (GloVe o Word2Vec); solo se usa
+  lo que coincide.»
+- Apéndice A9 (PowerPoint 27): la tabla conjunto_glove_vecinos.png a todo el ancho.
 
-Por qué NO llevan una diapositiva propia
-- No agregan un hallazgo nuevo: confirman el de la diapositiva 7. Una diapositiva aparte repetiría
-  el mensaje.
-- Explicar qué es un vecino y qué mide el coseno toma casi un minuto de método. La presentación
-  debe centrarse en resultados, y el plan ya va en 13:30 de un máximo de 15 minutos.
-- Lo más vistoso («anclaje / desanclaje») depende del método. Lo robusto cabe en una frase.
-- La tabla es densa (4 anclas, 80 vecinos, lemas sin tildes) y no se lee a media pantalla en el
-  video.
-- Excepción: si el equipo quiere resaltar la originalidad del método, una diapositiva simple solo
-  con «expectativas de inflación» (3 vecinos antes, 3 después y un fragmento), no la tabla.
-  Para no pasar de 15 minutos habría que quitar la diapositiva 5.
+Por qué ahora llevan diapositiva propia
+- El equipo decidió resaltar el método. La diapositiva solo dice lo que sostienen los dos métodos;
+  lo que depende del método va como matiz.
+- Con el guion, el total queda en 14:20 sin quitar diapositivas (ver sección 6). La regla era
+  recortar la diapositiva 3 si el total pasaba de 14:30.
 
 
 ====================================================================================================
-6. PROPUESTA DE ORDEN DE DIAPOSITIVAS
+6. ORDEN DE DIAPOSITIVAS (deck borrador_presentacion.pptx y guion_presentacion.txt)
 ====================================================================================================
 
-Duración total prevista: 13 min 30 s, más unos 60 a 90 s de transiciones (máximo 15 min).
-Las rutas son relativas a 03_Resultados/.
+Numeración de PowerPoint. El texto que se lee está en 04_Presentaciones/guion_presentacion.txt y
+copiado en las notas del orador; las cifras de cada diapositiva y su .csv, en las mismas notas.
+Duraciones del guion: palabras del texto y de la transición a 140 por minuto, más 3 s por cambio.
 
-Diapositiva 1
-- Título: Después del choque petrolero, la Junta pasó de hablar del mundo a hablar de cómo el
-  choque entraba a Colombia
-- Figura: ninguna (mensaje principal; opcional, una línea de tiempo mínima)
-- Duración: 1:00
-- Presentador: 1
-- Frase del presentador: «Esta es la respuesta: cambió de qué habla la Junta, y el cambio se vio
-  primero en los comunicados.»
-
-Diapositiva 2
-- Título: Comparamos cinco años antes y cinco después de la primera reunión con el petróleo en
-  mercado bajista
-- Figura: Tablas/09_antes_despues/conjunto_documentos_por_epoca.png (o sin figura)
-- Duración: 1:00
-- Presentador: 1
-- Frase del presentador: «El corte lo fijó el petróleo, no el texto; leímos comunicados y minutas
-  con dos medidas.»
-
-Diapositiva 3
-- Título: La caída del petróleo llegó a la inflación en dos años, a través de la depreciación del
-  peso
-- Figura: Figuras/07_graficas_macro/macro_cronologia_choque.png
-- Duración: 1:15
-- Presentador: 1
-- Frase del presentador: «El Brent cayó 77 %, el peso se depreció 86 % y la inflación llegó a 9 %.»
-
-Diapositiva 4
-- Título: Después del choque, la Junta pasó de describir la economía mundial a discutir el déficit
-  externo de Colombia
-- Figura: Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (tópicos 6 y 10)
-- Duración: 1:15
-- Presentador: 2
-- Frase del presentador: «El déficit externo pasó de 2 % a 16 % del peso de los comunicados, y la
-  economía mundial cayó a un tercio.»
-
-Diapositiva 5
-- Título: La cuenta corriente entró a la discusión de la Junta, que antes no la mencionaba
-- Figura: Figuras/09_antes_despues/conjunto_palabras_distintivas.png (versión ajustada)
-- Duración: 1:00
-- Presentador: 2
-- Frase del presentador: «En cinco años antes del corte no hay ni una mención; después, unas dos
-  por cada mil palabras.»
-
-Diapositiva 6
-- Título: El crédito, la liquidez y el detalle de la actividad interna perdieron espacio en la
-  discusión
-- Figura: Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (tópicos 1, 2 y 7)
-- Duración: 1:15
-- Presentador: 2
-- Frase del presentador: «Lo que dominaba en 2010–2013 casi desaparece: el crédito pasa de 11 % a
-  menos de 2 %.»
-
-Diapositiva 7
-- Título: La Junta pasó de vigilar la inflación básica frente a la meta a explicar el traslado de
-  la depreciación a los precios
-- Figura: Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (tópicos 4 y 8)
-- Duración: 1:30
-- Presentador: 3
-- Frase del presentador: «La inflación no recibió más espacio, recibió otra discusión: indexación,
-  persistencia, traslado.»
-- Línea de embeddings (sección 5): «Una tercera medida lo confirma: después de 2014, las
-  expectativas de inflación son la palabra cuyo uso más cambia, y la inflación se discute junto a
-  la meta y la convergencia.»
-
-Diapositiva 8
-- Título: La atención al exterior subió con la caída del petróleo y tocó su máximo antes que el
-  dólar y la inflación
-- Figura: Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png (versión recortada) o
-  Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png
-- Duración: 1:15
-- Presentador: 3
-- Frase del presentador: «El texto se movió con el petróleo y meses antes de los picos de la TRM y
-  de la inflación.»
-
-Diapositiva 9
-- Título: El comunicado registró el cambio de agenda con más fuerza que la minuta
-- Figura: Figuras/09_antes_despues/conjunto_temas_antes_despues.png
-- Duración: 1:00
-- Presentador: 3
-- Frase del presentador: «Para leer el cambio, el comunicado; para entender la deliberación, la
-  minuta.»
-
-Diapositiva 10
-- Título: Lo que la evidencia respalda y lo que requiere más análisis
-- Figura: ninguna (dos columnas de texto)
-- Duración: 1:00
-- Presentador: 4
-- Frase del presentador: «Es asociación en un solo episodio; el formato de las minutas y El Niño
-  son las salvedades.»
-
-Diapositiva 11
-- Título: En 2026 la Junta vuelve a subir tasas, con señales de texto que la mesa puede vigilar
-- Figura: Figuras/07_graficas_macro/macro_series_2007_2026.png
-- Duración: 1:15
-- Presentador: 4
-- Frase del presentador: «Hipótesis: si reaparecen indexación y persistencia, la discusión se
-  parece a la de 2015.»
-
-Diapositiva 12
-- Título: Próximos pasos para convertir esta lectura en una herramienta de seguimiento
-- Figura: ninguna
-- Duración: 0:45
-- Presentador: 4
-- Frase del presentador: «Probar si los temas anticipan la decisión, validar la votación y
-  repetirlo en 2021–2023.»
+| #  | Título (resumido)                                                     | Presentador | Duración |
+| -- | --------------------------------------------------------------------- | ----------- | -------- |
+| 1  | Portada: ¿De qué habla la Junta?                                      | 1           | 0:20     |
+| 2  | La Junta dejó de hablar del mundo y del crédito y pasó a discutir     | 1           | 1:15     |
+|    | cómo el choque entraba a Colombia                                     |             |          |
+| 3  | Comparamos cinco años antes y cinco después (corte, ventana,          | 1           | 1:00     |
+|    | documentos, tres medidas)                                             |             |          |
+| 4  | La caída del petróleo llegó a la inflación en dos años                | 1           | 1:10     |
+| 5  | De la economía mundial al déficit externo (tópicos 6 y 10)            | 2           | 1:15     |
+| 6  | El crédito y la actividad interna perdieron espacio (tópicos 1 y 2)   | 2           | 1:00     |
+| 7  | De la inflación básica al traslado de la depreciación (tópicos 4 y 8) | 2           | 1:20     |
+| 8  | Las expectativas de inflación son la palabra cuyo contexto más cambió | 3           | 1:20     |
+|    | (embeddings)                                                          |             |          |
+| 9  | La atención al exterior se movió con el petróleo; la inflación por    | 3           | 1:15     |
+|    | depreciación llegó con las alzas                                      |             |          |
+| 10 | El comunicado registró el cambio con más fuerza que la minuta         | 3           | 1:05     |
+| 11 | La evidencia respalda el cambio de temas y deja abiertas su causa y   | 4           | 1:05     |
+|    | su repetición                                                         |             |          |
+| 12 | En 2026 la Junta vuelve a subir tasas                                 | 4           | 1:20     |
+| 13 | Próximos pasos                                                        | 4           | 0:55     |
 
 Reparto entre presentadores
-- Presentador 1: diapositivas 1 a 3, 3:15.
-- Presentador 2: diapositivas 4 a 6, 3:30.
-- Presentador 3: diapositivas 7 a 9, 3:45.
-- Presentador 4: diapositivas 10 a 12, 3:00.
-- Total: 13:30.
+- Presentador 1: diapositivas 1 a 4, 3:45.
+- Presentador 2: diapositivas 5 a 7, 3:35.
+- Presentador 3: diapositivas 8 a 10, 3:40.
+- Presentador 4: diapositivas 11 a 13, 3:20.
+- Total: 14:20 (máximo 15:00; margen interno 14:30).
 
-Los embeddings no llevan diapositiva propia: entran como una línea en la 7 y como apéndice A9
-(razones en la sección 5).
-
-Apéndice (no cuenta en el tiempo): A1 a A9 de la sección 7.
+Apéndice (no cuenta en el tiempo): PowerPoint 14 (divisor) a 27 (A1 a A9 de la sección 7).
 
 Notas de diseño (04_Presentaciones/indicaciones_deck.md)
 - Ningún título lleva «:» en la mitad, ni «—pero», ni la forma «no es X, es Y».
-- Sin subtítulos de comentario ni cajas de conclusión, salvo la diapositiva 10.
-- Las cifras grandes se reservan para la diapositiva 3 (77 %, 86 %, 9 %).
+- Sin subtítulos de comentario ni cajas de conclusión, salvo la diapositiva de alcance.
+- Las cifras grandes se reservan para la diapositiva 4 (77 %, 86 %, 9 %).
 
 
 ====================================================================================================
@@ -841,6 +759,8 @@ A9. Embeddings
 - Tablas/10_glove/conjunto_glove_vecinos.png: vecinos de las cuatro anclas antes y después del
   corte, coseno antes–después con GloVe y Word2Vec, y coincidencia con las correlaciones de 09.
   Proporción 1,74:1, cercana a 16:9. Lectura y límites en la sección 5.
+- Figuras/11_figuras_diapositiva/conjunto_glove_cosenos.png: coseno antes–después de las cuatro
+  anclas con GloVe y Word2Vec (figura de la diapositiva 8).
 
 Figuras recomendadas que necesitan ajuste de legibilidad para el video (no se modificaron)
 

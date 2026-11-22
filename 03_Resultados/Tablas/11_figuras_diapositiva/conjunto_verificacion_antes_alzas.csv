@@ -1,0 +1,5 @@
+medida,fuente,maximo_antes,fecha_maximo_antes,primera_reunion_supera,antes_primera_alza,meses_antes_alza
+Entorno externo (por 1.000 palabras),Comunicados,23.661371490912934,2012-10-26,2014-12-19,TRUE,9.2
+Entorno externo (por 1.000 palabras),Minutas,20.070646409729086,2012-10-26,2015-03-20,TRUE,6.2
+Tópico 4: inflación por depreciación y alimentos (%),Comunicados,20.603215339464413,2010-04-30,2015-11-27,FALSE,-2.1
+Tópico 4: inflación por depreciación y alimentos (%),Minutas,21.479513992414454,2010-02-26,NA,FALSE,NA
