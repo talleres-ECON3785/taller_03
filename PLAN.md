@@ -4,7 +4,7 @@
 
 ## Contexto
 
-Pregunta fijada 2026-11-18. Ya existe: texto extraído y limpio (`01`–`05`), series macro (`06`), gráficas macro, alineación por reunión y fecha de corte (`07`, H1 y H2). Medidas antes/después (H3): `09_antes_despues.R` hecho (H3b); faltan el LDA (`08`, H3a), los embeddings (`10`, H3c) y la robustez común (H3d) y la interpretación con la historia macro (H4).
+Pregunta fijada 2026-11-18. Ya existe: texto extraído y limpio (`01`–`05`), series macro (`06`), gráficas macro, alineación por reunión y fecha de corte (`07`, H1 y H2). Medidas antes/después (H3): LDA (`08`, H3a), `09_antes_despues.R` (H3b) y embeddings (`10_glove.R`, H3c) hechos; faltan cerrar la robustez común (H3d) y la interpretación con la historia macro (H4).
 
 ## H1 — Gráficas macro + exploración descriptiva breve
 
@@ -75,18 +75,18 @@ Samuel Escandón, 2026-11-21. Reemplaza el antiguo `08_antes_despues.R`: el 08 q
 - [x] **P3b.7** `stopifnot()` (reuniones por época, anclas presentes, temas sin NA), README con el mapa de salidas, revisión visual de cada figura y tabla.
 - [x] **P3b.8** Notas `05_Notas/09_antes_despues/T_*.md` (skill `registrar-hallazgo`) solo para las conclusiones robustas o matizadas.
 
-### H3c — `10_word2vec.R`: contexto de las palabras ancla
+### H3c — `10_glove.R`: contexto de las palabras ancla
 
-- [ ] **P3c.1** Registrar la ampliación en `07_Recursos/catalogo_metodos.md` y en "Decisiones tomadas" **antes** de correr. Agregar `word2vec` al `p_load()`.
-- [ ] **P3c.2** Texto: una oración de udpipe por línea, armada desde `tokens_anotados.rds` con las palabras limpias (`limpio`), igual que los documentos de `pairwise_cor()` en `09`. Comunicados y discusión de la Junta, 2007–2026.
-- [ ] **P3c.3** Un solo modelo para todo el corpus. Las anclas se marcan por época en el texto (`petroleo_antes`, `petroleo_despues`) con `asignar_epoca()` en el escenario principal. Fuera de la ventana, el ancla queda sin marca.
-- [ ] **P3c.4** Las anclas son las mismas de `09`: se leen de `03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv` (`unique(ancla)`), para que el contraste sea con las mismas palabras y no haya dos listas.
-- [ ] **P3c.5** `word2vec::word2vec()` skip-gram con dimensión 50, ventana 5, `min_count` 5, 20 iteraciones y `threads = 1`. Semillas 2026, 2027 y 2028, las mismas de H3a.
-- [ ] **P3c.6** Medida: los 10 vecinos más cercanos de cada ancla en cada época (`predict(type = "nearest")`); cuentan los que se repiten en las tres semillas. También el solapamiento entre antes y después (Jaccard). Fragmento: una oración con el ancla y su vecino principal.
-- [ ] **P3c.7** Contraste con `pairwise_cor()`: se lee el mismo `.csv` de P3c.4. Si los vecinos y las correlaciones no coinciden, se reporta.
-- [ ] **P3c.8** Salidas: tabla `conjunto_vecinos_antes_despues.png` con los vecinos, el Jaccard y las correlaciones de `09` por ancla y época; nota `05_Notas/10_word2vec/T_*.md`; `stopifnot()` de que las anclas marcadas están en el vocabulario del modelo. Sin figura aparte: la tabla ya muestra el cambio.
+Simplificado el 2026-11-21 (ver "Decisiones tomadas" de `CLAUDE.md`). **GloVe en vez de Word2Vec:** el paquete `word2vec` no usa la semilla de R y cinco corridas iguales dieron vecinos distintos; GloVe (`text2vec`, Lab 13) se reproduce exactamente. Sin Jaccard: lo reemplaza el coseno antes–después.
 
-Pendiente: comunicados y minutas van juntos en un solo modelo, porque separados quedan muy pocas oraciones por época. Hay que decidirlo al registrar la ampliación.
+- [x] **P3c.1** Word2Vec y GloVe están en el catálogo (Lab 13, secciones 10 a 14 de `07_Recursos/catalogo_metodos.md`). `text2vec` en el `p_load()` y la especificación en "Decisiones tomadas", antes de ver los vecinos.
+- [x] **P3c.2** Texto: oración de udpipe con las palabras limpias de `tokens_anotados.rds`, como `pairwise_cor()` en `09`. Comunicados y discusión de la Junta juntos, 2007–2026.
+- [x] **P3c.3** Un solo modelo; en la ventana principal las anclas se marcan por época (`inflacion_antes`, `inflacion_despues`) con `asignar_epoca()`.
+- [x] **P3c.4** Anclas de `09` con 30 o más oraciones en cada época: inflación, expectativas de inflación, crecimiento y tasa de intervención (quedan fuera déficit, tasa de cambio y petróleo).
+- [x] **P3c.5** GloVe con la especificación del Lab 13 (`rank = 50`, `x_max = 10`, ventana 5, frecuencia mínima 5, 50 iteraciones, `n_threads = 1`). Semillas 2026, 2027 y 2028, con el coseno promediado.
+- [x] **P3c.6** Medida: los 10 vecinos de cada ancla y época, marcados los que no se repiten en las tres semillas, y el coseno entre `ancla_antes` y `ancla_despues`. Fragmento: oración con el ancla y su vecino principal.
+- [x] **P3c.7** Contraste con `pairwise_cor()`: cuántos vecinos están entre las 8 palabras phi de `09`.
+- [x] **P3c.8** Salidas: `03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.png` y `.csv` y `conjunto_glove_fragmentos.csv`; nota `05_Notas/10_glove/T_contexto_inflacion_expectativas.md`.
 
 ### H3d — Robustez común a H3a, H3b y H3c
 
