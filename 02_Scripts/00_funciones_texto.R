@@ -10,7 +10,11 @@
 #      tasa que abre cada uno;
 #   3. cortes de formato de las minutas;
 #   4. diccionario de terminos compuestos de la Junta;
-#   5. palabras vacias (generales y de dominio).
+#   5. palabras vacias (generales y de dominio);
+#   6. diccionario de temas;
+#   7. fecha de corte, epocas y escenarios antes/despues;
+#   8. bigramas;
+#   9. texto original para los fragmentos.
 #
 # Uso: source("02_Scripts/00_funciones_texto.R") al inicio del script.
 # =============================================================================
@@ -371,6 +375,22 @@ cortes_alternativos <- c(
   depreciacion_trm = as.Date("2014-12-19")
 )
 
+# epocas y escenarios de la comparacion antes/despues (los usan 08, 09 y 10)
+anios_ventana <- 5
+# "antes" / "despues" de `corte`; con ventana, NA fuera de los 5 anos a cada lado
+asignar_epoca <- function(fecha, corte, ventana) {
+  epoca <- if_else(fecha < corte, "antes", "despues")
+  if (ventana) epoca[fecha < corte - years(anios_ventana) | fecha >= corte + years(anios_ventana)] <- NA
+  epoca
+}
+escenarios <- tibble(
+  escenario = c("principal", "completa", "corte_p4", "corte_trm"),
+  nombre = c("Principal: corte 2014-10-30, 5 años a cada lado", "Muestra completa 2007–2026, corte 2014-10-30",
+             "Corte 2014-09-26, 5 años a cada lado", "Corte 2014-12-19, 5 años a cada lado"),
+  corte = c(corte_crisis, corte_crisis, cortes_alternativos[["apertura_p4"]], cortes_alternativos[["depreciacion_trm"]]),
+  ventana = c(TRUE, FALSE, TRUE, TRUE)
+)
+
 # -----------------------------------------------------------------------------
 # 8. Bigramas (los usan '04_bigramas.R' y '09_antes_despues.R')
 # -----------------------------------------------------------------------------
@@ -387,4 +407,25 @@ construir_bigramas <- function(anotados) {
     ungroup() %>%
     filter(limpio, limpio2, contiguo) %>%
     transmute(id, tipo, fecha, periodo, es_junta, bigrama = paste(word, palabra2))
+}
+
+# -----------------------------------------------------------------------------
+# 9. Texto original para los fragmentos (los usan '08_lda_oraciones.R' y '09_antes_despues.R')
+# -----------------------------------------------------------------------------
+
+# recupera la oracion original del PDF (con mayusculas y tildes) a partir de la
+# tokenizada: compara las dos sin espacios, signos ni tildes. Si no la
+# encuentra, devuelve la tokenizada (minusculas y compuestos con guion bajo).
+# `texto_doc` es el texto completo del documento (columna `texto` de corpus_texto.rds)
+# udpipe separa "del" y "al" en "de el" y "a el": se vuelven a unir
+contraer <- function(x) str_replace_all(x, c("\\bde el\\b" = "del", "\\ba el\\b" = "al"))
+clave <- function(x) gsub("[^a-z_]", "", sin_tilde(str_to_lower(contraer(x))))
+texto_original <- function(texto_doc, texto_tok) {
+  crudas <- str_squish(partir_oraciones(texto_doc)[[1]])
+  claves <- clave(aplicar_compuestos(crudas, unir_referencia = FALSE))
+  # la oracion de udpipe tiene que estar completa dentro de la cruda
+  hit <- which(str_detect(claves, fixed(clave(texto_tok))))
+  out <- if (length(hit)) crudas[hit[1]] else
+    str_replace_all(contraer(texto_tok), c("_" = " ", " ([,.;:%)])" = "\\1", "\\( " = "("))
+  if (nchar(out) > 330) paste0(str_sub(out, 1, 327), "…") else out
 }

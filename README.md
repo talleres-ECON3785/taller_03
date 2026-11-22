@@ -250,6 +250,28 @@ fechas, formato y número de palabras.
 | `Tablas/07_graficas_macro/macro_cortes_candidatos.png` | Fechas de corte candidatas (apertura de P4 y dos reglas mecánicas) con los datos que la Junta tenía ese día |
 | `Tablas/07_graficas_macro/conjunto_ventanas_corte.png` | Minutas del formato B antes de cada corte y reuniones y palabras de la Junta a cada lado, en una ventana de 5 años |
 
+### `08_lda_oraciones.R`: modelo de tópicos con bloques de oraciones
+
+Hito H3a de `PLAN.md`. Documento: bloques de oraciones consecutivas de un
+comunicado o de la discusión de la Junta en una minuta. El modelo se estima
+con la ventana de 5 años a cada lado del corte, como las medidas de `09`; fuera
+de ella, θ sale de `posterior()`. La sección 1 es un
+análisis previo al modelo, sin tópicos: fija el umbral de palabras por bloque.
+
+| Resultado | Contenido |
+| --- | --- |
+| `Tablas/08_lda_oraciones/conjunto_lda_umbral_bloques.png` | Palabras útiles por bloque y bloques por reunión antes y después del corte para umbrales de 60, 80 y 100 palabras, con el elegido marcado; bloques y vocabulario de la ventana de 5 años con la que se estima el modelo |
+| `Tablas/08_lda_oraciones/conjunto_lda_seleccion.png` | Perplejidad por validación cruzada (3 pliegues) con el mejor α, costo frente al mínimo y coherencia UMass media para K = 6, 8, 10, 12 y 15, con el K elegido marcado |
+| `Tablas/08_lda_oraciones/conjunto_lda_rejilla.csv` | Perplejidad de las 20 combinaciones de K y α |
+| `Tablas/08_lda_oraciones/conjunto_lda_topicos.png` | Los 10 tópicos: nombre, palabras de mayor lift y más probables, formato de minuta con más peso, alerta de formato y si se repite con las semillas 2027 y 2028 |
+| `Tablas/08_lda_oraciones/conjunto_lda_fragmentos.png` | Los 3 bloques de texto con mayor peso de cada tópico estable, con fecha y tipo de documento |
+| `Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png` | Peso medio por reunión de cada tópico estable antes y después del corte, con IC 95 %, por tipo de documento |
+| `Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png` | Media antes y después, diferencia, IC 95 % (prueba t de Welch por reunión) y lectura de robustez de cada tópico estable |
+| `Tablas/08_lda_oraciones/conjunto_lda_theta_por_reunion.csv` | Peso de cada tópico por reunión, 2007–2026 (fuera de la ventana, con `posterior()`) |
+| `Tablas/08_lda_oraciones/conjunto_lda_antes_despues_detalle.csv` | Medias, diferencias e IC de cada tópico en los cuatro escenarios |
+| `Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png` (y `.csv`) | Correlación por reunión, con IC 95 %, entre el peso de los tópicos y la atención al tema equivalente del diccionario de `09` (Actividad económica, Inflación, Entorno externo), en la ventana |
+| `Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png` y `..._topicos_6_10.png` | Peso de cada tópico estable por reunión, 2007–2019 (desde 2020 entra la pandemia), en dos figuras de 4 tópicos (1 a 4 y 6 a 10), con media móvil de 5 reuniones, el corte, los cambios de formato y los periodos de política (fuera de la ventana, con el modelo estimado en ella) |
+
 ### `09_antes_despues.R`: palabras, bigramas, atención por tema y correlaciones antes y después del corte
 
 Hito H3b de `PLAN.md`. Épocas: 5 años antes y 5 años después del 2014-10-30

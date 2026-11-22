@@ -68,6 +68,8 @@ carpetas_salida <- c(
   "03_Resultados/Figuras/05_lda_exploratorio",
   "03_Resultados/Tablas/07_graficas_macro",
   "03_Resultados/Figuras/07_graficas_macro",
+  "03_Resultados/Tablas/08_lda_oraciones",
+  "03_Resultados/Figuras/08_lda_oraciones",
   "03_Resultados/Tablas/09_antes_despues",
   "03_Resultados/Figuras/09_antes_despues"
 )
@@ -87,6 +89,7 @@ scripts <- c(
   "02_Scripts/05_lda_exploratorio.R",
   "02_Scripts/06_series_macro.R",
   "02_Scripts/07_graficas_macro.R",
+  "02_Scripts/08_lda_oraciones.R",
   "02_Scripts/09_antes_despues.R"
 )
 

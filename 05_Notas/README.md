@@ -14,6 +14,10 @@ Las reglas están en `CLAUDE.md` ("Notas de hallazgos").
 | [09_antes_despues/T_devaluacion_tema_de_inflacion.md](09_antes_despues/T_devaluacion_tema_de_inflacion.md) | vigente | ¿Cambió la forma en que la Junta habla de la inflación? (devaluación, traslado, indexación, persistencia) |
 | [09_antes_despues/T_atencion_temas_antes_despues.md](09_antes_despues/T_atencion_temas_antes_despues.md) | vigente (dos temas matizados) | ¿Cuánto cambió la atención a cada tema antes y después del corte, en comunicados y minutas? |
 | [09_antes_despues/X_atencion_se_adelanta_a_las_series.md](09_antes_despues/X_atencion_se_adelanta_a_las_series.md) | matizado | ¿La atención al entorno externo y a la inflación se mueve antes, a la vez o después del Brent, la TRM y la inflación? |
+| [08_lda_oraciones/T_choque_externo_llega_a_colombia.md](08_lda_oraciones/T_choque_externo_llega_a_colombia.md) | vigente | ¿Cómo cambia la forma en que la Junta habla del exterior? (de la economía mundial al déficit externo y la capacidad productiva; LDA) |
+| [08_lda_oraciones/T_inflacion_de_meta_a_choques.md](08_lda_oraciones/T_inflacion_de_meta_a_choques.md) | vigente (choques: matizado en minutas) | ¿Cambia la forma en que la Junta discute la inflación? (de la inflación básica frente a la meta a la depreciación y los alimentos; LDA) |
+| [08_lda_oraciones/T_decision_postura_sube.md](08_lda_oraciones/T_decision_postura_sube.md) | matizado | ¿Dedica la Junta más espacio a justificar su decisión de tasa después del choque? (LDA) |
+| [08_lda_oraciones/T_actividad_credito_liquidez_bajan.md](08_lda_oraciones/T_actividad_credito_liquidez_bajan.md) | vigente | ¿Qué temas internos pierden espacio después del choque? (actividad, crédito y liquidez; LDA) |
 
 Resultados exploratorios sin nota (quedan en la bitácora del 2026-11-12):
 vocabulario propio de la minuta frente al comunicado, vocabulario laboral y

@@ -73,7 +73,8 @@ nota_tabla <- function(fuente = c("comunicados", "minutas", "conjunto"),
 # -----------------------------------------------------------------------------
 
 # aplica el estilo del proyecto a una tabla `gt`: encabezado de columnas en
-# azul con texto blanco, titulos alineados a la izquierda, filas separadas con
+# azul con texto blanco y centrados, cifras centradas y texto a la izquierda,
+# titulos alineados a la izquierda, filas separadas con
 # lineas finas de la grilla y la nota al pie en gris. Los titulos, subtitulos
 # y etiquetas de columna se definen en el script de la tabla (en espanol y sin
 # nombres de variables del codigo)
@@ -108,11 +109,20 @@ estilo_tabla <- function(tabla, titulo = NULL, subtitulo = NULL, nota = NULL) {
       stub.border.style = "none",
       table_body.hlines.color = gris_grilla,
       table_body.border.bottom.color = gris_grilla,
-      source_notes.font.size = px(11)
+      source_notes.font.size = px(11),
+      # relleno minimo a cada lado del texto de encabezados y celdas
+      column_labels.padding.horizontal = px(8),
+      data_row.padding.horizontal = px(8)
     ) |>
+    # los encabezados de grupo (spanners) no tienen opcion de relleno en tab_options()
+    opt_css(".gt_column_spanner_outer { padding-left: 8px !important; padding-right: 8px !important; }",
+            add = TRUE) |>
+    # cifras centradas y texto a la izquierda; encabezados centrados en ancho y alto
+    cols_align("center", columns = where(is.numeric)) |>
+    cols_align("left", columns = where(\(x) !is.numeric(x))) |>
     tab_style(
-      style = cell_text(color = "white"),
-      locations = cells_column_labels()
+      style = cell_text(color = "white", align = "center", v_align = "middle"),
+      locations = list(cells_column_labels(), cells_column_spanners())
     ) |>
     tab_style(
       style = cell_text(color = gris_texto, weight = "bold"),
