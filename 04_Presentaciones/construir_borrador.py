@@ -479,6 +479,81 @@ def nota_apendice(s, ruta, como_leer):
                                            f"Cómo leerla: {como_leer}")
 
 
+def apendice_cortes():
+    ruta = TAB / "07_graficas_macro" / "macro_cortes_candidatos.csv"
+    d = leer(ruta)
+    filas = [["Regla", "Reunión", "Brent frente a su máximo de 12 meses (%)", "TRM, variación anual (%)",
+              "Inflación total (%)"]]
+    destacar = []
+    for _, r in d.iterrows():
+        if "aprobado" in r.regla:
+            destacar.append(len(filas))
+            aprobado = r
+        filas.append([r.regla, r.reunion, num(r.brent_vs_max, 1, True), num(r.var_trm, 1, True), num(r.inflacion_total)])
+    s = nueva()
+    titulo_apendice(s, f"El corte del {aprobado.reunion} es la primera reunión en que el Brent estaba "
+                       f"{num(-aprobado.brent_vs_max)} % por debajo de su máximo de 12 meses")
+    tabla(s, MARGEN, 2.5, [7.6, 2.4, 3.0, 2.6, 2.6], filas, tam=21, destacar=destacar, alto_fila=1.25)
+    caja_texto(s, MARGEN, 8.0, ANCHO - 2 * MARGEN, 2.5, [
+        "Datos que la Junta tenía el día de cada reunión: Brent del día hábil anterior, TRM del día e inflación del "
+        "último mes publicado. El corte se fijó solo con las series y las decisiones de tasa, antes de mirar el texto; "
+        "las otras dos fechas se usan como cortes alternativos de robustez."], tam=21, color=GRIS)
+    nota_apendice(s, TAB / "07_graficas_macro" / "macro_cortes_candidatos.png",
+                  "cada fila es una regla para fechar el inicio del choque; en negrita, la aprobada. La tabla completa "
+                  "trae también el nivel del Brent, la TRM y la brecha frente a la meta.")
+
+
+def apendice_documentos():
+    ruta = TAB / "09_antes_despues" / "conjunto_documentos_por_epoca.csv"
+    d = leer(ruta)
+    filas = [["Escenario y documento", "Reuniones antes", "Reuniones después", "Palabras antes", "Palabras después"]]
+    destacar = []
+    for _, r in d.iterrows():
+        escenario = re.split(r"[:,]", r.escenario)[0]
+        documento = "comunicados" if r.fuente == "Comunicados" else "minutas (discusión)"
+        if escenario == "Principal":
+            destacar.append(len(filas))
+        filas.append([f"{escenario} · {documento}", num(r.reuniones_antes, 0), num(r.reuniones_despues, 0),
+                      num(r.palabras_antes, 0), num(r.palabras_despues, 0)])
+    p = d[d.escenario.str.startswith("Principal")].set_index("fuente")
+    caida = 100 * (1 - p.loc["Minutas: discusión de la Junta", "palabras_despues"] /
+                   p.loc["Minutas: discusión de la Junta", "palabras_antes"])
+    s = nueva()
+    titulo_apendice(s, f"Los comunicados quedan equilibrados a cada lado del corte y las minutas tienen "
+                       f"{num(caida, 0)} % menos palabras después, por su cambio de formato")
+    tabla(s, MARGEN, 2.45, [7.4, 2.7, 2.7, 2.7, 2.7], filas, tam=21, destacar=destacar, alto_fila=0.8)
+    caja_texto(s, MARGEN, 9.85, ANCHO - 2 * MARGEN, 1.0, [
+        "En negrita, el escenario principal (corte 2014-10-30, 5 años a cada lado); los otros tres son de robustez. "
+        "Palabras: todas las del texto; en las minutas, solo la discusión de la Junta."], tam=18, color=GRIS)
+    nota_apendice(s, TAB / "09_antes_despues" / "conjunto_documentos_por_epoca.png",
+                  "cada fila es un tipo de documento en un escenario; por eso toda medida se normaliza por 1.000 "
+                  "palabras. La tabla completa trae las fechas de la primera y la última reunión de cada época.")
+
+
+def apendice_seleccion():
+    ruta = TAB / "08_lda_oraciones" / "conjunto_lda_seleccion.csv"
+    d = leer(ruta)
+    filas = [["Número de tópicos (K)", "α con menor perplejidad", "Perplejidad", "Por encima del mínimo (%)",
+              "Coherencia media"]]
+    destacar = []
+    for _, r in d.iterrows():
+        if r.elegido == "Sí":
+            destacar.append(len(filas))
+            elegido = r
+        filas.append([str(int(r.K)), num(r.alpha, 2), num(r.perplejidad), num(r.costo_pct), num(r.coherencia)])
+    s = nueva()
+    titulo_apendice(s, f"K = {int(elegido.K)} es el menor número de tópicos a menos del 5 % de la perplejidad "
+                       f"mínima, y su coherencia no es la peor")
+    tabla(s, MARGEN, 2.5, [4.0, 3.6, 3.4, 3.6, 3.6], filas, tam=22, destacar=destacar, alto_fila=0.95)
+    caja_texto(s, MARGEN, 8.4, ANCHO - 2 * MARGEN, 2.2, [
+        "Regla fijada antes de ver los tópicos: para cada K se toma el α con menor perplejidad (document completion, "
+        "3 pliegues); se elige el K más pequeño a menos del 5 % del mínimo, salvo que su coherencia UMass media sea la "
+        "peor. Menor perplejidad es mejor; la coherencia más cercana a cero, también."], tam=21, color=GRIS)
+    nota_apendice(s, TAB / "08_lda_oraciones" / "conjunto_lda_seleccion.png",
+                  "cada fila es un número de tópicos con su mejor α; en negrita, el elegido. La rejilla completa de K y α "
+                  "está en conjunto_lda_rejilla.csv.")
+
+
 def apendice_topicos():
     ruta = TAB / "08_lda_oraciones" / "conjunto_lda_topicos.csv"
     d = leer(ruta)
@@ -671,9 +746,9 @@ def titulo_macro_2(d):
 
 
 apendice = [
-    ("A1. Fechas de corte candidatas y datos que tenía la Junta", TAB / "07_graficas_macro" / "macro_cortes_candidatos.png"),
-    ("A1. Documentos a cada lado del corte, por escenario", TAB / "09_antes_despues" / "conjunto_documentos_por_epoca.png"),
-    ("A2. Selección del número de tópicos (K) y de α", TAB / "08_lda_oraciones" / "conjunto_lda_seleccion.png"),
+    apendice_cortes,
+    apendice_documentos,
+    apendice_seleccion,
     apendice_topicos,
     apendice_diccionario,
     apendice_robustez,
