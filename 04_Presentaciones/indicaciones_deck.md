@@ -44,3 +44,12 @@
 6. Atención y temas
 7. LDA temas 1 - 4
 8. LDA temas 6 - 10
+9. Word2Vec
+10. Word2Vec
+11. Robustez
+    1. Cambio de formato
+    2. Se presentaron los temas que persisten en tres semillas, 2 no fueron estables
+    3. Para LDA y se probaron múltiples hiperparámetros y se escogieron los modelos que dieran mejor combinación de predicción (perplejidad) y legibilidad de los temas (coherencia).
+    4. Los hallazgos son robustos a la ventana de tiempo evaluada y al punto de corte de la crisis
+       1. Puntos de corte alternativos de 2014-09-26 y 2014-12-19
+       2. Ventana alternativa usando corpus completo de 2007 a 2026.
