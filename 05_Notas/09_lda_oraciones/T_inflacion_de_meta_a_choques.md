@@ -2,13 +2,13 @@
 
 - **Estado:** vigente (inflación básica: robusta; inflación por choques: robusta en comunicados y matizada en minutas)
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/08_lda_oraciones.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/08_lda_oraciones.R`
+- **Script de origen:** `02_Scripts/09_lda_oraciones.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/09_lda_oraciones.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png`.
-- Tablas `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png`,
+- Figura `03_Resultados/Figuras/09_lda_oraciones/conjunto_lda_antes_despues.png`.
+- Tablas `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.png`,
   `conjunto_lda_topicos.png` y `conjunto_lda_fragmentos.png`; escenarios en
   `conjunto_lda_antes_despues_detalle.csv`.
 - LDA con K = 10 y α = 0,1, ventana 2009-10-30 a 2019-10-29; 54 comunicados
@@ -67,7 +67,7 @@ subir la tasa. Para la mesa: después de 2014, la señal de inflación en los
 comunicados viene de la depreciación y de los alimentos, no de la inflación
 básica.
 
-**Contraste con `09_antes_despues/`:**
+**Contraste con `08_antes_despues/`:**
 - **Consistente** con `T_devaluacion_tema_de_inflacion.md` (devaluación,
   traslado, indexación y persistencia ganan peso después del corte).
 - **Cambia (atribuible)** frente a `T_atencion_temas_antes_despues.md`: allí el
@@ -78,7 +78,7 @@ básica.
 - **Consistente, reunión a reunión:** la suma de los tópicos 4 y 8 sigue al
   tema «Inflación» del diccionario (correlación de 0,71 [0,60; 0,79] en los
   comunicados y 0,73 [0,63; 0,80] en las minutas; ventana, 107 y 112 reuniones;
-  `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png`). Por
+  `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_vs_diccionario.png`). Por
   separado, el tópico 8 casi no se mueve con el diccionario en los comunicados
   (0,10 [−0,09; 0,29]): allí el diccionario lo empuja sobre todo la inflación
   por choques (tópico 4: 0,61).
@@ -98,6 +98,6 @@ básica.
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `08_lda_oraciones.R`.
-- 2026-11-21: contraste por reunión con el diccionario de `09` (P3a.9): consistente (r = 0,71 y 0,73 con la suma de 4 y 8). Cifras sin cambios.
+- 2026-11-21: nota creada con la primera corrida de `09_lda_oraciones.R`.
+- 2026-11-21: contraste por reunión con el diccionario de `08` (P3a.9): consistente (r = 0,71 y 0,73 con la suma de 4 y 8). Cifras sin cambios.
 - 2026-11-21: contraste con los embeddings (`10_glove.R`, [T_contexto_inflacion_expectativas](../10_glove/T_contexto_inflacion_expectativas.md)): consistente. «Inflación» pasa de vecinos de seguimiento (proyección, resultado) a meta, convergencia y desviar; el tópico 8 (inflación básica frente a la meta) baja y la discusión pasa al desvío por choques.

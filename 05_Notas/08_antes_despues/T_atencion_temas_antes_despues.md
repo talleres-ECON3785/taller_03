@@ -2,13 +2,13 @@
 
 - **Estado:** vigente (actividad y fiscal: robustos; entorno externo: robusto en comunicados y matizado en minutas; inflación: matizada)
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/09_antes_despues.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/09_antes_despues.R`
+- **Script de origen:** `02_Scripts/08_antes_despues.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/08_antes_despues.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/09_antes_despues/conjunto_temas_antes_despues.png`.
-- Tablas `03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues.png`
+- Figura `03_Resultados/Figuras/08_antes_despues/conjunto_temas_antes_despues.png`.
+- Tablas `03_Resultados/Tablas/08_antes_despues/conjunto_temas_antes_despues.png`
   (medias, diferencia, IC 95 % y lectura), `conjunto_temas_robustez.png` (cuatro
   escenarios) y `conjunto_fragmentos_temas.png`; cifras por reunión en
   `conjunto_temas_por_reunion.csv`.
@@ -93,8 +93,8 @@ comunicado es donde se lee primero el cambio de prioridades.
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `09_antes_despues.R`.
+- 2026-11-21: nota creada con la primera corrida de `08_antes_despues.R`.
   Consistente con
   [T_inflacion_sigue_episodios](../03_frecuencias_tfidf/T_inflacion_sigue_episodios.md):
   la atención a la inflación sube en 2015–2016.
-- 2026-11-21: corregida la lectura de «Entorno externo» en la tabla: robusta en comunicados y matizada en minutas, como en `03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues.csv` (antes decía «Matizada» para toda la fila). Cifras sin cambios.
+- 2026-11-21: corregida la lectura de «Entorno externo» en la tabla: robusta en comunicados y matizada en minutas, como en `03_Resultados/Tablas/08_antes_despues/conjunto_temas_antes_despues.csv` (antes decía «Matizada» para toda la fila). Cifras sin cambios.

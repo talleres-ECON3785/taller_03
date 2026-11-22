@@ -2,17 +2,17 @@
 
 - **Estado:** vigente
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/09_antes_despues.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/09_antes_despues.R`
+- **Script de origen:** `02_Scripts/08_antes_despues.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/08_antes_despues.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/09_antes_despues/conjunto_palabras_distintivas.png`.
-- Tablas `03_Resultados/Tablas/09_antes_despues/comunicados_palabras_robustez.png`,
+- Figura `03_Resultados/Figuras/08_antes_despues/conjunto_palabras_distintivas.png`.
+- Tablas `03_Resultados/Tablas/08_antes_despues/comunicados_palabras_robustez.png`,
   `minutas_palabras_robustez.png` y `conjunto_fragmentos_palabras.png`;
   detalle en `conjunto_palabras_cambio_detalle.csv`.
 - Correlaciones de las anclas `inflacion` y `expectativas_inflacion`:
-  `03_Resultados/Tablas/09_antes_despues/minutas_correlaciones_anclas.png` y
+  `03_Resultados/Tablas/08_antes_despues/minutas_correlaciones_anclas.png` y
   `comunicados_correlaciones_anclas.png`.
 
 Épocas: 2009-10-30 a 2014-10-29 frente a 2014-10-30 a 2019-10-29; n = 59 y 53
@@ -94,7 +94,7 @@ expectativas. Para la mesa, las palabras «persistencia», «indexación» y
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `09_antes_despues.R`.
+- 2026-11-21: nota creada con la primera corrida de `08_antes_despues.R`.
 - 2026-11-21: contraste con los embeddings (`10_glove.R`,
   [T_contexto_inflacion_expectativas](../10_glove/T_contexto_inflacion_expectativas.md)):
   consistente. Los vecinos de «inflación» pasan de proyección y resultado a

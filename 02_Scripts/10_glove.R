@@ -5,7 +5,7 @@
 #
 # Entradas: 01_Datos/02_Procesados/corpus_texto.rds,
 #           01_Datos/03_Listos/tokens_anotados.rds,
-#           03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv
+#           03_Resultados/Tablas/08_antes_despues/conjunto_correlaciones_anclas.csv
 # Salidas:  03_Resultados/Tablas/10_glove/
 #
 # Diseno (ver "Decisiones tomadas" de CLAUDE.md, 2026-11-21):
@@ -13,7 +13,7 @@
 #     corridas iguales dan vecinos distintos; GloVe (text2vec) se reproduce;
 #   - un solo modelo GloVe (Lab 13) con comunicados y discusion de la Junta,
 #     2007-2026; documento = oracion de udpipe con las palabras limpias (la
-#     misma unidad de pairwise_cor en 09);
+#     misma unidad de pairwise_cor en 08);
 #   - en la ventana principal (2009-10-30 a 2019-10-29) cada ancla se reemplaza
 #     por ancla_antes / ancla_despues: dos vectores en el mismo espacio, sin
 #     alinear modelos;
@@ -33,9 +33,9 @@ ruta_tabla <- function(nombre) file.path("03_Resultados/Tablas", carpeta_salida,
 
 corpus <- readRDS("01_Datos/02_Procesados/corpus_texto.rds")
 anotados <- readRDS("01_Datos/03_Listos/tokens_anotados.rds")
-cor_09 <- read_csv("03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv", show_col_types = FALSE)
+cor_09 <- read_csv("03_Resultados/Tablas/08_antes_despues/conjunto_correlaciones_anclas.csv", show_col_types = FALSE)
 
-# anclas de 09 con 30 o mas oraciones en cada epoca (comunicados + minutas)
+# anclas de 08 con 30 o mas oraciones en cada epoca (comunicados + minutas)
 anclas <- c("inflacion", "expectativas_inflacion", "crecimiento", "tasa_intervencion")
 min_oraciones <- 30
 semillas <- c(2026, 2027, 2028)
@@ -189,7 +189,7 @@ tabla <- datos_tabla %>%
     "GloVe (Lab 13): 50 dimensiones, ventana de 5 palabras, palabras con 5 o más apariciones, documento = oración; coseno promedio de tres semillas (2026, 2027 y 2028).",
     "*: el vecino no está entre los 10 primeros en alguna de las tres semillas. Coseno antes–después: parecido entre los dos vectores del ancla (1 = mismo contexto).",
     "Word2Vec (robustez): skip-gram con el mismo texto, 50 dimensiones y ventana de 5; promedio de 5 entrenamientos. El paquete no usa la semilla de R, así que esta columna varía en unos 0,01–0,03 entre corridas. Sus vecinos están en conjunto_w2v_vecinos_detalle.csv.",
-    "Vecinos que también aparecen en la misma oración: cuántos de los 10 están entre las 8 palabras con mayor correlación phi con el ancla en la misma oración (09, comunicados o minutas).",
+    "Vecinos que también aparecen en la misma oración: cuántos de los 10 están entre las 8 palabras con mayor correlación phi con el ancla en la misma oración (08, comunicados o minutas).",
     "Fragmentos de cada ancla con su vecino principal en conjunto_glove_fragmentos.csv.")))
 guardar_tabla("conjunto_glove_vecinos", tabla, datos_tabla, carpeta_salida)
 

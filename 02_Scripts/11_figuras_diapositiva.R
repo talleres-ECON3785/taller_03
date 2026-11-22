@@ -3,12 +3,12 @@
 # Taller 3 - ECON-3785
 #
 # Entradas (resultados ya guardados; este script no estima nada):
-#   03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues_detalle.csv
-#   03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_theta_por_reunion.csv
-#   03_Resultados/Tablas/09_antes_despues/conjunto_temas_por_reunion.csv
-#   03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv
-#   03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv
-#   03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.csv
+#   03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues_detalle.csv
+#   03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_theta_por_reunion.csv
+#   03_Resultados/Tablas/08_antes_despues/conjunto_temas_por_reunion.csv
+#   03_Resultados/Tablas/08_antes_despues/conjunto_palabras_cambio_detalle.csv
+#   03_Resultados/Tablas/08_antes_despues/conjunto_correlaciones_anclas.csv
+#   03_Resultados/Tablas/08_antes_despues/conjunto_cronologia_texto_macro.csv
 #   03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.csv
 #   01_Datos/03_Listos/macro_por_reunion.rds, tokens_anotados.rds (solo para
 #     poner tildes a las etiquetas)
@@ -75,7 +75,7 @@ etiqueta <- function(lema) {
 # 1. LDA antes y despues, una figura por diapositiva
 # -----------------------------------------------------------------------------
 
-lda <- leer("03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues_detalle.csv") %>%
+lda <- leer("03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues_detalle.csv") %>%
   filter(str_starts(escenario, "Principal")) %>%
   mutate(num = as.integer(str_extract(topico, "^\\d+")))
 
@@ -123,7 +123,7 @@ hasta <- as.Date("2018-12-31")
 media_movil <- function(x) as.numeric(stats::filter(x, rep(1 / 5, 5), sides = 1)) # 5 reuniones, solo el pasado
 paneles <- c("Entorno externo (por 1.000 palabras)", "Brent (dólares por barril)",
              "TRM (pesos por dólar)", "Inflación total anual (%)")
-temas_reunion <- leer("03_Resultados/Tablas/09_antes_despues/conjunto_temas_por_reunion.csv")
+temas_reunion <- leer("03_Resultados/Tablas/08_antes_despues/conjunto_temas_por_reunion.csv")
 externo <- temas_reunion %>%
   filter(tema == "Entorno externo") %>%
   arrange(fecha) %>%
@@ -139,8 +139,8 @@ serie <- bind_rows(externo, serie_macro) %>%
   filter(between(fecha, desde, hasta), !is.na(valor)) %>%
   mutate(panel = factor(panel, levels = paneles))
 
-# extremos: los mismos de la cronologia de 09 (se leen, no se recalculan)
-crono <- leer("03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.csv")
+# extremos: los mismos de la cronologia de 08 (se leen, no se recalculan)
+crono <- leer("03_Resultados/Tablas/08_antes_despues/conjunto_cronologia_texto_macro.csv")
 extremos <- tribble(
   ~patron,                               ~panel,     ~serie,            ~vj,  ~hj,
   "Entorno externo \\(Comunicados\\)",   paneles[1], "Comunicados",     -0.7, 0.5,
@@ -181,8 +181,8 @@ guardar_figura("conjunto_externo_macro_2013_2018.png", fig_macro, carpeta_salida
 # 3. Palabras distintivas, 10 y 10
 # -----------------------------------------------------------------------------
 
-min_palabra <- 20 # el mismo minimo de 09
-palabras <- leer("03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv") %>%
+min_palabra <- 20 # el mismo minimo de 08
+palabras <- leer("03_Resultados/Tablas/08_antes_despues/conjunto_palabras_cambio_detalle.csv") %>%
   filter(str_starts(escenario, "Principal"), n_antes + n_despues >= min_palabra) %>%
   group_by(fuente) %>%
   group_modify(~ bind_rows(slice_max(.x, razon, n = 10, with_ties = FALSE),
@@ -212,7 +212,7 @@ guardar_figura("conjunto_palabras_10_10.png", fig_palabras, carpeta_salida, widt
 # -----------------------------------------------------------------------------
 
 anclas_fig <- c("inflacion", "expectativas_inflacion")
-cor_inf <- leer("03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv") %>%
+cor_inf <- leer("03_Resultados/Tablas/08_antes_despues/conjunto_correlaciones_anclas.csv") %>%
   filter(fuente == "Minutas: discusión de la Junta", ancla %in% anclas_fig) %>%
   mutate(ancla = factor(etiqueta(ancla), levels = etiqueta(anclas_fig)),
          epoca = factor(epoca, levels = c("Antes", "Después")),
@@ -244,7 +244,7 @@ guardar_figura("minutas_correlaciones_inflacion.png", fig_cor, carpeta_salida, w
 # antes del corte (2009-10-30 a 2014-10-29). Se reporta la primera reunion
 # desde el corte en que lo supera. La figura se genera solo si las dos medidas
 # lo superan antes de la primera alza (2015-09-25) en comunicados Y en minutas
-theta <- leer("03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_theta_por_reunion.csv")
+theta <- leer("03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_theta_por_reunion.csv")
 medidas <- bind_rows(
   theta %>% filter(topico == 4) %>% transmute(medida = "Tópico 4: inflación por depreciación y alimentos (%)", fuente, fecha, valor = theta),
   temas_reunion %>% filter(tema == "Entorno externo") %>% transmute(medida = "Entorno externo (por 1.000 palabras)", fuente, fecha, valor = por_mil)
@@ -292,10 +292,10 @@ if (sostiene) {
 }
 
 # -----------------------------------------------------------------------------
-# 5b. Atencion a cada tema antes y despues (version de diapositiva de la figura de 09)
+# 5b. Atencion a cada tema antes y despues (version de diapositiva de la figura de 08)
 # -----------------------------------------------------------------------------
 
-temas_ad <- leer("03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues_detalle.csv") %>%
+temas_ad <- leer("03_Resultados/Tablas/08_antes_despues/conjunto_temas_antes_despues_detalle.csv") %>%
   filter(str_starts(escenario, "Principal")) %>%
   transmute(fuente = factor(fuente, levels = fuentes_09), tema,
             Antes_media = media_antes, Antes_inf = ic_antes_inf, Antes_sup = ic_antes_sup,

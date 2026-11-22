@@ -2,16 +2,16 @@
 
 - **Estado:** matizado (asociativo; depende de una media móvil y de la serie de texto)
 - **Tipo / fuente:** X; comunicados, minutas (solo la discusión de la Junta) y series macro (Brent de FRED, TRM del Banco de la República, IPC del DANE); asociativo
-- **Script de origen:** `02_Scripts/09_antes_despues.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/09_antes_despues.R`
+- **Script de origen:** `02_Scripts/08_antes_despues.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/08_antes_despues.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png`
+- Figura `03_Resultados/Figuras/08_antes_despues/conjunto_temas_macro_por_reunion.png`
   (por reunión, 2007–2026; texto como media móvil de las últimas 5 reuniones;
   series macro con el último dato que la Junta tenía el día de la reunión,
   regla de `CLAUDE.md`).
-- Tabla `03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png`
+- Tabla `03_Resultados/Tablas/08_antes_despues/conjunto_cronologia_texto_macro.png`
   (extremos de cada serie entre 2013 y 2018).
 
 | Reunión | Evento | Valor |
@@ -76,7 +76,7 @@ preocupaciones que las cifras todavía no muestran.
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `09_antes_despues.R`.
+- 2026-11-21: nota creada con la primera corrida de `08_antes_despues.R`.
   Consistente con la cronología de
   [M_cronologia_choque_petrolero](../07_graficas_macro/M_cronologia_choque_petrolero.md)
   (valle del Brent en enero de 2016, pico de la TRM en febrero de 2016, pico de

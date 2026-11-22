@@ -13,11 +13,13 @@ documentos con las herramientas de texto del curso para mostrar qué patrones
 tiene la comunicación de la Junta, cómo cambian en el tiempo y cómo se
 relacionan con el contexto macroeconómico.
 
-**Estado:** el repositorio contiene la base del pipeline y una exploración del
-corpus (palabras frecuentes, vocabulario distintivo, bigramas, votaciones y
-tópicos preliminares). Aún no se cruzan los textos con series
-macroeconómicas. Todos los resultados actuales son exploratorios y anteriores a
-la pregunta.
+**Estado:** el pipeline (`00_main.R`, scripts 01 a 11) extrae y limpia el texto,
+construye las series macro y las alinea con cada reunión, fija el corte del
+choque (2014-10-30) y mide cómo cambia la comunicación de la Junta antes y
+después: palabras, atención a temas de un diccionario, tópicos (LDA) y
+embeddings (GloVe, con Word2Vec como robustez). Los scripts 01 a 05 son la
+exploración del corpus, anterior a la pregunta. La presentación final está en
+`08_Entregables/`.
 
 ## Pregunta de investigación
 
@@ -30,13 +32,17 @@ Fijada por el equipo el 2026-11-18:
   petróleo, aumento de la tasa de cambio e impacto en la inflación) y se
   relacionan con los cambios de temas que trata la Junta. La relación es
   asociativa, no causal.
-- **Método previsto:** embeddings de palabras (GloVe o Word2Vec) para entender
-  de qué se hablaba antes y después y cómo cambian las prioridades o
-  preocupaciones. Todavía no están en el catálogo de métodos
-  (`07_Recursos/catalogo_metodos.md`) y no se usan hasta registrarlos como
-  ampliación.
-- **Por definir:** fecha de corte antes/después, tipo de documento
-  (comunicados, minutas o ambos) y paquete y especificación de los embeddings.
+- **Corte antes/después:** 2014-10-30, la primera reunión en que el Brent
+  estaba 20 % o más por debajo de su máximo de los 12 meses previos. Se compara
+  una ventana de 5 años a cada lado (2009-10-30 a 2019-10-29), con dos cortes
+  alternativos como robustez (2014-09-26 y 2014-12-19).
+- **Documentos:** comunicados y minutas por separado (en las minutas, solo la
+  discusión de la Junta); los comunicados sirven de control del cambio de
+  formato de las minutas.
+- **Métodos** (todos del catálogo, `07_Recursos/catalogo_metodos.md`):
+  razón de frecuencias, TF-IDF y bigramas (`08_antes_despues.R`), LDA con
+  bloques de oraciones (`09_lda_oraciones.R`) y embeddings GloVe, con
+  Word2Vec como robustez (`10_glove.R`).
 
 ## Cómo ejecutar
 
@@ -53,10 +59,10 @@ proyecto (abrir `taller_03.Rproj` y ejecutar `source("00_main.R")`, o
   paquetes y descargar el modelo `spanish-gsd` de `udpipe`, unos 28 MB) y
   Google Chrome o Chromium (para exportar las tablas a `.png`; si está en una
   ruta no estándar, definir la variable de entorno `CHROME_PATH`).
-- Tiempo de la corrida completa desde cero: unos 5 minutos (3 si ya existe
-  la anotación). La anotación con
-  `udpipe` (unos 4 minutos) y la extracción de los PDF se guardan en
-  `01_Datos/02_Procesados/` y se reutilizan en las corridas siguientes.
+- Tiempo de la corrida completa desde cero: unos 10 minutos (9,7 en la prueba
+  del 2026-11-22, con los once scripts). La anotación con `udpipe` y la
+  extracción de los PDF se guardan en `01_Datos/02_Procesados/` y se reutilizan
+  en las corridas siguientes.
 - Para correr un script suelto, primero ejecutar las secciones 1 a 3 de
   `00_main.R`.
 
@@ -69,11 +75,11 @@ proyecto (abrir `taller_03.Rproj` y ejecutar `source("00_main.R")`, o
 | `01_Datos/03_Listos/` | Tokens limpios y vocabulario que entran al análisis (se generan con `00_main.R`) |
 | `02_Scripts/` | Scripts de R |
 | `03_Resultados/` | `Tablas/` y `Figuras/`, con una subcarpeta por script |
-| `04_Presentaciones/` | Borradores de la presentación |
+| `04_Presentaciones/` | Borrador de la presentación, su generador, el guion del video (`.txt`, `.pdf` y `.docx`) y la plantilla |
 | `05_Notas/` | Notas de hallazgos |
 | `06_Bitacoras/` | Registro de cada sesión de trabajo |
 | `07_Recursos/` | Enunciado, catálogo de métodos y heurísticas |
-| `08_Entregables/` | Presentación final y video |
+| `08_Entregables/` | Presentación final (`Presentación Final.pptx`, con el guion en las notas del orador) y video |
 | `00_main.R` | Script maestro: único punto de entrada |
 
 ## Fuentes de los datos
@@ -132,8 +138,9 @@ modificar en `01_Datos/01_Crudos/`; `06_series_macro.R` las lee):
   del dato (el IPC sale unos días después del cierre del mes). Al cruzar con las
   reuniones de la Junta hay que usar solo lo publicado a la fecha de la reunión.
 - La fecha de la TRM es el día de vigencia, y el archivo llega hasta
-  2026-11-19, un día posterior a la consulta. Al alinear con las reuniones hay
-  que confirmar con el Banco desde qué fecha se conoce cada valor.
+  2026-11-19, un día posterior a la consulta. Al alinear con las reuniones se
+  usa la TRM vigente el día de la reunión (el Banco la publica el día hábil
+  anterior).
 - Los archivos del Banco de la República traen los datos como estaban el
   2026-11-18, es decir, con las revisiones posteriores.
 - Qué series entran al análisis se decide con la pregunta fijada el 2026-11-18
@@ -225,6 +232,23 @@ Datos: `01_Datos/02_Procesados/anotado_udpipe.rds` y el modelo de `udpipe`;
 | `Tablas/04_bigramas/minutas_desacuerdo_por_anio.csv`, `minutas_desacuerdo_por_documento.csv` | Ídem, cifras |
 | `Tablas/04_bigramas/minutas_desacuerdo_por_formato.png` | Uso de cada expresión según el formato de la minuta |
 
+### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
+
+Exploratorio, sin selección de hiperparámetros. `<m>` es `vem` (LDA por
+defecto) o `gibbs` (hiperparámetros del laboratorio); `<K>` es 6 o 10. El
+sufijo `_completo` indica el texto completo de la minuta; sin sufijo, solo la
+discusión de la Junta.
+
+| Resultado | Contenido |
+| --- | --- |
+| `Tablas/05_lda_exploratorio/minutas_<m>_k<K>_topicos.png` | Palabras de cada tópico (beta y lift), atención promedio y extensión de las minutas |
+| `Tablas/05_lda_exploratorio/minutas_gibbs_k<K>_topicos_completo.png` | Ídem, texto completo |
+| `Tablas/05_lda_exploratorio/minutas_gibbs_k<K>_documentos.png` | Las 3 minutas más representativas de cada tópico, con un fragmento |
+| `Tablas/05_lda_exploratorio/minutas_gibbs_k<K>_periodos.png` (y `_completo`) | Atención promedio a cada tópico por periodo |
+| `Figuras/05_lda_exploratorio/minutas_gibbs_k<K>_atencion.png` (y `_completo`) | Atención a cada tópico por reunión, con los cortes de formato |
+| `Tablas/05_lda_exploratorio/minutas_<m>_k<K>_theta.csv` (y `_completo`) | Peso de cada tópico en cada minuta |
+| `Tablas/05_lda_exploratorio/minutas_lda_extension_por_formato.png` | Extensión de las minutas y peso del tópico principal, por formato |
+
 ### `06_series_macro.R`: series macroeconómicas desde 2000
 
 No genera tablas ni figuras. Lee los tres archivos crudos de series macro y
@@ -250,54 +274,54 @@ fechas, formato y número de palabras.
 | `Tablas/07_graficas_macro/macro_cortes_candidatos.png` | Fechas de corte candidatas (apertura de P4 y dos reglas mecánicas) con los datos que la Junta tenía ese día |
 | `Tablas/07_graficas_macro/conjunto_ventanas_corte.png` | Minutas del formato B antes de cada corte y reuniones y palabras de la Junta a cada lado, en una ventana de 5 años |
 
-### `08_lda_oraciones.R`: modelo de tópicos con bloques de oraciones
-
-Hito H3a de `PLAN.md`. Documento: bloques de oraciones consecutivas de un
-comunicado o de la discusión de la Junta en una minuta. El modelo se estima
-con la ventana de 5 años a cada lado del corte, como las medidas de `09`; fuera
-de ella, θ sale de `posterior()`. La sección 1 es un
-análisis previo al modelo, sin tópicos: fija el umbral de palabras por bloque.
-
-| Resultado | Contenido |
-| --- | --- |
-| `Tablas/08_lda_oraciones/conjunto_lda_umbral_bloques.png` | Palabras útiles por bloque y bloques por reunión antes y después del corte para umbrales de 60, 80 y 100 palabras, con el elegido marcado; bloques y vocabulario de la ventana de 5 años con la que se estima el modelo |
-| `Tablas/08_lda_oraciones/conjunto_lda_seleccion.png` | Perplejidad por validación cruzada (3 pliegues) con el mejor α, costo frente al mínimo y coherencia UMass media para K = 6, 8, 10, 12 y 15, con el K elegido marcado |
-| `Tablas/08_lda_oraciones/conjunto_lda_rejilla.csv` | Perplejidad de las 20 combinaciones de K y α |
-| `Tablas/08_lda_oraciones/conjunto_lda_topicos.png` | Los 10 tópicos: nombre, palabras de mayor lift y más probables, formato de minuta con más peso, alerta de formato y si se repite con las semillas 2027 y 2028 |
-| `Tablas/08_lda_oraciones/conjunto_lda_fragmentos.png` | Los 3 bloques de texto con mayor peso de cada tópico estable, con fecha y tipo de documento |
-| `Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png` | Peso medio por reunión de cada tópico estable antes y después del corte, con IC 95 %, por tipo de documento |
-| `Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png` | Media antes y después, diferencia, IC 95 % (prueba t de Welch por reunión) y lectura de robustez de cada tópico estable |
-| `Tablas/08_lda_oraciones/conjunto_lda_theta_por_reunion.csv` | Peso de cada tópico por reunión, 2007–2026 (fuera de la ventana, con `posterior()`) |
-| `Tablas/08_lda_oraciones/conjunto_lda_antes_despues_detalle.csv` | Medias, diferencias e IC de cada tópico en los cuatro escenarios |
-| `Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png` (y `.csv`) | Correlación por reunión, con IC 95 %, entre el peso de los tópicos y la atención al tema equivalente del diccionario de `09` (Actividad económica, Inflación, Entorno externo), en la ventana |
-| `Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png` y `..._topicos_6_10.png` | Peso de cada tópico estable por reunión, 2007–2019 (desde 2020 entra la pandemia), en dos figuras de 4 tópicos (1 a 4 y 6 a 10), con media móvil de 5 reuniones, el corte, los cambios de formato y los periodos de política (fuera de la ventana, con el modelo estimado en ella) |
-
-### `09_antes_despues.R`: palabras, bigramas, atención por tema y correlaciones antes y después del corte
+### `08_antes_despues.R`: palabras, bigramas, atención por tema y correlaciones antes y después del corte
 
 Hito H3b de `PLAN.md`. Épocas: 5 años antes y 5 años después del 2014-10-30
 (2009-10-30 a 2019-10-29). Minutas: solo la discusión de la Junta;
 comunicados en paralelo como control del cambio de formato de las minutas.
 Todo por 1.000 palabras. Robustez (solo tablas): muestra completa 2007–2026 y
 cortes 2014-09-26 y 2014-12-19. La construcción de bigramas se movió a
-`construir_bigramas()` de `00_funciones_texto.R` (la usan `04` y `09`).
+`construir_bigramas()` de `00_funciones_texto.R` (la usan `04` y `08`).
 
 | Resultado | Contenido |
 | --- | --- |
-| `Figuras/09_antes_despues/conjunto_palabras_distintivas.png` | Las 15 palabras que más ganan y las 15 que más pierden peso después del corte (razón de frecuencias), por tipo de documento |
-| `Figuras/09_antes_despues/conjunto_bigramas_cambio.png` | Los 10 bigramas que más ganan y los 10 que más pierden, por tipo |
-| `Figuras/09_antes_despues/conjunto_temas_antes_despues.png` | Atención media por reunión a cada tema del diccionario `temas`, antes y después, con IC 95 % |
-| `Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png` | Atención al entorno externo y a la inflación por reunión, 2007–2026, con Brent, TRM e inflación total en paneles alineados, corte y periodos marcados |
-| `Tablas/09_antes_despues/conjunto_documentos_por_epoca.png` | Reuniones y palabras a cada lado del corte en los cuatro escenarios |
-| `Tablas/09_antes_despues/conjunto_fragmentos_palabras.png` | Las 5 palabras que más ganan y más pierden, con su lectura de robustez y un fragmento |
-| `Tablas/09_antes_despues/{comunicados,minutas}_palabras_robustez.png` | Las 30 palabras de la figura con su frecuencia, la razón en el otro tipo de documento y en los tres escenarios de robustez |
-| `Tablas/09_antes_despues/conjunto_fragmentos_bigramas.png` | Ídem para los bigramas |
-| `Tablas/09_antes_despues/conjunto_bigramas_frecuentes_epoca.png` | Los 12 bigramas más frecuentes en cada época, por tipo |
-| `Tablas/09_antes_despues/conjunto_temas_antes_despues.png` | Media antes y después, diferencia, IC 95 % (prueba t de Welch por reunión) y lectura de cada tema |
-| `Tablas/09_antes_despues/conjunto_temas_robustez.png` | La diferencia por tema en los cuatro escenarios |
-| `Tablas/09_antes_despues/conjunto_fragmentos_temas.png` | Un fragmento por tema, época y tipo de documento |
-| `Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png` | Reunión en que toca su extremo cada serie (texto y macro), 2013–2018 |
-| `Tablas/09_antes_despues/{comunicados,minutas}_correlaciones_anclas.png` | Las 8 palabras más correlacionadas (phi, `pairwise_cor()`, documento = oración) con cada palabra ancla, antes y después |
-| `Tablas/09_antes_despues/*.csv` | Cifras sin formato de cada tabla; además el detalle completo de palabras y bigramas (`*_cambio_detalle.csv`, con TF-IDF de dos grupos), la atención por reunión (`conjunto_temas_por_reunion.csv`) y los fragmentos de las anclas (`conjunto_fragmentos_anclas.csv`) |
+| `Figuras/08_antes_despues/conjunto_palabras_distintivas.png` | Las 15 palabras que más ganan y las 15 que más pierden peso después del corte (razón de frecuencias), por tipo de documento |
+| `Figuras/08_antes_despues/conjunto_bigramas_cambio.png` | Los 10 bigramas que más ganan y los 10 que más pierden, por tipo |
+| `Figuras/08_antes_despues/conjunto_temas_antes_despues.png` | Atención media por reunión a cada tema del diccionario `temas`, antes y después, con IC 95 % |
+| `Figuras/08_antes_despues/conjunto_temas_macro_por_reunion.png` | Atención al entorno externo y a la inflación por reunión, 2007–2026, con Brent, TRM e inflación total en paneles alineados, corte y periodos marcados |
+| `Tablas/08_antes_despues/conjunto_documentos_por_epoca.png` | Reuniones y palabras a cada lado del corte en los cuatro escenarios |
+| `Tablas/08_antes_despues/conjunto_fragmentos_palabras.png` | Las 5 palabras que más ganan y más pierden, con su lectura de robustez y un fragmento |
+| `Tablas/08_antes_despues/{comunicados,minutas}_palabras_robustez.png` | Las 30 palabras de la figura con su frecuencia, la razón en el otro tipo de documento y en los tres escenarios de robustez |
+| `Tablas/08_antes_despues/conjunto_fragmentos_bigramas.png` | Ídem para los bigramas |
+| `Tablas/08_antes_despues/conjunto_bigramas_frecuentes_epoca.png` | Los 12 bigramas más frecuentes en cada época, por tipo |
+| `Tablas/08_antes_despues/conjunto_temas_antes_despues.png` | Media antes y después, diferencia, IC 95 % (prueba t de Welch por reunión) y lectura de cada tema |
+| `Tablas/08_antes_despues/conjunto_temas_robustez.png` | La diferencia por tema en los cuatro escenarios |
+| `Tablas/08_antes_despues/conjunto_fragmentos_temas.png` | Un fragmento por tema, época y tipo de documento |
+| `Tablas/08_antes_despues/conjunto_cronologia_texto_macro.png` | Reunión en que toca su extremo cada serie (texto y macro), 2013–2018 |
+| `Tablas/08_antes_despues/{comunicados,minutas}_correlaciones_anclas.png` | Las 8 palabras más correlacionadas (phi, `pairwise_cor()`, documento = oración) con cada palabra ancla, antes y después |
+| `Tablas/08_antes_despues/*.csv` | Cifras sin formato de cada tabla; además el detalle completo de palabras y bigramas (`*_cambio_detalle.csv`, con TF-IDF de dos grupos), la atención por reunión (`conjunto_temas_por_reunion.csv`) y los fragmentos de las anclas (`conjunto_fragmentos_anclas.csv`) |
+
+### `09_lda_oraciones.R`: modelo de tópicos con bloques de oraciones
+
+Hito H3a de `PLAN.md`. Documento: bloques de oraciones consecutivas de un
+comunicado o de la discusión de la Junta en una minuta. El modelo se estima
+con la ventana de 5 años a cada lado del corte, como las medidas de `08`; fuera
+de ella, θ sale de `posterior()`. La sección 1 es un
+análisis previo al modelo, sin tópicos: fija el umbral de palabras por bloque.
+
+| Resultado | Contenido |
+| --- | --- |
+| `Tablas/09_lda_oraciones/conjunto_lda_umbral_bloques.png` | Palabras útiles por bloque y bloques por reunión antes y después del corte para umbrales de 60, 80 y 100 palabras, con el elegido marcado; bloques y vocabulario de la ventana de 5 años con la que se estima el modelo |
+| `Tablas/09_lda_oraciones/conjunto_lda_seleccion.png` | Perplejidad por validación cruzada (3 pliegues) con el mejor α, costo frente al mínimo y coherencia UMass media para K = 6, 8, 10, 12 y 15, con el K elegido marcado |
+| `Tablas/09_lda_oraciones/conjunto_lda_rejilla.csv` | Perplejidad de las 20 combinaciones de K y α |
+| `Tablas/09_lda_oraciones/conjunto_lda_topicos.png` | Los 10 tópicos: nombre, palabras de mayor lift y más probables, formato de minuta con más peso, alerta de formato y si se repite con las semillas 2027 y 2028 |
+| `Tablas/09_lda_oraciones/conjunto_lda_fragmentos.png` | Los 3 bloques de texto con mayor peso de cada tópico estable, con fecha y tipo de documento |
+| `Figuras/09_lda_oraciones/conjunto_lda_antes_despues.png` | Peso medio por reunión de cada tópico estable antes y después del corte, con IC 95 %, por tipo de documento |
+| `Tablas/09_lda_oraciones/conjunto_lda_antes_despues.png` | Media antes y después, diferencia, IC 95 % (prueba t de Welch por reunión) y lectura de robustez de cada tópico estable |
+| `Tablas/09_lda_oraciones/conjunto_lda_theta_por_reunion.csv` | Peso de cada tópico por reunión, 2007–2026 (fuera de la ventana, con `posterior()`) |
+| `Tablas/09_lda_oraciones/conjunto_lda_antes_despues_detalle.csv` | Medias, diferencias e IC de cada tópico en los cuatro escenarios |
+| `Tablas/09_lda_oraciones/conjunto_lda_vs_diccionario.png` (y `.csv`) | Correlación por reunión, con IC 95 %, entre el peso de los tópicos y la atención al tema equivalente del diccionario de `08` (Actividad económica, Inflación, Entorno externo), en la ventana |
+| `Figuras/09_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png` y `..._topicos_6_10.png` | Peso de cada tópico estable por reunión, 2007–2019 (desde 2020 entra la pandemia), en dos figuras de 4 tópicos (1 a 4 y 6 a 10), con media móvil de 5 reuniones, el corte, los cambios de formato y los periodos de política (fuera de la ventana, con el modelo estimado en ella) |
 
 ### `10_glove.R`: en qué contextos se usan las palabras ancla antes y después del corte
 
@@ -305,15 +329,15 @@ Hito H3c de `PLAN.md`. Embeddings GloVe (`text2vec`, Lab 13) con un solo
 modelo para comunicados y discusión de la Junta, 2007–2026; documento =
 oración de udpipe. En la ventana principal (2009-10-30 a 2019-10-29) cada ancla
 se marca por época (`inflacion_antes` / `inflacion_despues`), así que el modelo
-le da un vector a cada época. Anclas: las de `09` con 30 o más oraciones en cada
+le da un vector a cada época. Anclas: las de `08` con 30 o más oraciones en cada
 época (inflación, expectativas de inflación, crecimiento y tasa de
 intervención). Tres semillas promediadas. Se usa GloVe y no Word2Vec porque el
 paquete `word2vec` no se puede reproducir con la semilla de R.
 
 | Resultado | Contenido |
 | --- | --- |
-| `Tablas/10_glove/conjunto_glove_vecinos.png` (y `.csv`) | Los 10 vecinos por coseno de cada ancla antes y después (marcados los que no se repiten en las tres semillas), el coseno entre los dos vectores del ancla y cuántos vecinos coinciden con las correlaciones phi de `09` |
-| `Tablas/10_glove/conjunto_glove_vecinos_detalle.csv` | Cada vecino con su coseno promedio, si es estable entre semillas y si está entre las palabras phi de `09` |
+| `Tablas/10_glove/conjunto_glove_vecinos.png` (y `.csv`) | Los 10 vecinos por coseno de cada ancla antes y después (marcados los que no se repiten en las tres semillas), el coseno entre los dos vectores del ancla y cuántos vecinos coinciden con las correlaciones phi de `08` |
+| `Tablas/10_glove/conjunto_glove_vecinos_detalle.csv` | Cada vecino con su coseno promedio, si es estable entre semillas y si está entre las palabras phi de `08` |
 | `Tablas/10_glove/conjunto_glove_fragmentos.csv` | Por ancla y época, una oración con el ancla y su vecino principal |
 | `Tablas/10_glove/conjunto_w2v_vecinos_detalle.csv` | Robustez con Word2Vec skip-gram (mismo texto y anclas, 5 entrenamientos promediados): vecinos, en cuántas corridas aparecen y si también están en GloVe. No se reproduce exactamente entre corridas; su coseno antes–después va en la columna «Word2Vec» de la tabla |
 
@@ -334,7 +358,7 @@ que no se confunden con los de comunicados y minutas
 | `Figuras/11_figuras_diapositiva/conjunto_externo_macro_2013_2018.png` | Atención al entorno externo, Brent, TRM e inflación por reunión, 2013–2018, con el corte, el ciclo de alzas y los extremos fechados |
 | `Figuras/11_figuras_diapositiva/conjunto_palabras_10_10.png` | Las 10 palabras que más ganan y las 10 que más pierden, con tildes |
 | `Figuras/11_figuras_diapositiva/minutas_correlaciones_inflacion.png` | Palabras más correlacionadas con «inflación» y «expectativas de inflación» en las minutas, antes y después |
-| `Figuras/11_figuras_diapositiva/conjunto_temas_antes_despues.png` | Atención media por reunión a cada tema del diccionario, antes y después, comunicados y minutas, con IC 95 % (versión de diapositiva de la figura de `09`) |
+| `Figuras/11_figuras_diapositiva/conjunto_temas_antes_despues.png` | Atención media por reunión a cada tema del diccionario, antes y después, comunicados y minutas, con IC 95 % (versión de diapositiva de la figura de `08`) |
 | `Figuras/11_figuras_diapositiva/macro_series_2007_2026.png` | Brent, TRM e inflación total por reunión, 2007–2026, con la meta y su rango, el corte y el periodo P10 destacado |
 | `Figuras/11_figuras_diapositiva/conjunto_glove_cosenos.png` | Coseno antes–después de las cuatro anclas de `10_glove.R` (inflación, expectativas de inflación, crecimiento y tasa de intervención) con GloVe y Word2Vec, de menor a mayor, con la línea «1 = mismo contexto» (diapositiva 8) |
 | `Tablas/11_figuras_diapositiva/conjunto_verificacion_antes_alzas.csv` | Primera reunión en que la media móvil del tópico 4 y del tema «Entorno externo» supera su máximo de los 5 años antes del corte, frente a la primera alza (2015-09-25). La figura `conjunto_cambio_antes_alzas.png` solo se genera si las dos medidas lo superan antes de la alza en comunicados y en minutas; con los datos actuales no se genera |
@@ -351,23 +375,13 @@ El texto que se lee en el video está en `04_Presentaciones/guion_presentacion.t
 (diapositiva por diapositiva, con presentador, duración, qué señalar y transición, más
 los tiempos por presentador y cinco preguntas probables); el generador lo copia a las
 notas del orador de las 13 diapositivas principales.
-
-### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
-
-Exploratorio, sin selección de hiperparámetros. `<m>` es `vem` (LDA por
-defecto) o `gibbs` (hiperparámetros del laboratorio); `<K>` es 6 o 10. El
-sufijo `_completo` indica el texto completo de la minuta; sin sufijo, solo la
-discusión de la Junta.
-
-| Resultado | Contenido |
-| --- | --- |
-| `Tablas/05_lda_exploratorio/minutas_<m>_k<K>_topicos.png` | Palabras de cada tópico (beta y lift), atención promedio y extensión de las minutas |
-| `Tablas/05_lda_exploratorio/minutas_gibbs_k<K>_topicos_completo.png` | Ídem, texto completo |
-| `Tablas/05_lda_exploratorio/minutas_gibbs_k<K>_documentos.png` | Las 3 minutas más representativas de cada tópico, con un fragmento |
-| `Tablas/05_lda_exploratorio/minutas_gibbs_k<K>_periodos.png` (y `_completo`) | Atención promedio a cada tópico por periodo |
-| `Figuras/05_lda_exploratorio/minutas_gibbs_k<K>_atencion.png` (y `_completo`) | Atención a cada tópico por reunión, con los cortes de formato |
-| `Tablas/05_lda_exploratorio/minutas_<m>_k<K>_theta.csv` (y `_completo`) | Peso de cada tópico en cada minuta |
-| `Tablas/05_lda_exploratorio/minutas_lda_extension_por_formato.png` | Extensión de las minutas y peso del tópico principal, por formato |
+Requiere Python con `python-pptx`, `pandas` y `Pillow`, que no se instalan con
+`00_main.R`. `guion_presentacion.pdf` y `guion_presentacion.docx` son versiones
+para leer del mismo guion, hechas a partir del `.txt` fuera del repositorio: si
+el `.txt` cambia, hay que volver a generarlas. La presentación final
+(`08_Entregables/Presentación Final.pptx`) se editó a partir del borrador; sus
+notas del orador (diapositivas 1 a 13) traen el guion con los nombres de los
+presentadores.
 
 ## Documentación
 

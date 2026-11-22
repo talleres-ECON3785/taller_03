@@ -2,13 +2,13 @@
 
 - **Estado:** vigente
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/08_lda_oraciones.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/08_lda_oraciones.R`
+- **Script de origen:** `02_Scripts/09_lda_oraciones.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/09_lda_oraciones.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png`.
-- Tablas `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png`,
+- Figura `03_Resultados/Figuras/09_lda_oraciones/conjunto_lda_antes_despues.png`.
+- Tablas `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.png`,
   `conjunto_lda_topicos.png` y `conjunto_lda_fragmentos.png`; escenarios en
   `conjunto_lda_antes_despues_detalle.csv`.
 - LDA con K = 10 y α = 0,1, ventana 2009-10-30 a 2019-10-29; 54 comunicados
@@ -58,12 +58,12 @@ crisis de 2008. Después del choque, la agenda la fijó el sector externo. Para
 la mesa, el crédito dejó de ser un argumento de la Junta para mover la tasa en
 2015–2019.
 
-**Contraste con `09_antes_despues/`:** **consistente** con
+**Contraste con `08_antes_despues/`:** **consistente** con
 `T_atencion_temas_antes_despues.md`, donde la atención a «Actividad económica»
 cae alrededor de un tercio, de forma robusta. Reunión a reunión, el tópico 1 y
 el tema del diccionario se mueven juntos: correlación de 0,53 [0,38; 0,65] en
 los comunicados y 0,53 [0,38; 0,65] en las minutas (ventana; 107 y 112
-reuniones; `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png`).
+reuniones; `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_vs_diccionario.png`).
 
 ## Límites e incertidumbre
 
@@ -80,5 +80,5 @@ reuniones; `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.pn
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `08_lda_oraciones.R`.
-- 2026-11-21: contraste por reunión con el diccionario de `09` (P3a.9): consistente (r = 0,53 en las dos fuentes). Cifras sin cambios.
+- 2026-11-21: nota creada con la primera corrida de `09_lda_oraciones.R`.
+- 2026-11-21: contraste por reunión con el diccionario de `08` (P3a.9): consistente (r = 0,53 en las dos fuentes). Cifras sin cambios.

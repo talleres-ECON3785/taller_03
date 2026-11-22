@@ -16,34 +16,40 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **H4 de `PLAN.md` (P4.5): deck final y video, todo el equipo (domingo 22).**
-   - Borrador: `04_Presentaciones/borrador_presentacion.pptx` (13 diapositivas principales y
-     14 de apéndice), generado por `python 04_Presentaciones/construir_borrador.py`. Guion:
-     `04_Presentaciones/guion_presentacion.txt` (14:20 estimados), copiado a las notas del orador.
-   - Faltan: revisarlo en PowerPoint (Codec Pro no está en LibreOffice), poner los nombres de los
-     presentadores, cronometrar un ensayo, pasar la versión final a `08_Entregables/` y grabar.
-   - *Terminado cuando:* el video dura máximo 15 minutos, los cuatro integrantes exponen y cada
-     hallazgo lleva su fragmento y la salvedad «asociación, no causalidad».
-2. **H3d de `PLAN.md` (P3d.1–P3d.3): cerrar la robustez común (integrante por definir).**
+1. **H4 de `PLAN.md` (P4.5): ensayo cronometrado y video, todo el equipo (domingo 22).**
+   - Presentación final: `08_Entregables/Presentación Final.pptx`, con el guion y los nombres de los
+     presentadores en las notas (Samuel 1–4, Santiago 5–7, Mateo 8–10, Douglas 11–13). Guion:
+     `04_Presentaciones/guion_presentacion.txt` (14:20 estimados antes de agregar las líneas de
+     agradecimiento y las transiciones copiadas al TEXTO).
+   - *Terminado cuando:* el video dura máximo 15 minutos, los cuatro integrantes exponen y el enlace
+     del video está en el README y en la entrega.
+2. **Abrir el PR de `SantiagoMunozM` a `main` con la renumeración de `08` y `09` y la presentación
+   final (Santiago Muñoz Martínez).**
+   - *Terminado cuando:* el PR está abierto desde una rama sincronizada con `main`, con `00_main.R`
+     comprobado sin errores (hecho el 2026-11-22) y los `.jsonl` de las conversaciones de los
+     cuatro integrantes reunidos aparte para el material de soporte.
+3. **H3d de `PLAN.md` (P3d.1–P3d.3) y marcar P4.1–P4.5: cerrar la robustez común (integrante por
+   definir).**
    - `08` y `09` ya tienen los cortes alternativos y los comunicados como control. `10` solo tiene
      robustez entre métodos (GloVe frente a Word2Vec).
-   - *Terminado cuando:* P3d.1–P3d.3 quedan marcados en `PLAN.md` y el alcance de `10` queda
-     declarado en «Decisiones tomadas».
-3. **Correr `00_main.R` completo (01 a 11) y abrir el PR de `SamuelEscandonC` a `main` (Samuel
-   Escandón).**
-   - *Terminado cuando:* `00_main.R` termina sin errores y el PR está abierto.
+   - *Terminado cuando:* P3d.1–P3d.3 y P4.1–P4.5 quedan marcados en `PLAN.md` y el alcance de `10`
+     queda declarado en «Decisiones tomadas».
 
 **Bloqueos y preguntas abiertas:**
 
 - Roles de los integrantes en el Taller 3.
+- Los PDF y Word del guion se generaron con scripts temporales que no están en el repositorio:
+  si el `.txt` cambia, hay que regenerarlos.
+- La diapositiva 1 de la presentación tiene un cuadro de forma libre con el texto «z» (probable
+  glifo de la plantilla): revisarlo en PowerPoint.
 - La validación manual de la votación quedó fuera de `PLAN.md`: decidir si se
   abandona.
 - Embeddings (`10`): con 97 mil palabras en 8.913 oraciones, GloVe y Word2Vec
   comparten solo 1 a 4 de cada 10 vecinos. Solo se concluye lo que coincide en
   los dos métodos. Word2Vec no se reproduce exactamente: su columna de coseno
   cambia unas centésimas en cada corrida de `00_main.R`.
-- Los `.csv` de `05`, `07` y `09` regenerados en la corrida completa del
-  2026-11-21 (5) están sin commitear. Los de `07` y `09` solo cambian decimales
+- Los `.csv` de `05`, `07` y `08` regenerados en la corrida completa del
+  2026-11-21 (5) están sin commitear. Los de `07` y `08` solo cambian decimales
   a partir de la posición 15; los de `05` cambian los tópicos VEM
   exploratorios. Decidir si se versionan.
 - Fecha de la retroalimentación a compañeros (no afecta el repositorio).
@@ -63,7 +69,7 @@ domingo 22 de noviembre de 2026.**
   se redacta la minuta (ver la nota de votación).
 - Solo 31 minutas traen su fecha de publicación (rezago mediano de 14 días);
   para las demás hay que suponerlo o consultarlo.
-- LDA (`08`): en las minutas, el formato B (desde 2014-05-30) casi coincide con
+- LDA (`09`): en las minutas, el formato B (desde 2014-05-30) casi coincide con
   la época «después», así que la alerta de formato no separa formato de época.
   El tópico 3 (decisión y postura) puede ser en parte de formato en las
   minutas.
@@ -94,8 +100,10 @@ domingo 22 de noviembre de 2026.**
 ## Estado actual
 
 - **Pipeline:** `00_main.R` corre once scripts (01 a 11).
-  - La corrida completa de 01 a 10 tardó 4,8 minutos (2026-11-21), antes de agregar la robustez con
-    Word2Vec a `10`; `11` suma unos 10 segundos. La corrida completa con los once no se ha hecho.
+  - Corrida completa desde cero de los once scripts, en una copia limpia del repositorio, sin errores
+    en 9,7 minutos (2026-11-22). Los archivos generados coinciden con los versionados en nombre y en
+    cifras, salvo ruido de coma flotante y la columna de Word2Vec. Antes de la renumeración fallaba:
+    el LDA leía resultados de `08_antes_despues.R` y corría antes.
   - Requiere Chrome para las tablas e internet la primera vez.
 - **Scripts:**
   - de formato y definiciones: `00_formato_graficas.R` (incluye `tema_diapositiva` y
@@ -103,12 +111,12 @@ domingo 22 de noviembre de 2026.**
   - de texto: `01_extraer_texto.R` a `05_lda_exploratorio.R`;
   - de series: `06_series_macro.R` y `07_graficas_macro.R`;
   - antes/después del corte:
-    - `08_lda_oraciones.R`: LDA con bloques de 60 palabras, estimado en la
+    - `08_antes_despues.R`: palabras, bigramas, atención por tema y
+      correlaciones;
+    - `09_lda_oraciones.R`: LDA con bloques de 60 palabras, estimado en la
       ventana con K = 10 y α = 0,1; 8 tópicos estables con nombre; θ por
       reunión antes/después en cuatro escenarios, contraste con el
-      diccionario y serie 2007–2019;
-    - `09_antes_despues.R`: palabras, bigramas, atención por tema y
-      correlaciones.
+      diccionario y serie 2007–2019.
     - `10_glove.R`: embeddings GloVe con las anclas marcadas por época
       (inflación, expectativas de inflación, crecimiento y tasa de
       intervención), vecinos y coseno antes–después, más la robustez con
@@ -123,8 +131,8 @@ domingo 22 de noviembre de 2026.**
 - **Fecha de corte:** 2014-10-30. Alternativas: 2014-09-26 y 2014-12-19. En
   la ventana de 5 años: 54 y 53 comunicados, 59 y 53 minutas.
 - **Resultados:**
-  - exploratorios (01 a 05), macro (07), antes/después por diccionario (09) y
-    LDA (08). Mapa completo en `README.md`.
+  - exploratorios (01 a 05), macro (07), antes/después por diccionario (08) y
+    LDA (09). Mapa completo en `README.md`.
   - LDA, peso medio por reunión antes → después (pp, comunicados / minutas):
     - suben: déficit externo (+14,1 / +9,4), inflación por depreciación
       (+10,8 / +2,0, matizada en minutas) y decisión y postura
@@ -138,7 +146,7 @@ domingo 22 de noviembre de 2026.**
   se sostiene lo que coincide en GloVe y Word2Vec. La del sector externo
   también está matizada: el LDA y el diccionario coinciden en la dirección
   antes/después y, reunión a reunión, solo en las minutas.
-- **Plan:** `PLAN.md` con H1, H2, H3a (LDA), H3b (`09`) y H3c (`10`)
+- **Plan:** `PLAN.md` con H1, H2, H3a (LDA), H3b (`08`) y H3c (`10`)
   terminados. Siguen H3d (robustez; falta declarar el alcance de `10`) y H4.
 - **Reglas:** el catálogo incluye los Labs 11, 12 y 13 (Word2Vec y GloVe) y
   registra como ampliaciones `pdftools`, `gt` y `readxl`. `widyr`, `text2vec`
@@ -148,11 +156,27 @@ domingo 22 de noviembre de 2026.**
   `borrador_presentacion.pptx` (lo genera `construir_borrador.py`; 13 principales, con una
   diapositiva de embeddings, y apéndice A1 a A9) y guion `guion_presentacion.txt` (14:20, cuatro
   presentadores, cinco preguntas probables).
-- **Git:** `main` incluye `SantiagoMunozM` hasta los embeddings (PR #10) y `SamuelEscandonC` hasta
-  el documento de hallazgos (PR #9). `SamuelEscandonC` ya trae `main` y tiene sin mergear el script
-  `11`, el deck y el guion.
+- **Presentación final:** `08_Entregables/Presentación Final.pptx` (27 diapositivas; las notas de las
+  13 principales traen el guion con los presentadores). El guion también está en PDF y Word en
+  `04_Presentaciones/`.
+- **Git:** `main` incluye `SamuelEscandonC` hasta el guion y el script `11` (PR #11). `SantiagoMunozM`
+  trae `main` y tiene sin commitear la renumeración de `08` y `09`, el README y la presentación final.
 
 ## Registro de sesiones
+
+### 2026-11-22: renumeración de 08 y 09, guion con presentadores y revisión de entrega
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). Se pusieron las transiciones en el texto del guion, se
+  corrigió su ortografía y se asignaron los presentadores; se generaron el guion en PDF y Word y se
+  reemplazaron las notas del orador de las diapositivas 1 a 13 de `08_Entregables/Presentación Final.pptx`.
+  Se encontró que `00_main.R` fallaba desde cero (el LDA leía resultados de un script posterior) y se
+  invirtieron los números: `08_antes_despues.R` y `09_lda_oraciones.R`. Corrida completa desde cero
+  sin errores en 9,7 minutos. README, `PLAN.md` y `CLAUDE.md` al día. Avanzó P4.5 (deck final); no se
+  trabajó H3d.
+- Bitácora: [2026-11-22_renumeracion-scripts-y-guion.md](06_Bitacoras/2026-11-22_renumeracion-scripts-y-guion.md)
+- **Siguientes objetivos:** (1) ensayo cronometrado y video (P4.5); (2) PR de `SantiagoMunozM` a
+  `main` y reunir las conversaciones; (3) cerrar H3d (P3d.1–P3d.3) y marcar P4.1–P4.5 en `PLAN.md`.
+
 
 ### 2026-11-21 (6): diapositiva de embeddings y guion del video
 

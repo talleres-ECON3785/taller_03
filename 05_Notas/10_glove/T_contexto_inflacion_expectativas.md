@@ -33,7 +33,7 @@
 - Coseno entre los dos vectores del ancla: 1 indica el mismo contexto en las
   dos épocas. «Expectativas de inflación» es la que más cambia (0,31) y «tasa
   de intervención» la que menos (0,71).
-- Coincidencia con las correlaciones en la misma oración de `09` (phi): 5 de
+- Coincidencia con las correlaciones en la misma oración de `08` (phi): 5 de
   10 vecinos de «inflación» en cada época; 5 y 6 de «expectativas de
   inflación»; 4 y 4 de «crecimiento»; 7 y 7 de «tasa de intervención».
 - Cada vecino está entre los 10 primeros de las tres semillas en 4 a 7 de 10
@@ -99,8 +99,8 @@ al que se suma el de la votación (mayoría, unanimidad).
 
 Confirma, con una medida distinta, el hallazgo de que la inflación no recibió
 más espacio sino otro tipo de discusión
-([T_devaluacion_tema_de_inflacion](../09_antes_despues/T_devaluacion_tema_de_inflacion.md),
-[T_inflacion_de_meta_a_choques](../08_lda_oraciones/T_inflacion_de_meta_a_choques.md)).
+([T_devaluacion_tema_de_inflacion](../08_antes_despues/T_devaluacion_tema_de_inflacion.md),
+[T_inflacion_de_meta_a_choques](../09_lda_oraciones/T_inflacion_de_meta_a_choques.md)).
 La interpretación económica: con la depreciación de 2014–2016 empujando los
 precios, el riesgo para la Junta dejó de ser el nivel de la inflación y pasó a
 ser que el choque se volviera persistente y desanclara las expectativas. El
@@ -120,7 +120,7 @@ preocupación que acompañó el ciclo de alzas de 2015–2016.
   ancla que menos cambia, así que no sirve de control. Solo se concluye lo que
   coincide en los dos métodos. Los vecinos de una sola lista son ilustrativos.
 
-- «Devaluación», «indexación» y «persistencia», que `09` muestra como
+- «Devaluación», «indexación» y «persistencia», que `08` muestra como
   palabras nuevas, no aparecen entre los vecinos de «inflación»: son poco
   frecuentes (menos de 1,4 por 1.000 palabras) y no llegan a estar entre las
   10 más cercanas. La medida capta el marco (desvío frente a la meta,
@@ -146,8 +146,8 @@ preocupación que acompañó el ciclo de alzas de 2015–2016.
 ## Historial
 
 - 2026-11-21: nota creada con la primera corrida de `10_glove.R`. Contraste:
-  consistente con las correlaciones phi de `09` y con los tópicos 4 y 8 de
-  `08` en la dirección del cambio; las palabras de mecanismo (devaluación,
+  consistente con las correlaciones phi de `08` y con los tópicos 4 y 8 de
+  `09` en la dirección del cambio; las palabras de mecanismo (devaluación,
   indexación) no aparecen entre los vecinos.
 - 2026-11-21: matizada con el contraste de Word2Vec que agrega `10_glove.R`
   (confirmado por Santiago Muñoz Martínez). El título pasa de «desvío frente a

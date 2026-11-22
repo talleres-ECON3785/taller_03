@@ -2,13 +2,13 @@
 
 - **Estado:** matizado (robusto por signo, pero en los comunicados el IC del escenario principal toca el cero y en las minutas puede pesar el formato)
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/08_lda_oraciones.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/08_lda_oraciones.R`
+- **Script de origen:** `02_Scripts/09_lda_oraciones.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/09_lda_oraciones.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png`.
-- Tablas `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png`,
+- Figura `03_Resultados/Figuras/09_lda_oraciones/conjunto_lda_antes_despues.png`.
+- Tablas `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.png`,
   `conjunto_lda_topicos.png` y `conjunto_lda_fragmentos.png`; escenarios en
   `conjunto_lda_antes_despues_detalle.csv`.
 - LDA con K = 10 y α = 0,1, ventana 2009-10-30 a 2019-10-29; 54 comunicados
@@ -67,7 +67,7 @@ la Junta que antes.
   y el párrafo de la decisión pesa proporcionalmente más en un texto corto.
   Parte del +18,4 puede venir de ahí. El tópico tiene el 66 % de su peso en el
   formato B, sin llegar a la alerta del 70 %. En la serie por reunión
-  (`03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png`),
+  (`03_Resultados/Figuras/09_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png`),
   el salto de las minutas empieza con el cambio de formato del 2014-05-30, unos
   meses antes del corte, y se mantiene alto hasta 2018; en los comunicados no
   hay salto en esa fecha. Eso refuerza que parte del aumento en las minutas es
@@ -81,5 +81,5 @@ la Junta que antes.
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `08_lda_oraciones.R`.
+- 2026-11-21: nota creada con la primera corrida de `09_lda_oraciones.R`.
 - 2026-11-21: la serie por reunión 2007–2019 (P3a.10) muestra que el salto de las minutas coincide con el cambio de formato A→B; se agrega a los límites. Estado sin cambios (matizado).

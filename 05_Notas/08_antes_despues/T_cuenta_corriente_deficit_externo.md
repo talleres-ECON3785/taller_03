@@ -2,16 +2,16 @@
 
 - **Estado:** vigente
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/09_antes_despues.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/09_antes_despues.R`
+- **Script de origen:** `02_Scripts/08_antes_despues.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/08_antes_despues.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/09_antes_despues/conjunto_palabras_distintivas.png`.
-- Tablas `03_Resultados/Tablas/09_antes_despues/minutas_palabras_robustez.png`,
+- Figura `03_Resultados/Figuras/08_antes_despues/conjunto_palabras_distintivas.png`.
+- Tablas `03_Resultados/Tablas/08_antes_despues/minutas_palabras_robustez.png`,
   `comunicados_palabras_robustez.png` y `conjunto_fragmentos_palabras.png`
   (cifras en los `.csv` del mismo nombre y en `conjunto_palabras_cambio_detalle.csv`).
-- Correlaciones: `03_Resultados/Tablas/09_antes_despues/minutas_correlaciones_anclas.png`
+- Correlaciones: `03_Resultados/Tablas/08_antes_despues/minutas_correlaciones_anclas.png`
   y `comunicados_correlaciones_anclas.png`.
 
 Épocas: antes = 2009-10-30 a 2014-10-29; después = 2014-10-30 a 2019-10-29.
@@ -77,10 +77,10 @@ los reportes técnicos.
   del comunicado (más párrafos sobre el contexto externo) pueden contribuir.
 - La relación con la caída del Brent es asociativa: el corte se fijó con el
   Brent y la cuenta corriente también responde a otros factores.
-- Falta confirmar con el LDA (08) y los embeddings (10) si aparece un tema o
+- Falta confirmar con el LDA (09) y los embeddings (10) si aparece un tema o
   un vecindario «externo» nuevo después del corte.
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `09_antes_despues.R`.
-- 2026-11-21: corregida la cifra de «déficit» en comunicados después del corte: 2,12 por 1.000 palabras (65 apariciones sobre 30.601 palabras), no 2,14, según `03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv`. La conclusión no cambia.
+- 2026-11-21: nota creada con la primera corrida de `08_antes_despues.R`.
+- 2026-11-21: corregida la cifra de «déficit» en comunicados después del corte: 2,12 por 1.000 palabras (65 apariciones sobre 30.601 palabras), no 2,14, según `03_Resultados/Tablas/08_antes_despues/conjunto_palabras_cambio_detalle.csv`. La conclusión no cambia.

@@ -2,13 +2,13 @@
 
 - **Estado:** vigente
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
-- **Script de origen:** `02_Scripts/08_lda_oraciones.R`
-- **Última verificación:** 2026-11-21, con `02_Scripts/08_lda_oraciones.R`
+- **Script de origen:** `02_Scripts/09_lda_oraciones.R`
+- **Última verificación:** 2026-11-21, con `02_Scripts/09_lda_oraciones.R`
 
 ## Evidencia
 
-- Figura `03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png`.
-- Tablas `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png`
+- Figura `03_Resultados/Figuras/09_lda_oraciones/conjunto_lda_antes_despues.png`.
+- Tablas `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.png`
   (medias, diferencia, IC 95 % y lectura), `conjunto_lda_topicos.png` (palabras)
   y `conjunto_lda_fragmentos.png` (bloques representativos); los cuatro
   escenarios en `conjunto_lda_antes_despues_detalle.csv`.
@@ -74,7 +74,7 @@ la inflación converja a la meta en 2017 y contribuir a la reducción en el
 déficit de la cuenta corriente» (ver `T_decision_postura_sube.md`). La Junta
 pasó de mirar afuera a mirar cómo lo de afuera entra al país.
 
-**Contraste con `09_antes_despues/`:**
+**Contraste con `08_antes_despues/`:**
 - **Consistente** con `T_cuenta_corriente_deficit_externo.md`: el déficit y la
   balanza de pagos entran al vocabulario después del corte.
 - **Cambia (atribuible)** frente a `T_atencion_temas_antes_despues.md`: allí el
@@ -86,7 +86,7 @@ pasó de mirar afuera a mirar cómo lo de afuera entra al país.
   dirección del cambio antes/después; el LDA muestra su composición
   (heurística H2).
 - **Reunión a reunión, coherentes solo en las minutas** (P3a.9; ventana, 107
-  comunicados y 112 minutas; `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png`).
+  comunicados y 112 minutas; `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_vs_diccionario.png`).
   La suma de los tópicos 6 y 10 se mueve con el tema «Entorno externo» del
   diccionario en las minutas (correlación de 0,39 [0,23; 0,54]), pero no en los
   comunicados (0,04 [−0,15; 0,23]). Hipótesis: en los comunicados, el tema del
@@ -120,6 +120,6 @@ pasó de mirar afuera a mirar cómo lo de afuera entra al país.
 
 ## Historial
 
-- 2026-11-21: nota creada con la primera corrida de `08_lda_oraciones.R`.
-- 2026-11-21 (pendiente de conciliar, P3a.9): reunión a reunión, la suma de los tópicos 6 y 10 se correlaciona con el tema «Entorno externo» del diccionario en las minutas (0,39 [0,23; 0,54]) pero no en los comunicados (0,04 [−0,15; 0,23]; ventana, 107 y 112 reuniones; `03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png`). La frase «las dos medidas son coherentes» del contraste con `09` queda en revisión; las cifras antes/después de esta nota no cambian.
-- 2026-11-21: con la confirmación de Santiago Muñoz Martínez, el contraste con `09` se matiza: coherentes en la dirección antes/después y, reunión a reunión, solo en las minutas. Estado sin cambios (vigente): las cifras antes/después no cambian.
+- 2026-11-21: nota creada con la primera corrida de `09_lda_oraciones.R`.
+- 2026-11-21 (pendiente de conciliar, P3a.9): reunión a reunión, la suma de los tópicos 6 y 10 se correlaciona con el tema «Entorno externo» del diccionario en las minutas (0,39 [0,23; 0,54]) pero no en los comunicados (0,04 [−0,15; 0,23]; ventana, 107 y 112 reuniones; `03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_vs_diccionario.png`). La frase «las dos medidas son coherentes» del contraste con `08` queda en revisión; las cifras antes/después de esta nota no cambian.
+- 2026-11-21: con la confirmación de Santiago Muñoz Martínez, el contraste con `08` se matiza: coherentes en la dirección antes/después y, reunión a reunión, solo en las minutas. Estado sin cambios (vigente): las cifras antes/después no cambian.

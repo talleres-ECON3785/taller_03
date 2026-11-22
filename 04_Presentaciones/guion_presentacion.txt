@@ -3,8 +3,8 @@ Taller 3 · ECON-3785 · 2026-2
 
 Para leer en voz alta, diapositiva por diapositiva. La numeración es la de
 PowerPoint (borrador_presentacion.pptx). Ritmo de referencia: unas 140 palabras
-por minuto. Los presentadores van como Presentador 1 a 4; los nombres los pone
-el equipo. Las cifras salen de los .csv de 03_Resultados/ y de las notas de
+por minuto. Presentan Samuel, Santiago, Mateo y Douglas, en ese orden.
+Las cifras salen de los .csv de 03_Resultados/ y de las notas de
 05_Notas/ (la fuente de cada una está en las notas del orador de cada
 diapositiva). Todo lo que se dice es asociación, no causalidad.
 
@@ -15,11 +15,13 @@ no cambiar los encabezados «DIAPOSITIVA n ·», «TEXTO», «SEÑALAR» ni
 
 
 DIAPOSITIVA 1 · ¿De qué habla la Junta?
-Presentador: Presentador 1 · Duración: 0:20
+Presentador: Samuel · Duración: 0:20
 TEXTO
-Buenas. Somos el equipo del Taller 3. Le preguntamos a los comunicados y a las
-minutas de la Junta del Banco de la República cómo cambiaron sus temas antes y
-después de la caída del petróleo de 2014.
+Buenas. Somos el equipo del 6 y para este taller nos interesamos en saber cómo cambiaron
+los temas que trataba el Banco de la República después de la crisis del petróleo de 2014, usando 
+los comunicados y minutas de las reuniones de la Junta. 
+
+Empezamos por la respuesta.
 SEÑALAR
 Nada en particular: el título y la pregunta.
 TRANSICIÓN
@@ -27,161 +29,180 @@ Empezamos por la respuesta.
 
 
 DIAPOSITIVA 2 · Después del choque petrolero, la Junta dejó de hablar del mundo y del crédito y pasó a discutir cómo el choque entraba a Colombia
-Presentador: Presentador 1 · Duración: 1:15
+Presentador: Samuel · Duración: 1:15
 TEXTO
-La respuesta corta es esta: después del choque, la Junta cambió de qué habla.
+En resumen, nuestro análisis muestra que después del choque la Junta sí cambió de qué habla y cómo trata la inflación.
 Antes de 2014, buena parte de la discusión era la economía mundial, el crédito
 de los hogares, el detalle de la actividad interna y el seguimiento de la
 inflación básica frente a la meta. Después entran dos temas que casi no
 estaban: el déficit externo del país y la depreciación del peso que se
 traslada a los precios. Es decir, la Junta deja de mirar el mundo desde
 afuera y pasa a discutir cómo el choque entra a Colombia.
-Lo vemos en los comunicados y en las minutas, y con tres fechas de corte
-distintas. Y se ve con más fuerza en los comunicados.
+Lo vemos en los comunicados y en las minutas, con tres fechas de corte
+distintas, y el cambio se ve con más fuerza en los comunicados.
 ¿Por qué le importa esto a la mesa? Porque el comunicado es la lectura más
 directa de hacia dónde mira la Junta. Y en 2026, con la Junta otra vez
-subiendo tasas, vale la pena vigilar si reaparece el lenguaje de 2015.
+subiendo tasas y manteniéndolas altas para frenar la inflación, vale la pena 
+vigilar si reaparece el lenguaje de 2015.
+
+Antes de mostrar la evidencia, revisaremos la metodología que usamos para nuestro análisis.
 SEÑALAR
 Las dos primeras líneas (qué entró y qué salió) y la última, en negrita, que
 es el mensaje para la mesa.
 TRANSICIÓN
-Antes de mostrar la evidencia, cuento en un minuto cómo la medimos.
+Antes de mostrar la evidencia, revisaremos la metodología que usamos para nuestro análisis.
 
 
 DIAPOSITIVA 3 · Comparamos cinco años antes y cinco después de la primera reunión con el petróleo en mercado bajista
-Presentador: Presentador 1 · Duración: 1:00
+Presentador: Samuel · Duración: 1:00
 TEXTO
-El corte es el 30 de octubre de 2014. Es la primera reunión en la que el
-Brent estaba un veinte por ciento o más por debajo de su máximo del último
-año. Lo fijamos con las series, antes de mirar el texto.
-Comparamos cinco años a cada lado: cincuenta y cuatro y cincuenta y tres
-comunicados, cincuenta y nueve y cincuenta y tres minutas. De las minutas solo
-usamos la parte en la que discute la Junta.
-Usamos tres medidas. La primera es un diccionario: contamos las palabras de
-cada tema. La segunda son tópicos: un modelo agrupa las frases que hablan de
-lo mismo. La tercera son embeddings: ponemos las
-palabras en un mapa, donde quedan cerca las que se usan en frases parecidas.
+Definimos el corte choque en el 30 de octubre de 2014, pues es la primera reunión en la que el
+Brent estaba un 20% o más por debajo de su máximo del último
+año. Usando este corte, comparamos 5 años antes y después del choque: 54 comunicados y 53
+comunicados, 59 y 53 minutas. De las minutas solo
+usamos la parte en la que discute la Junta, filtrando las secciones del equipo técnico porque 
+cambiaron de formato a lo largo de la ventana analizada.
+Finalmente, usamos tres medidas de procesamiento de texto como datos en nuestro análisis. 
+La primera es un diccionario con temas fijados de antemano, con el que contamos las palabras de
+cada tema antes y después. La segunda son tópicos: un modelo LDA agrupa las frases que hablan de
+lo mismo sin intervención manual. La tercera son embeddings: ponemos las
+palabras en un mapa y observamos cómo cambian sus vecinos después de la crisis.
+
+Ahora revisemos cómo los indicadores macroeconómicos evidencian el choque y la crisis.
 SEÑALAR
 Las cuatro cajas, en orden: corte, ventana, documentos y medidas.
 TRANSICIÓN
-Primero, la historia macro que ordena todo.
+Ahora revisemos cómo los indicadores macroeconómicos evidencian el choque y la crisis.
 
 
 DIAPOSITIVA 4 · La caída del petróleo llegó a la inflación en dos años, a través de la depreciación del peso
-Presentador: Presentador 1 · Duración: 1:10
+Presentador: Samuel · Duración: 1:10
 TEXTO
-Esta es la historia que cuentan las series. Entre junio de 2014 y enero de
-2016 el Brent cayó un setenta y siete por ciento. Colombia exporta petróleo, así que entraron menos dólares y el
-peso se depreció: la TRM subió un ochenta y seis por ciento. Y esa
-depreciación se fue a los precios: la inflación llegó a ocho coma noventa y
-siete por ciento en julio de 2016, con una meta de tres por ciento.
-La Junta empezó a subir la tasa en septiembre de 2015, casi un año después
-del corte, y la subió once veces, hasta siete coma setenta y cinco por ciento
-en julio de 2016. Fíjense en el orden: primero el petróleo, después el peso,
-después la inflación y al final la tasa.
-La pregunta es si la conversación de la Junta siguió ese mismo camino.
+En la gráfica vemos que entre junio de 2014 y enero de 2016 el Brent cayó un 77%,
+pasando de máximos históricos de 115 dólares por barril a menos de 30 dólares por barril en 2016. 
+Esto supuso una reducción fuerte del número de dólares que entraron al país por las exportaciones petroleras, 
+lo que naturalmente devaluó el peso y empujó la TRM al alza, acumulando un aumento del 86% en el mismo periodo.
+Finalmente, la devaluación del peso generó presiones inflacionarias, principalmente a través de
+productos e insumos importados, resultando en una inflación del 8.97% a mitad de 2016. 
+La Junta empezó a subir la tasa de intervención en septiembre de 2015, casi un año después
+de que el precio del petróleo empezara a caer, y la subió 11 veces, hasta 7.5%
+en julio de 2016. Así, la TRM sigue al petróleo, afectando luego a la inflación, lo cual lleva finalmente a 
+movimientos de la tasa de intervención. Entonces, nos interesa saber si las conversaciones de la Junta se pueden
+caracterizar en esa misma línea de eventos.
+
+A continuación Santiago nos mostrará los cambios en los temas antes y después de la crisis.
+Santiago: Gracias, Samuel.
 SEÑALAR
 Las tres cifras grandes de la izquierda y, en la figura, la línea vertical del
 corte y el orden en que se mueven las tres series.
 TRANSICIÓN
-Le paso la palabra a Presentador 2, que muestra qué temas entraron y cuáles
-salieron.
-
+A continuación Santiago nos mostrará los cambios en los temas antes y después de la crisis.
+Santiago: Gracias, Samuel.
 
 DIAPOSITIVA 5 · Después del choque, la Junta pasó de describir la economía mundial a discutir el déficit externo de Colombia
-Presentador: Presentador 2 · Duración: 1:15
+Presentador: Santiago · Duración: 1:15
 TEXTO
-El cambio más claro es en cómo la Junta habla del exterior. Cada barra es el
-peso de un tópico en la reunión típica, antes y después del corte.
-El tópico que llamamos déficit externo y capacidad productiva pasa de dos a
-dieciséis por ciento en los comunicados, y de tres a doce por ciento en las
+El cambio más claro que encontramos es en cómo la Junta habla del exterior. Cada barra es el
+peso de un tópico en la reunión típica, antes y después del corte; los tópicos agruparon oraciones
+automáticamente mediante un modelo y nosotros etiquetamos manualmente sus nombres.
+El tópico que llamamos déficit externo y capacidad productiva pasa de 2 a
+16% en los comunicados, y de 3 a 12% en las
 minutas. Al mismo tiempo, el tópico de economía mundial cae a la tercera
-parte: de dieciséis a cinco y medio por ciento en los comunicados, y de trece
-y medio a cuatro en las minutas.
+parte: de 16 a 5.5% en los comunicados, y de 13.5
+a 4% en las minutas.
 Las palabras lo confirman: antes del corte «cuenta corriente» no aparecía, y
-después aparece una o dos veces por cada mil palabras. Por ejemplo, el
+después aparece 1 o 2 veces por cada 1000 palabras. Por ejemplo, el
 comunicado de febrero de 2015 dice que, por la caída de las exportaciones
 petroleras, el déficit de la cuenta corriente se amplió.
-Para la mesa, la lectura es que el exterior dejó de ser contexto y pasó a ser
-un problema propio.
+Por ende, lo que vemos es que la Junta pasa de mencionar la economía mundial como parte del contexto
+a enfocarse en que el sector externo es uno de influencia directa y fuerte para Colombia.
+
+Así como la economía mundial, otros tópicos perdieron relevancia después del choque.
 SEÑALAR
 En la figura, las barras del tópico de déficit externo, que suben, y las de
 economía mundial, que bajan, en comunicados y minutas. Luego el fragmento.
 TRANSICIÓN
-Si algo entró, algo tuvo que salir.
+Así como la economía mundial, otros tópicos perdieron relevancia después del choque.
 
 
 DIAPOSITIVA 6 · El crédito y el detalle de la actividad interna perdieron espacio en la discusión
-Presentador: Presentador 2 · Duración: 1:00
+Presentador: Santiago · Duración: 1:00
 TEXTO
-Lo que sale es la economía de adentro. El tópico de crédito y sistema
-financiero, que dominaba entre 2010 y 2013, casi desaparece: pasa de once a
-uno y medio por ciento en los comunicados, y de doce a tres por ciento en las
-minutas. El de actividad económica interna también baja, sobre todo en las
-minutas, de quince a ocho por ciento.
-Antes, la Junta se preocupaba por el endeudamiento de los hogares. En abril de
-2012 decía que el crédito a los hogares seguía alto y que su endeudamiento
+Entre estos, el tópico de crédito y sistema
+financiero, que dominaba entre 2010 y 2013, casi desaparece: pasa de 11 a
+1.5% en los comunicados, y de 12 a 3% en las
+minutas tras el inicio de la crisis. El de actividad económica interna también baja, sobre todo en las
+minutas, de 15 a 8%.
+Antes del choque, la Junta se preocupaba por el endeudamiento de los hogares, evidenciado por
+afirmaciones como la de abril de 2012 donde decía que el crédito a los hogares seguía alto y que su endeudamiento
 había subido. Después del choque, ese tema deja de aparecer.
-Una salvedad: en esos años también terminó el ciclo de crédito, así que
-parte de la caída puede venir de ahí y no del petróleo.
+Ahora bien, hacia 2014 el ciclo de expansión del crédito de los hogares que se evidenció durante la recuperación
+de la crisis financiera del 2008 empezaba a desacelerarse, así que parte de la caída puede venir de ahí y no solo del petróleo.
+
+Finalmente, vamos a ver cómo la Junta cambió la forma en la que analizaba la inflación ante la crisis.
 SEÑALAR
 Las barras del tópico de crédito, la caída más grande de la figura, y luego
 las de actividad.
 TRANSICIÓN
-El tercer cambio es en la inflación, y es el más interesante.
+Finalmente, vamos a ver cómo la Junta cambió la forma en la que analizaba la inflación ante la crisis.
 
 
 DIAPOSITIVA 7 · La Junta pasó de vigilar la inflación básica frente a la meta a explicar el traslado de la depreciación a los precios
-Presentador: Presentador 2 · Duración: 1:20
+Presentador: Santiago · Duración: 1:20
 TEXTO
-Con la inflación pasa algo distinto: en las minutas no recibe mucho más
-espacio, sino otra discusión. Con el diccionario, la atención a la inflación
-en las minutas casi no se mueve: de dieciocho coma siete a diecinueve coma
-cuatro palabras por cada mil.
-Lo que cambia es el tipo de inflación. El tópico de inflación básica y
-expectativas frente a la meta cae a menos de la mitad: de once y medio a
-cuatro coma seis por ciento en los comunicados, y de doce a cinco y medio en
-las minutas. Y sube el de inflación por depreciación y alimentos: de cinco a
-casi dieciséis por ciento en los comunicados. En las minutas sube mucho
-menos, así que ese aumento lo damos como claro solo en los comunicados.
+Como es de esperarse, la inflación no pierde relevancia en las discusiones de la junta. Usando el diccionario con 
+palabras preasignadas a los temas observamos que la atención a la inflación es relativamente constante antes y 
+después del choque: 18.7 frente a 19.4 palabras por cada 1000.
+Ahora, lo que cambia después del choque es el tipo de inflación en el que se enfoca la Junta. 
+El tópico de inflación básica y expectativas frente a la meta cae a menos de la mitad: de 11.5 a
+4.6% en los comunicados, y de 12 a 5.5% en las minutas. En cambio, sube el de inflación por depreciación y alimentos: de 5 a
+casi 16% en los comunicados. 
 El comunicado de septiembre de 2015 lo dice así: el traslado de la
 devaluación a los precios y el fenómeno de El Niño hacen más lenta la
-convergencia a la meta, y pueden activar la indexación.
+convergencia a la meta, y pueden activar la indexación de precios.
+Así, la naturaleza del choque se ve directamente reflejada en cómo la Junta analiza la inflación en el país,
+aun si dedica la misma importancia a la inflación dentro de su discusión.
+
+Ahora Mateo, que va a mostrarles los resultados de nuestra tercera medida para
+analizar ese cambio en el enfoque de la inflación.
+Mateo: Gracias, Santiago.
 SEÑALAR
 Las barras de los dos tópicos: el de inflación básica, que baja, y el de
 depreciación y alimentos, que sube en los comunicados. Luego el fragmento.
 TRANSICIÓN
-Le paso a Presentador 3, que mira esa misma inflación con la tercera medida.
+Ahora Mateo, que va a mostrarles los resultados de nuestra tercera medida para
+analizar ese cambio en el enfoque de la inflación.
+Mateo: Gracias, Santiago.
 
 
 DIAPOSITIVA 8 · Las expectativas de inflación son la palabra cuyo contexto más cambió, y la inflación pasó a discutirse junto a la meta
-Presentador: Presentador 3 · Duración: 1:20
+Presentador: Mateo · Duración: 1:20
 TEXTO
-Aquí usamos los embeddings. Recuerden la idea: cada palabra es un punto en un
-mapa, y quedan cerca las palabras que se usan en frases parecidas. Si los
-vecinos de una palabra cambian, cambió la forma en que se usa.
-La figura mide qué tanto se parece el contexto de cuatro palabras antes y
-después del corte. Uno quiere decir mismo contexto. Lo estimamos con dos
+Para analizar mejor cómo cambia el contexto en el que se presenta la inflación usamos los embeddings. 
+Este método nos permite asignar cada palabra a un punto en un mapa, donde quedará cerca a las palabras
+que se usen en frases o contextos parecidos. Por ende, si los vecinos de una palabra cambian con el choque,
+esto nos indica que cambió la forma en la que se usa dicha palabra.
+La figura mide qué tanto se parece el contexto de 4 palabras antes y después del corte, tal que 1 quiere decir
+que el contexto no cambia entre periodos y 0 que cambia completamente. Lo estimamos con dos
 métodos, y en los dos la palabra que más cambia es «expectativas de
-inflación»: cero coma treinta y uno con un método y cero coma sesenta y uno con
-el otro, la más baja en ambos.
-A la derecha, los vecinos. Antes, «inflación» iba con proyección y
-comportamiento. Después va con meta, convergencia y desviar. En enero de 2015
-una minuta dice que la devaluación puede desviar transitoriamente la inflación
-de la meta.
-Una salvedad: que las expectativas pasen a hablarse en términos de anclaje y
-desanclaje solo aparece con uno de los dos métodos, así que no lo damos por
-sentado.
+inflación»: 0.31 con un método y 0.61 con el otro, la más baja en ambos.
+En la parte derecha están los vecinos de cada palabra antes y después.
+Antes, «inflación» iba con proyección y comportamiento. Después va con meta, convergencia y desviar. En enero de 2015
+una minuta dice que la devaluación puede desviar transitoriamente la inflación de la meta.
+Es importante aclarar que el resultado de que las expectativas pasen a hablarse en términos de anclaje y
+desanclaje solo aparece con uno de los dos métodos, por lo que no es completamente robusto.
+
+Ahora, pasamos a revisar si los cambios en el texto se movieron a la par de las series macroeconómicas
 SEÑALAR
 En la figura, la barra verde de expectativas, la más corta en los dos
-paneles, y la línea punteada del uno. Luego, a la derecha, los vecinos
+paneles, y la línea punteada del 1. Luego, a la derecha, los vecinos
 después del corte de «inflación»: meta, convergencia, desviar.
 TRANSICIÓN
-Ahora, ¿se movió el texto con las series?
+Ahora, pasamos a revisar si los cambios en el texto se movieron a la par de las series macroeconómicas
 
 
 DIAPOSITIVA 9 · La atención al exterior se movió con el petróleo, y la discusión de la inflación por depreciación llegó con las alzas
-Presentador: Presentador 3 · Duración: 1:15
+Presentador: Mateo · Duración: 1:15
 TEXTO
 Esta figura pone, reunión por reunión, la atención al entorno externo junto
 al Brent, la TRM y la inflación, entre 2013 y 2018.
@@ -189,94 +210,100 @@ La atención al exterior sube con la caída del petróleo y toca su máximo en
 junio de 2015 en las minutas y en septiembre de 2015 en los comunicados. Eso
 es antes del mínimo del Brent, en enero de 2016, antes del máximo de la TRM,
 en febrero, y antes del máximo de la inflación, en agosto de 2016. Además,
-supera su máximo de los cinco años previos en diciembre de 2014 en los
+supera su máximo de los 5 años previos en diciembre de 2014 en los
 comunicados y en marzo de 2015 en las minutas, varios meses antes de la
 primera alza.
-La discusión de la inflación por depreciación, en cambio, no se adelanta:
-llega con las alzas, en noviembre de 2015 en los comunicados.
-Ojo: esto coincide en el tiempo, pero es un solo episodio. No dice que el
-texto anticipe la tasa.
+En contraste, la atención a la inflación por depreciación no se adelanta, pues empieza a aumentar en los comunicados cuando ya 
+se evidencian aumentos de inflación considerables, hacia noviembre de 2015.
+Ahora, este análisis no implica que el texto anticipe decisiones ni variables; solo nos
+muestra cómo la situación macroeconómica va moldeando la discusión con cierto rezago.
+
+Esta gráfica muestra que los comunicados parecen darle más atención al sector externo que las minutas, por lo
+que el siguiente paso es validar con otros temas y entender por qué importa.
 SEÑALAR
 En la figura, el punto máximo de la línea de atención al exterior y,
 debajo, los extremos del Brent, la TRM y la inflación, que llegan después.
 TRANSICIÓN
-Ya vieron que la señal es más fuerte en los comunicados. Veamos por qué
-importa.
-
+Esta gráfica muestra que los comunicados parecen darle más atención al sector externo que las minutas, por lo
+que el siguiente paso es validar con otros temas y entender por qué importa.
 
 DIAPOSITIVA 10 · El comunicado registró el cambio de agenda con más fuerza que la minuta
-Presentador: Presentador 3 · Duración: 1:05
+Presentador: Mateo · Duración: 1:05
 TEXTO
-Aquí está el diccionario, tema por tema. En los comunicados, la atención al
-entorno externo sube de quince a casi veintidós palabras por cada mil. En las
-minutas sube mucho menos, de doce coma siete a catorce coma siete, y ese
-aumento no es claro.
-La razón es el propósito de cada documento. El comunicado anuncia la decisión
-y explica en pocas líneas por qué; la minuta resume una discusión en la que
-la Junta muchas veces no está de acuerdo. En ese periodo, el cincuenta y seis
-por ciento de las minutas reporta una decisión por mayoría, frente al ocho por
-ciento de los comunicados.
-Para la mesa: para leer el cambio de agenda, el comunicado. Para entender la
-deliberación, la minuta.
+Al revisar los temas del diccionario, separados por comunicados y minutas, observamos que en los comunicados la atención al
+entorno externo sube de 15 a casi 22 palabras por cada 1000 tras el choque. En las
+minutas sube mucho menos, de 12.7 a 14.7, y no podemos afirmar que sea un aumento estadísticamente significativo.
+Para nosotros, esta diferencia entre minutas y comunicados se debe principalmente al propósito de cada documento. 
+El comunicado anuncia la decisión y explica en pocas líneas por qué; la minuta resume una discusión en la que
+la Junta muchas veces no está de acuerdo. En ese periodo, el 56%
+de las minutas reporta una decisión por mayoría, frente al 8%
+de los comunicados.
+Por ende, si la mesa quisiera determinar el cambio en la agenda de la Junta, lo más importante sigue siendo 
+el comunicado, pero para entender la deliberación y los detalles de la discusión la minuta da la información necesaria
+
+Para cerrar Douglas nos va a contar tanto lo que nuestro análisis permite afirmar como las limitaciones que tiene.
+Douglas: Gracias, Mateo.
 SEÑALAR
 Las barras de entorno externo: la diferencia entre comunicados y minutas.
 TRANSICIÓN
-Le paso a Presentador 4, que cierra con lo que esto permite afirmar y lo que
-no.
+Para cerrar Douglas nos va a contar tanto lo que nuestro análisis permite afirmar como las limitaciones que tiene.
+Douglas: Gracias, Mateo.
 
 
 DIAPOSITIVA 11 · La evidencia respalda el cambio de temas y deja abiertas su causa y su repetición
-Presentador: Presentador 4 · Duración: 1:05
+Presentador: Douglas · Duración: 1:05
 TEXTO
 ¿Qué podemos afirmar? Que entraron el déficit externo y la depreciación como
 causa de la inflación, y que salieron la economía mundial, el crédito y la
 inflación básica frente a la meta. Esto lo vemos con las tres medidas, en
 comunicados y minutas, y con tres fechas de corte.
-¿Qué no podemos afirmar? Primero, que el petróleo causó el cambio: en esos años
-también hubo El Niño, la Reserva Federal empezó a subir tasas y terminó el
-ciclo de crédito. Segundo, que el texto se adelante a las series: es un solo
-episodio. Tercero, lo que cambia solo en las minutas puede venir de su cambio
-de formato en mayo de 2014. Y cuarto, los embeddings cambian según el método;
-solo usamos lo que coincide en los dos.
-En resumen: el qué está bien sustentado; el porqué, todavía no.
+¿Qué no podemos afirmar? Primero, que el petróleo causó completamente el cambio: en esos años
+también experimentamos un fenómeno de El Niño, la Reserva Federal empezó a subir tasas y terminó el
+ciclo de crédito post 2008. Segundo, que el texto se adelante a las series, pues este es solo un episodio
+y no podemos asegurar que el comportamiento se replique en otro. Tercero, lo que cambia solo en las minutas puede venir de su cambio
+de formato en mayo de 2014. Y cuarto, los embeddings cambian según el método por lo que
+solo usamos y concluimos con lo que coincide en los dos.
+En conclusión, podemos describir bien lo que pasó y ver las variables macro a través de las discusiones, pero el por qué del
+cambio no lo podemos atribuir completamente al choque petrolero.
+
+Con eso en mente, miremos por qué este análisis es importante hoy y de cara a 2027.
 SEÑALAR
 La columna izquierda, lo respaldado, y luego los cuatro puntos de la derecha.
 TRANSICIÓN
-Con eso en mente, miremos 2026.
+Con eso en mente, miremos por qué este análisis es importante hoy y de cara a 2027.
 
 
 DIAPOSITIVA 12 · En 2026 la Junta vuelve a subir tasas, y la mesa puede vigilar si reaparece el lenguaje de 2015
-Presentador: Presentador 4 · Duración: 1:20
+Presentador: Douglas · Duración: 1:20
 TEXTO
-En enero de 2026 la Junta subió la tasa cien puntos básicos, hasta diez coma
-veinticinco por ciento, y desde entonces lleva cuatro alzas y dos reuniones
-sin cambio. La inflación promedio en el periodo es cinco coma ocho por ciento,
+En enero de 2026 la Junta subió la tasa 100 puntos básicos, hasta 10.25%, y desde entonces lleva 4 alzas y 2 reuniones
+sin cambio. La inflación promedio en el periodo es 5.8%,
 fuera del rango de la meta en todos los meses.
-Pero el contexto es distinto al de 2015: esta vez el petróleo sube, cerca de
-un sesenta por ciento en el periodo, y el peso se aprecia, un ocho coma siete
-por ciento.
-Esto es una hipótesis, no un pronóstico. Si en los próximos comunicados
+Pero el contexto es distinto al de 2015: esta vez el petróleo sube principalmente por la guerra en Irán, cerca de
+un 60% en el periodo, y el peso se aprecia, un 8.7%.
+Como resultado de nuestro análisis y a modo de hipótesis, si en los próximos comunicados
 reaparecen palabras como indexación, persistencia o anclaje de las
 expectativas, la discusión se estaría pareciendo a la de 2015. También vale
-la pena mirar la votación: el ochenta y tres por ciento de las minutas de
+la pena mirar la votación: el 83% de las minutas de
 este periodo reporta una decisión por mayoría.
-La señal concreta para la mesa es el vocabulario del comunicado: es corto,
-sale el mismo día de la reunión y fue donde el cambio de 2015 se vio con más
-fuerza.
+La señal concreta para la mesa es el vocabulario del comunicado: es corto y directo a la decisión,
+y fue donde el cambio de 2015 se vio con más fuerza.
+
+Para terminar, vamos con los próximos pasos a seguir.
 SEÑALAR
 La franja oscura de 2026 en la figura y, a la izquierda, la de 2015–2016 para
 comparar: el Brent y la TRM se mueven en sentido contrario.
 TRANSICIÓN
-Para terminar, los próximos pasos.
+Para terminar, vamos con los próximos pasos a seguir.
 
 
 DIAPOSITIVA 13 · Próximos pasos para convertir esta lectura en una herramienta de seguimiento
-Presentador: Presentador 4 · Duración: 0:55
+Presentador: Douglas · Duración: 0:55
 TEXTO
 Tenemos cuatro próximos pasos para que esto sea una herramienta de
 seguimiento para la mesa.
 Primero, probar fuera de muestra si los temas del comunicado anticipan la
-siguiente decisión de tasa: entrenar con el pasado y evaluar con el futuro.
+siguiente decisión de tasa, de modo que entrenamos con datos previos y evaluamos con lo que pasa después.
 Segundo, repetir la medición en el choque inflacionario de 2021 a 2023 y en
 el ciclo actual, para saber si el patrón de 2015 se repite.
 Tercero, validar a mano la votación y hacia dónde vota la minoría.
@@ -288,17 +315,17 @@ verlo. Gracias.
 SEÑALAR
 Los cuatro puntos, en orden.
 TRANSICIÓN
-Fin. Preguntas.
+
 
 
 TIEMPOS POR PRESENTADOR
 
 | Presentador   | Diapositivas | Duración |
 | ------------- | ------------ | -------- |
-| Presentador 1 | 1 a 4        | 3:45     |
-| Presentador 2 | 5 a 7        | 3:35     |
-| Presentador 3 | 8 a 10       | 3:40     |
-| Presentador 4 | 11 a 13      | 3:20     |
+| Samuel        | 1 a 4        | 3:45     |
+| Santiago      | 5 a 7        | 3:35     |
+| Mateo         | 8 a 10       | 3:40     |
+| Douglas       | 11 a 13      | 3:20     |
 | Total         | 13           | 14:20    |
 
 Las duraciones salen del conteo de palabras del TEXTO y de la TRANSICIÓN a

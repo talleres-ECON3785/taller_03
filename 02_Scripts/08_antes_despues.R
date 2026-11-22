@@ -6,7 +6,7 @@
 # Entradas: 01_Datos/02_Procesados/corpus_texto.rds,
 #           01_Datos/03_Listos/tokens_limpios.rds, tokens_anotados.rds,
 #           macro_por_reunion.rds
-# Salidas:  03_Resultados/Tablas/09_antes_despues/ y Figuras/09_antes_despues/
+# Salidas:  03_Resultados/Tablas/08_antes_despues/ y Figuras/08_antes_despues/
 #
 # Diseno (comun a todas las medidas):
 #   - Epocas: "antes" y "despues" del corte `corte_crisis` (2014-10-30), en
@@ -39,7 +39,7 @@
 source("02_Scripts/00_formato_tablas.R")
 source("02_Scripts/00_funciones_texto.R")
 
-carpeta_salida <- "09_antes_despues"
+carpeta_salida <- "08_antes_despues"
 ruta_tabla <- function(nombre) file.path("03_Resultados/Tablas", carpeta_salida, nombre)
 
 corpus <- readRDS("01_Datos/02_Procesados/corpus_texto.rds")
@@ -672,4 +672,4 @@ stopifnot(
   !anyNA(sel_palabras$fragmento), !anyNA(sel_bigramas$fragmento)
 )
 
-message("09_antes_despues: listo.")
+message("08_antes_despues: listo.")

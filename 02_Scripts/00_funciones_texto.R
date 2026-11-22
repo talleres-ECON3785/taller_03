@@ -392,7 +392,7 @@ escenarios <- tibble(
 )
 
 # -----------------------------------------------------------------------------
-# 8. Bigramas (los usan '04_bigramas.R' y '09_antes_despues.R')
+# 8. Bigramas (los usan '04_bigramas.R' y '08_antes_despues.R')
 # -----------------------------------------------------------------------------
 
 # pares de tokens contiguos (token_id consecutivo) dentro de la misma oracion,
@@ -410,7 +410,7 @@ construir_bigramas <- function(anotados) {
 }
 
 # -----------------------------------------------------------------------------
-# 9. Texto original para los fragmentos (los usan '08_lda_oraciones.R' y '09_antes_despues.R')
+# 9. Texto original para los fragmentos (los usan '09_lda_oraciones.R' y '08_antes_despues.R')
 # -----------------------------------------------------------------------------
 
 # recupera la oracion original del PDF (con mayusculas y tildes) a partir de la

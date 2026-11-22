@@ -50,7 +50,7 @@ Regla, fijada antes de ver el resultado:
 
 ## Por qué importa en el estudio
 
-Matiza `05_Notas/09_antes_despues/X_atencion_se_adelanta_a_las_series.md`:
+Matiza `05_Notas/08_antes_despues/X_atencion_se_adelanta_a_las_series.md`:
 - se sostiene que la atención al exterior se movió con el choque y antes de la política;
 - no se sostiene que toda la discusión del choque se adelantara a las alzas.
 
@@ -66,5 +66,5 @@ Para la mesa, la señal temprana fue la atención al exterior, no el lenguaje de
 ## Historial
 
 - 2026-11-21: nota creada con la primera corrida de `11_figuras_diapositiva.R`. Matiza la nota
-  `X_atencion_se_adelanta_a_las_series.md` de `09` y es consistente con ella (la atención a la
+  `X_atencion_se_adelanta_a_las_series.md` de `08` y es consistente con ella (la atención a la
   inflación en comunicados llegó después del pico).

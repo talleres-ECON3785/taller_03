@@ -181,8 +181,8 @@ def sin_tilde(x):
 
 # tildes de las etiquetas: cada lema toma la escritura más frecuente en los fragmentos originales
 # de 08 y 09; los compuestos se escriben con su expresión
-TEXTOS = pd.concat([leer(TAB / "08_lda_oraciones" / "conjunto_lda_fragmentos.csv").astype(str).stack()] +
-                   [leer(TAB / "09_antes_despues" / f).fragmento.astype(str) for f in
+TEXTOS = pd.concat([leer(TAB / "09_lda_oraciones" / "conjunto_lda_fragmentos.csv").astype(str).stack()] +
+                   [leer(TAB / "08_antes_despues" / f).fragmento.astype(str) for f in
                     ["conjunto_fragmentos_temas.csv", "conjunto_fragmentos_anclas.csv",
                      "conjunto_palabras_seleccion_fragmentos.csv", "conjunto_bigramas_seleccion_fragmentos.csv"]])
 CONTEO = pd.Series(re.findall(r"[a-záéíóúüñ]+", " ".join(TEXTOS).lower())).value_counts()
@@ -247,7 +247,7 @@ for i, (cab, cuerpo) in enumerate(bloques):
                espacio=10)
 notas(s, "1", "1:00",
       "El corte lo fijó el petróleo, no el texto; leímos comunicados y minutas con tres medidas.",
-      "Corte y ventanas: 03_Resultados/Tablas/09_antes_despues/conjunto_documentos_por_epoca.csv "
+      "Corte y ventanas: 03_Resultados/Tablas/08_antes_despues/conjunto_documentos_por_epoca.csv "
       "(54/53 comunicados, 59/53 minutas; minutas 43.788 y 23.104 palabras). Regla del corte: "
       "«Decisiones tomadas» de CLAUDE.md (2026-11-19).", "No aplica.")
 
@@ -284,9 +284,9 @@ diapositiva_figura(
      "antes no se mencionaba, aparece unas dos veces por cada mil palabras.",
      "Tópico 6: comunicados 2,3 → 16,4 % (+14,1 pp [11,4; 16,8]), minutas 2,6 → 12,0 % (+9,4 pp). "
      "Tópico 10: comunicados 16,1 → 5,5 % (−10,6 pp), minutas 13,5 → 4,2 % (−9,3 pp) "
-     "(03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv). «Cuenta corriente»: "
+     "(03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.csv). «Cuenta corriente»: "
      "0 → 2,03 por 1.000 palabras en minutas y 0 → 1,41 en comunicados "
-     "(03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv). Robusto.",
+     "(03_Resultados/Tablas/08_antes_despues/conjunto_palabras_cambio_detalle.csv). Robusto.",
      "«Como resultado de la fuerte caída de los ingresos por exportaciones petroleras y del dinamismo "
      "de la demanda interna, el déficit en la cuenta corriente de la balanza de pagos del país se ha "
      "ampliado.» Comunicado del 20-02-2015."))
@@ -301,9 +301,9 @@ diapositiva_figura(
      "peso de los temas en cada reunión.",
      "Tópico 2: comunicados 10,7 → 1,5 % (−9,2 pp [−10,9; −7,5]), minutas 12,3 → 3,3 % (−9,0 pp). "
      "Tópico 1: comunicados 15,2 → 11,6 % (−3,6 pp), minutas 14,8 → 7,9 % (−6,9 pp) "
-     "(03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv). Tema «Actividad "
+     "(03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.csv). Tema «Actividad "
      "económica» del diccionario: −6,4 y −7,9 por 1.000 palabras "
-     "(03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues.csv). Robusto. Salvedad: "
+     "(03_Resultados/Tablas/08_antes_despues/conjunto_temas_antes_despues.csv). Robusto. Salvedad: "
      "el fin del ciclo de crédito de 2010–2013 también explica la caída.",
      "«El crecimiento del crédito a los hogares permanece alto, especialmente el de consumo, lo que "
      "indica que los hogares han elevado significativamente su grado de endeudamiento.» Comunicado "
@@ -320,7 +320,7 @@ diapositiva_figura(
      "La inflación no recibió más espacio, recibió otra discusión: indexación, persistencia, traslado.",
      "Tópico 4: comunicados 5,1 → 15,8 % (+10,8 pp [7,9; 13,6], robusto), minutas 7,5 → 9,6 % "
      "(+2,0 pp [−0,6; 4,7], matizado). Tópico 8: comunicados 11,5 → 4,6 % (−6,9 pp), minutas "
-     "12,2 → 5,4 % (−6,8 pp), robusto (03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv). "
+     "12,2 → 5,4 % (−6,8 pp), robusto (03_Resultados/Tablas/09_lda_oraciones/conjunto_lda_antes_despues.csv). "
      "Palabras: «indexación» 0 → 1,11 por 1.000 en comunicados; en minutas «inflación» pasa de "
      "aparecer con proyección y monitoreo a meta, convergencia, persistencia e indexación "
      "(03_Resultados/Figuras/11_figuras_diapositiva/minutas_correlaciones_inflacion.png, en el apéndice).",
@@ -382,7 +382,7 @@ diapositiva_figura(
      "de la inflación por depreciación llegó con las alzas, no antes.",
      "Máximos de la atención al entorno externo: minutas 2015-06-24, comunicados 2015-09-25; mínimo "
      "del Brent 2016-01-29; máximo de la TRM 2016-02-19; máximo de la inflación 2016-08-31 "
-     "(03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.csv). Verificación: el "
+     "(03_Resultados/Tablas/08_antes_despues/conjunto_cronologia_texto_macro.csv). Verificación: el "
      "entorno externo supera su máximo de 2009–2014 el 2014-12-19 (comunicados) y el 2015-03-20 "
      "(minutas), antes de la primera alza; el tópico de inflación por depreciación lo supera el "
      "2015-11-27 en comunicados, después de la primera alza, y nunca en minutas "
@@ -400,7 +400,7 @@ diapositiva_figura(
     ("3", "1:00",
      "Para leer el cambio de agenda, el comunicado; para entender la deliberación, la minuta.",
      "Entorno externo: +6,5 por 1.000 palabras [3,6; 9,4] en comunicados (robusto) y +2,1 [−0,8; 4,9] "
-     "en minutas (matizado) (03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues_detalle.csv). "
+     "en minutas (matizado) (03_Resultados/Tablas/08_antes_despues/conjunto_temas_antes_despues_detalle.csv). "
      "Tópico 4: +10,8 pp en comunicados y +2,0 pp en minutas. En las minutas sube la justificación de "
      "la postura (tópico 3, 12,2 → 30,5 %), en parte por formato. En P4 el 56 % de las minutas reporta "
      "decisión por mayoría, frente al 8 % de los comunicados (05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md).",
@@ -533,7 +533,7 @@ def apendice_cortes():
 
 
 def apendice_documentos():
-    ruta = TAB / "09_antes_despues" / "conjunto_documentos_por_epoca.csv"
+    ruta = TAB / "08_antes_despues" / "conjunto_documentos_por_epoca.csv"
     d = leer(ruta)
     filas = [["Escenario y documento", "Reuniones antes", "Reuniones después", "Palabras antes", "Palabras después"]]
     destacar = []
@@ -554,13 +554,13 @@ def apendice_documentos():
     caja_texto(s, MARGEN, 9.85, ANCHO - 2 * MARGEN, 1.0, [
         "En negrita, el escenario principal (corte 2014-10-30, 5 años a cada lado); los otros tres son de robustez. "
         "Palabras: todas las del texto; en las minutas, solo la discusión de la Junta."], tam=18, color=GRIS)
-    nota_apendice(s, TAB / "09_antes_despues" / "conjunto_documentos_por_epoca.png",
+    nota_apendice(s, TAB / "08_antes_despues" / "conjunto_documentos_por_epoca.png",
                   "cada fila es un tipo de documento en un escenario; por eso toda medida se normaliza por 1.000 "
                   "palabras. La tabla completa trae las fechas de la primera y la última reunión de cada época.")
 
 
 def apendice_seleccion():
-    ruta = TAB / "08_lda_oraciones" / "conjunto_lda_seleccion.csv"
+    ruta = TAB / "09_lda_oraciones" / "conjunto_lda_seleccion.csv"
     d = leer(ruta)
     filas = [["Número de tópicos (K)", "α con menor perplejidad", "Perplejidad", "Por encima del mínimo (%)",
               "Coherencia media"]]
@@ -578,13 +578,13 @@ def apendice_seleccion():
         "Regla fijada antes de ver los tópicos: para cada K se toma el α con menor perplejidad (document completion, "
         "3 pliegues); se elige el K más pequeño a menos del 5 % del mínimo, salvo que su coherencia UMass media sea la "
         "peor. Menor perplejidad es mejor; la coherencia más cercana a cero, también."], tam=21, color=GRIS)
-    nota_apendice(s, TAB / "08_lda_oraciones" / "conjunto_lda_seleccion.png",
+    nota_apendice(s, TAB / "09_lda_oraciones" / "conjunto_lda_seleccion.png",
                   "cada fila es un número de tópicos con su mejor α; en negrita, el elegido. La rejilla completa de K y α "
                   "está en conjunto_lda_rejilla.csv.")
 
 
 def apendice_topicos():
-    ruta = TAB / "08_lda_oraciones" / "conjunto_lda_topicos.csv"
+    ruta = TAB / "09_lda_oraciones" / "conjunto_lda_topicos.csv"
     d = leer(ruta)
     d["num"] = d.topico.str.extract(r"^(\d+)\.").astype(float)
     estables = d[d.se_repite == "Sí"].sort_values("num")
@@ -609,13 +609,13 @@ def apendice_topicos():
         f"Los tópicos {' y '.join(inestables)} no se repiten con otras semillas y no se interpretan. "
         f"Con alerta de formato o de época (más del 70 % de su peso en un formato de minuta): {', '.join(alerta)}."],
         tam=18, color=GRIS)
-    nota_apendice(s, TAB / "08_lda_oraciones" / "conjunto_lda_topicos.png",
+    nota_apendice(s, TAB / "09_lda_oraciones" / "conjunto_lda_topicos.png",
                   "cada fila es un tópico estable; las palabras de mayor lift son las más propias del tópico "
                   "frente al resto, y la última columna es la interpretación que justifica su nombre.")
 
 
 def apendice_diccionario():
-    ruta = TAB / "08_lda_oraciones" / "conjunto_lda_vs_diccionario.csv"
+    ruta = TAB / "09_lda_oraciones" / "conjunto_lda_vs_diccionario.csv"
     d = leer(ruta)
     temas = [("Actividad económica", "1", "tópico 1"), ("Inflación", "4 + 8", "tópicos 4 + 8"),
              ("Entorno externo", "6 + 10", "tópicos 6 + 10")]
@@ -640,13 +640,13 @@ def apendice_diccionario():
         "atención al tema del diccionario. El diccionario suma conversaciones que se mueven en direcciones opuestas "
         "(la inflación por depreciación sube y la inflación básica baja; el déficit externo sube y la economía "
         "mundial baja); el modelo de tópicos las separa."], tam=22, color=TEXTO)
-    nota_apendice(s, TAB / "08_lda_oraciones" / "conjunto_lda_vs_diccionario.png",
+    nota_apendice(s, TAB / "09_lda_oraciones" / "conjunto_lda_vs_diccionario.png",
                   "cada cifra es la correlación de Pearson por reunión entre el peso del tópico (o la suma de dos) y el "
                   "tema del diccionario; cerca de 1, las dos medidas suben y bajan juntas.")
 
 
 def apendice_robustez():
-    ruta = TAB / "08_lda_oraciones" / "conjunto_lda_antes_despues_detalle.csv"
+    ruta = TAB / "09_lda_oraciones" / "conjunto_lda_antes_despues_detalle.csv"
     d = leer(ruta)
     d["num"] = d.topico.str.extract(r"^(\d+)\.").astype(float)
     principal = d[d.escenario.str.startswith("Principal")]
@@ -673,7 +673,7 @@ def apendice_robustez():
         "Diferencia después − antes del peso medio del tópico en la reunión, en puntos porcentuales, con IC 95 %, en el "
         "escenario principal (corte 2014-10-30, 5 años a cada lado). «Robusto»: el signo se mantiene con la muestra "
         "completa 2007–2026 y con los cortes 2014-09-26 y 2014-12-19."], tam=17, color=GRIS)
-    nota_apendice(s, TAB / "08_lda_oraciones" / "conjunto_lda_antes_despues.png",
+    nota_apendice(s, TAB / "09_lda_oraciones" / "conjunto_lda_antes_despues.png",
                   "cada fila es un tópico; un número positivo dice que el tópico pesa más después del corte. La "
                   "columna de dirección dice si los otros tres escenarios dan el mismo signo.")
 
@@ -690,10 +690,10 @@ def recortar(texto, clave, max_palabras=30):
 
 
 def apendice_fragmentos():
-    d09 = TAB / "09_antes_despues"
-    anclas = leer(d09 / "conjunto_fragmentos_anclas.csv")
-    temas = leer(d09 / "conjunto_fragmentos_temas.csv")
-    palabras = leer(d09 / "conjunto_palabras_seleccion_fragmentos.csv")
+    d08 = TAB / "08_antes_despues"
+    anclas = leer(d08 / "conjunto_fragmentos_anclas.csv")
+    temas = leer(d08 / "conjunto_fragmentos_temas.csv")
+    palabras = leer(d08 / "conjunto_palabras_seleccion_fragmentos.csv")
 
     def de_palabras(term, fuente):
         r = palabras[(palabras.termino == term) & (palabras.fuente == fuente)].iloc[0]
@@ -731,7 +731,7 @@ def apendice_fragmentos():
             (f"{epoca} del corte · {doc}", {"tam": 17, "color": GRIS, "espacio": 8}),
             (f"«{recortar(texto, clave)}»", {"tam": 20, "cursiva": True}),
         ])
-    nota_apendice(s, d09 / "conjunto_fragmentos_temas.png",
+    nota_apendice(s, d08 / "conjunto_fragmentos_temas.png",
                   "cada tarjeta es una cita textual de la época en que el tema es más frecuente; las tarjetas de arriba "
                   "son de después del corte y las de abajo de antes. Fuentes: conjunto_fragmentos_anclas.csv, "
                   "conjunto_fragmentos_temas.csv y conjunto_palabras_seleccion_fragmentos.csv.")
@@ -782,7 +782,7 @@ apendice = [
     apendice_diccionario,
     apendice_robustez,
     apendice_fragmentos,
-    ("A6. Peso de los tópicos 6 a 10 por reunión, 2007 a 2019", FIG / "08_lda_oraciones" / "conjunto_lda_theta_por_reunion_topicos_6_10.png"),
+    ("A6. Peso de los tópicos 6 a 10 por reunión, 2007 a 2019", FIG / "09_lda_oraciones" / "conjunto_lda_theta_por_reunion_topicos_6_10.png"),
     lambda: apendice_macro(["P1", "P2", "P3", "P4", "P5"], titulo_macro_1),
     lambda: apendice_macro(["P6", "P7", "P8", "P9", "P10"], titulo_macro_2),
     ("A8. Palabras que acompañan a «inflación» en las minutas", D11 / "minutas_correlaciones_inflacion.png"),

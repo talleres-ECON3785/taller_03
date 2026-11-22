@@ -4,8 +4,8 @@
 # Taller 3 - ECON-3785
 #
 # Entradas: 01_Datos/03_Listos/tokens_anotados.rds, 01_Datos/02_Procesados/corpus_texto.rds,
-#           03_Resultados/Tablas/09_antes_despues/ (reuniones por epoca y atencion por tema)
-# Salidas:  03_Resultados/Tablas/08_lda_oraciones/ y 03_Resultados/Figuras/08_lda_oraciones/
+#           03_Resultados/Tablas/08_antes_despues/ (reuniones por epoca y atencion por tema)
+# Salidas:  03_Resultados/Tablas/09_lda_oraciones/ y 03_Resultados/Figuras/09_lda_oraciones/
 #
 # Documento = bloque de oraciones consecutivas de udpipe de una misma unidad
 # (comunicado entero o seccion de discusion/decision de la Junta en las
@@ -28,7 +28,7 @@
 #      nombres de los topicos estables.
 #   6. peso de cada topico por reunion antes y despues del corte, en los
 #      cuatro escenarios, con la regla de lectura de 09.
-#   7. contraste con el diccionario de temas de 09 (correlacion por reunion)
+#   7. contraste con el diccionario de temas de 08 (correlacion por reunion)
 #      y serie del peso de los topicos 2007-2019.
 # =============================================================================
 
@@ -37,7 +37,7 @@
 source("02_Scripts/00_formato_tablas.R")
 source("02_Scripts/00_funciones_texto.R")
 
-carpeta_salida <- "08_lda_oraciones"
+carpeta_salida <- "09_lda_oraciones"
 
 anotados <- readRDS("01_Datos/03_Listos/tokens_anotados.rds") %>%
   filter(tipo == "comunicado" | es_junta) %>%
@@ -58,8 +58,8 @@ ruta_tabla <- function(nombre) file.path("03_Resultados/Tablas", carpeta_salida,
 umbrales <- c(60, 80, 100)
 min_utiles <- 20
 
-# palabras por oracion (todas las del texto, como en 09). El modelo se estima
-# con la ventana principal (5 anos a cada lado del corte), como las medidas de 09
+# palabras por oracion (todas las del texto, como en 08). El modelo se estima
+# con la ventana principal (5 anos a cada lado del corte), como las medidas de 08
 oraciones <- anotados %>%
   count(fuente, tipo, id, fecha, formato, unidad, sentence_id, name = "palabras") %>%
   mutate(en_ventana = !is.na(asignar_epoca(fecha, corte_crisis, ventana = TRUE))) %>%
@@ -408,14 +408,14 @@ theta_reunion <- theta_bloque %>%
   summarise(theta = 100 * mean(theta), .groups = "drop")
 write_csv(theta_reunion %>% mutate(fuente = fuentes[fuente]), ruta_tabla("conjunto_lda_theta_por_reunion.csv"))
 
-# reuniones con su epoca en cada escenario (como docs_esc en 09)
+# reuniones con su epoca en cada escenario (como docs_esc en 08)
 reuniones_esc <- escenarios %>%
   rowwise() %>%
   reframe(escenario, theta_reunion %>% mutate(epoca = asignar_epoca(fecha, corte, ventana))) %>%
   filter(!is.na(epoca))
 
 # media por epoca con su IC 95 % y diferencia despues - antes con su IC 95 %
-# (t.test de Welch, la reunion es la unidad), como comparar_temas en 09
+# (t.test de Welch, la reunion es la unidad), como comparar_temas en 08
 comparar_topicos <- reuniones_esc %>%
   group_by(escenario, fuente, topico) %>%
   summarise({
@@ -433,7 +433,7 @@ write_csv(comparar_topicos %>% mutate(escenario = escenarios$nombre[match(escena
                                       fuente = fuentes[fuente], topico = etiqueta_topico(topico)),
           ruta_tabla("conjunto_lda_antes_despues_detalle.csv"))
 
-# lectura (regla de 09): artefacto de formato si minutas y comunicados van en
+# lectura (regla de 08): artefacto de formato si minutas y comunicados van en
 # direcciones opuestas; robusta si el signo se mantiene en los otros escenarios
 lectura_topicos <- comparar_topicos %>%
   select(escenario, fuente, topico, diferencia) %>%
@@ -506,18 +506,18 @@ tabla_antes_despues <- datos_tabla_topicos %>%
 guardar_tabla("conjunto_lda_antes_despues", tabla_antes_despues, datos_tabla_topicos, carpeta_salida)
 
 # -----------------------------------------------------------------------------
-# 7. Contraste con el diccionario de 09 y peso de los topicos en 2007-2019
+# 7. Contraste con el diccionario de 08 y peso de los topicos en 2007-2019
 # -----------------------------------------------------------------------------
 
 # (a) correlacion por reunion entre theta y la atencion al tema equivalente del
-# diccionario, leida de 09 (no se recalcula). Equivalencias fijadas por las
+# diccionario, leida de 08 (no se recalcula). Equivalencias fijadas por las
 # palabras de cada tema y topico, antes de ver las correlaciones; la suma
 # muestra lo que el diccionario mezcla y cada topico, su composicion
 equivalencias <- tibble(
   tema = c("Actividad económica", rep("Inflación", 3), rep("Entorno externo", 3)),
   topicos = list(1, 4, 8, c(4, 8), 6, 10, c(6, 10))
 ) %>% mutate(etiqueta = map_chr(topicos, ~ paste(.x, collapse = " + ")))
-atencion_09 <- read_csv("03_Resultados/Tablas/09_antes_despues/conjunto_temas_por_reunion.csv", show_col_types = FALSE) %>%
+atencion_09 <- read_csv("03_Resultados/Tablas/08_antes_despues/conjunto_temas_por_reunion.csv", show_col_types = FALSE) %>%
   mutate(fuente = names(fuentes)[match(fuente, fuentes)])
 theta_ventana <- theta_reunion %>% filter(!is.na(asignar_epoca(fecha, corte_crisis, ventana = TRUE)))
 cor_diccionario <- equivalencias %>%
@@ -554,13 +554,13 @@ tabla_dicc <- datos_tabla_dicc %>%
              n_dicc$reuniones[n_dicc$fuente == "junta"], " minutas; la reunión es la unidad."),
       "Equivalencias fijadas por las palabras de cada tema y tópico antes de calcular las correlaciones; «Suma» usa el peso conjunto de los dos tópicos.",
       "La correlación es entre niveles, así que incluye el cambio entre épocas antes y después del 2014-10-30.",
-      "Atención por tema: diccionario de 09_antes_despues.R (Mercado laboral, Fiscal y Riesgo no tienen tópico equivalente)."))
+      "Atención por tema: diccionario de 08_antes_despues.R (Mercado laboral, Fiscal y Riesgo no tienen tópico equivalente)."))
   )
 guardar_tabla("conjunto_lda_vs_diccionario", tabla_dicc, cor_diccionario %>% mutate(fuente = fuentes[fuente]), carpeta_salida)
 
 # (b) peso de cada topico estable por reunion hasta 2019: desde 2020 entra la
 # pandemia, otro choque que habria que explicar aparte (fuera de la ventana,
-# theta de posterior()). Estilo de la serie por reunion de 09
+# theta de posterior()). Estilo de la serie por reunion de 08
 media_movil <- function(x) as.numeric(stats::filter(x, rep(1 / 5, 5), sides = 1)) # 5 reuniones, solo el pasado
 fin_serie <- as.Date("2019-12-31")
 serie_topicos <- theta_reunion %>%
@@ -600,18 +600,18 @@ for (g in names(grupos_serie)) {
   guardar_figura(paste0("conjunto_lda_theta_por_reunion_", g, ".png"), fig_g, carpeta_salida, width = 14, height = 7.5)
 }
 
-# reuniones por epoca del escenario principal, tal como las cuenta 09
-epocas_09 <- read_csv("03_Resultados/Tablas/09_antes_despues/conjunto_documentos_por_epoca.csv", show_col_types = FALSE) %>%
+# reuniones por epoca del escenario principal, tal como las cuenta 08
+epocas_09 <- read_csv("03_Resultados/Tablas/08_antes_despues/conjunto_documentos_por_epoca.csv", show_col_types = FALSE) %>%
   filter(str_starts(escenario, "Principal"))
 
 stopifnot(
   # theta fuera de la ventana tambien suma 1 por bloque
   all(abs(count(theta_bloque, bloque, wt = theta)$n - 1) < 1e-8),
-  # mismas reuniones que 09 en el escenario principal
+  # mismas reuniones que 08 en el escenario principal
   identical(as.integer(sort(c(n_reuniones$reuniones_antes, n_reuniones$reuniones_despues))),
             as.integer(sort(c(epocas_09$reuniones_antes, epocas_09$reuniones_despues)))),
   length(nombres_topicos) %in% c(0, length(estables)),
-  # ninguna reunion de la ventana se pierde en el cruce con el diccionario de 09
+  # ninguna reunion de la ventana se pierde en el cruce con el diccionario de 08
   all(cor_diccionario$reuniones == count(distinct(theta_ventana, fuente, id), fuente)$n[match(cor_diccionario$fuente, c("com", "junta"))]),
   # theta del modelo final suma 1 por bloque
   all(abs(rowSums(posterior(modelo)$topics) - 1) < 1e-8),
