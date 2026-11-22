@@ -16,38 +16,36 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **Correr `00_main.R` completo y abrir el pull request de `SamuelEscandonC`
-   a `main` (Samuel Escandón; lo corre él, no el agente).**
-   - Verifica que `09_antes_despues.R` corre dentro del pipeline y que las
-     salidas de `04_bigramas.R` no cambiaron con `construir_bigramas()`
-     (`git diff` de sus `.csv` sin cambios).
-   - *Terminado cuando:* `00_main.R` termina sin errores desde cero y el PR
-     está abierto.
-2. **LDA (script 08) y embeddings (script 10), otros integrantes; contraste
-   con `09` (P3c.6 de `PLAN.md`).**
-   - Lo que deben buscar para confirmar o contradecir `09`: un tópico o
-     vecindario «déficit / cuenta corriente / balanza de pagos» que aparezca
-     después del corte; vecinos de «inflación» que pasen de palabras de
-     seguimiento (proyección, monitoreo) a traslado, persistencia, indexación
-     y convergencia; menos peso de «actividad económica».
-   - *Terminado cuando:* cada uno tiene su nota en `05_Notas/` con una línea
-     de contraste contra las notas de `05_Notas/09_antes_despues/`.
-3. **H4 de `PLAN.md`: interpretación y deck (domingo 22).**
-   - Las cuatro notas de `05_Notas/09_antes_despues/` ya traen cifras,
-     fragmentos y lectura de robustez para las diapositivas.
-   - *Terminado cuando:* cada cambio de tema tiene un fragmento del texto y la
-     salvedad de asociación, no causalidad, y el video dura máximo 15 minutos.
+1. **H4 de `PLAN.md` (P4.1–P4.5): interpretación y deck, todo el equipo
+   (domingo 22).**
+   - Insumos listos: las notas de `05_Notas/08_lda_oraciones/` (LDA) y de
+     `05_Notas/09_antes_despues/` (diccionario, palabras, bigramas), con
+     cifras, fragmentos y lectura de robustez. Las figuras por reunión del LDA
+     (`conjunto_lda_theta_por_reunion_topicos_1_4.png` y `_6_10.png`) ya
+     están en formato de diapositiva.
+   - *Terminado cuando:* el borrador en `04_Presentaciones/` tiene cada cambio
+     de tema con su fragmento y la salvedad «asociación, no causalidad», y el
+     video dura máximo 15 minutos.
+2. **H3c de `PLAN.md` (P3c.1–P3c.8): `10_word2vec.R`, o decidir omitirlo
+   (integrante por definir).**
+   - Antes de correr: registrar Word2Vec como ampliación del catálogo
+     (P3c.1). Contrastar con `pairwise_cor()` de `09` y con los tópicos de
+     `08` (vecinos de «inflación» y de «déficit»).
+   - *Terminado cuando:* existe `conjunto_vecinos_antes_despues.png` con su
+     nota en `05_Notas/10_word2vec/`, o la omisión queda registrada en
+     «Decisiones tomadas».
+3. **Llevar `SantiagoMunozM` a `main` con un pull request (lo pide Santiago
+   Muñoz Martínez, no el agente).**
+   - `SamuelEscandonC` ya está en `main` (PR #6). `00_main.R` corre completo
+     en `SantiagoMunozM` (nueve scripts, 4,6 minutos); si `main` avanzó, hay
+     que traerlo antes y resolver conflictos en `PLAN.md`, `CLAUDE.md` y
+     `HANDOFF.md`.
+   - *Terminado cuando:* el PR está mergeado y `00_main.R` corre sin errores
+     en `main`.
 
 **Bloqueos y preguntas abiertas:**
 
-- `PLAN.md` tiene dos bloques «H3b»: el de `09_antes_despues.R` (esta sesión)
-  y el del LDA, que sigue rotulado `09_lda_oraciones.R` aunque el LDA es el
-  script 08. Lo renumera quien lleva el LDA.
 - Roles de los integrantes en el Taller 3.
-- La regla de balance del LDA (suma de rangos de perplejidad y coherencia,
-  empate al K menor) es propuesta de la sesión del 2026-11-21: el equipo debe
-  aprobarla antes de correr. Los objetivos de H5 (interpretación y deck) quedan
-  fuera de la lista por el máximo de tres.
 - La validación manual de la votación quedó fuera de `PLAN.md`: decidir si se
   abandona.
 - Corpus pequeño (unas 177 mil palabras limpias) para entrenar embeddings y
@@ -70,8 +68,18 @@ domingo 22 de noviembre de 2026.**
   se redacta la minuta (ver la nota de votación).
 - Solo 31 minutas traen su fecha de publicación (rezago mediano de 14 días);
   para las demás hay que suponerlo o consultarlo.
-- El LDA con la minuta entera como documento separa épocas y formatos, no
-  temas: si la pregunta necesita temas, hay que bajar a párrafo u oración.
+- LDA (`08`): en las minutas, el formato B (desde 2014-05-30) casi coincide con
+  la época «después», así que la alerta de formato no separa formato de época.
+  El tópico 3 (decisión y postura) puede ser en parte de formato en las
+  minutas.
+- Hipótesis sin verificar en `T_choque_externo_llega_a_colombia.md`: en los
+  comunicados, el tema «Entorno externo» del diccionario lo dominan palabras
+  genéricas que el LDA reparte entre tópicos (correlación por reunión de 0,04
+  con los tópicos 6 + 10).
+- `00_main.R` emite un warning de ggplot (`position_stack()` con intervalos
+  que se solapan); no se revisó de qué figura sale.
+- `04_Presentaciones/indicaciones_deck.md` está sin seguimiento y no lo creó
+  esta rama: confirmar de quién es antes de versionarlo.
 - Lista de palabras vacías de redacción: `mantener`, `continuar`, `seguir`,
   los verbos de atribución («resaltar», «destacar», «señalar»…) y adjetivos
   como `anual`, `mayor` o `menor` quedan entre las palabras más frecuentes. Si
@@ -87,49 +95,66 @@ domingo 22 de noviembre de 2026.**
 
 ## Estado actual
 
-- **Pipeline:** `00_main.R` corre ocho scripts (01 a 07 y 09): unos 4 minutos
-  si ya existe la anotación de `udpipe` y unos 6 si no. Requiere Chrome para
-  las tablas e internet la primera vez. **La corrida completa con `09` todavía
-  no se ha hecho**: solo se corrió `09` suelto (unos 70 segundos). La hace
-  Samuel Escandón antes del pull request a `main`.
+- **Pipeline:** `00_main.R` corre nueve scripts (01 a 09) en unos 4,6 minutos
+  si ya existe la anotación de `udpipe` (verificado el 2026-11-21 en
+  `SantiagoMunozM`). Requiere Chrome para las tablas e internet la primera vez.
 - **Scripts:**
   - de formato y definiciones: `00_formato_graficas.R`, `00_formato_tablas.R`
-    y `00_funciones_texto.R` (periodos, formatos de minuta, compuestos,
-    palabras vacías, grupos temáticos, fecha de corte y, desde el 2026-11-21,
-    `construir_bigramas()`, que usan `04` y `09`);
+    (desde el 2026-11-21: encabezados y cifras centrados, texto a la izquierda,
+    márgenes de 8 px) y `00_funciones_texto.R` (periodos, formatos de minuta,
+    compuestos, palabras vacías, temas, corte, `construir_bigramas()`,
+    `asignar_epoca()`, `escenarios` y `texto_original()`);
   - de texto: `01_extraer_texto.R` a `05_lda_exploratorio.R`;
   - de series: `06_series_macro.R` y `07_graficas_macro.R`;
-  - antes/después del corte: `09_antes_despues.R` (palabras, bigramas,
-    atención por tema, correlaciones entre palabras y su relación con Brent,
-    TRM e inflación). El 08 (LDA) y el 10 (embeddings) están a cargo de otros
-    integrantes.
+  - antes/después del corte:
+    - `08_lda_oraciones.R`: LDA con bloques de 60 palabras, estimado en la
+      ventana con K = 10 y α = 0,1; 8 tópicos estables con nombre; θ por
+      reunión antes/después en cuatro escenarios, contraste con el
+      diccionario y serie 2007–2019;
+    - `09_antes_despues.R`: palabras, bigramas, atención por tema y
+      correlaciones.
+  - `10_word2vec.R` no existe.
 - **Datos:**
-  - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios en
-    `01_Datos/03_Listos/`.
-  - Series macro en `01_Datos/03_Listos/`: Brent, TRM, inflación total y
-    básicas, meta por año e índices de tasa de cambio real.
-  - `macro_por_reunion.rds`: las 205 reuniones con el último dato de cada serie
-    que la Junta tenía (regla en `CLAUDE.md`, "Alineación temporal").
+  - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios y
+    anotados en `01_Datos/03_Listos/`.
+  - Series macro en `01_Datos/03_Listos/`, y `macro_por_reunion.rds` con las
+    205 reuniones alineadas.
 - **Fecha de corte:** 2014-10-30. Alternativas: 2014-09-26 y 2014-12-19. En
   la ventana de 5 años: 54 y 53 comunicados, 59 y 53 minutas.
 - **Resultados:**
-  - exploratorios de texto (01 a 05) y macro (07);
-  - de `09`: cuatro figuras y doce tablas (con fragmentos y robustez). Mapa
-    completo en `README.md`.
-  - Ocho notas en `05_Notas/`; las cuatro de `09_antes_despues/` sostienen
-    las conclusiones antes/después: cuenta corriente y déficit externo
-    (robusta), devaluación como tema de inflación (robusta), atención por
-    tema (actividad y fiscal robustas; entorno externo e inflación
-    matizadas) y cronología texto–macro (matizada, asociativa).
-- **Plan:** `PLAN.md` con H1, H2 y el H3b de `09_antes_despues.R` terminados.
-  Siguen el LDA, Word2Vec (otros integrantes) y H4 (interpretación y deck).
-- **Reglas:** el catálogo registra `pdftools`, `gt` y `readxl`; `widyr` ya
-  estaba en el catálogo y entró al `p_load()`. Los embeddings siguen sin
-  registrar.
-- **Git:** trabajo de esta sesión en `SamuelEscandonC` (al día con `main`), sin
-  mergear a `main`.
+  - exploratorios (01 a 05), macro (07), antes/después por diccionario (09) y
+    LDA (08). Mapa completo en `README.md`.
+  - LDA, peso medio por reunión antes → después (pp, comunicados / minutas):
+    - suben: déficit externo (+14,1 / +9,4), inflación por depreciación
+      (+10,8 / +2,0, matizada en minutas) y decisión y postura
+      (+2,8 / +18,4, matizada);
+    - bajan: economía mundial, inflación básica frente a la meta, actividad,
+      crédito y liquidez.
+- **Notas:** doce notas en `05_Notas/`, cuatro de ellas de `08_lda_oraciones/`.
+  La del sector externo se matizó: el LDA y el diccionario coinciden en la
+  dirección antes/después y, reunión a reunión, solo en las minutas.
+- **Plan:** `PLAN.md` con H1, H2, H3a (LDA) y H3b (`09`) terminados. Siguen
+  H3c (Word2Vec, sin registrar), H3d (robustez; falta solo `10`) y H4.
+- **Reglas:** el catálogo registra `pdftools`, `gt` y `readxl`; `widyr` está
+  en el `p_load()`. Word2Vec sigue sin registrar.
+- **Git:** el trabajo del LDA está en `SantiagoMunozM` y el de `09` en
+  `SamuelEscandonC` (mergeado a `main` en el PR #6); `SantiagoMunozM` no está
+  mergeado a `main`.
 
 ## Registro de sesiones
+
+### 2026-11-21 (4): LDA con bloques de oraciones (H3a)
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). Se diseñó y escribió
+  `08_lda_oraciones.R` (H3a, P3a.1–P3a.12 cerrados): umbral de 60 palabras por
+  bloque, LDA en la ventana con K = 10 y α = 0,1, 8 tópicos estables con
+  nombre, diferencia antes/después por reunión en cuatro escenarios, contraste
+  con el diccionario de `09` y serie por reunión 2007–2019. El estilo de las
+  tablas cambió para todo el proyecto. Cuatro notas nuevas; la del sector
+  externo se matizó. `00_main.R` corre completo.
+- Bitácora: [2026-11-21_lda-oraciones.md](06_Bitacoras/2026-11-21_lda-oraciones.md)
+- **Siguientes objetivos:** (1) H4, interpretación y deck; (2) H3c Word2Vec
+  o decidir omitirlo; (3) PR de `SantiagoMunozM` a `main`.
 
 ### 2026-11-21 (3): qué cambió antes y después del corte
 

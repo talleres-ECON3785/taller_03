@@ -1,0 +1,11 @@
+topico,top_lift,top_beta,formato,alerta,se_repite
+1. Actividad económica interna,"venta, lado, construccion, civil, obra, industrial, industria, cuarto","crecimiento, inversion, consumo, cifra, primero, segundo",A (77 %),Posible artefacto de formato o de época,Sí
+2. Crédito y sistema financiero,"vivienda, cartera, historico, credito, nominal, termino, real, sistema","credito, crecimiento, nivel, tasa_interes, tasa, financiero",A (86 %),Posible artefacto de formato o de época,Sí
+3. Decisión y postura de política monetaria,"necesario, macroeconomico, senda, postura_politica, estabilidad, ajuste, compromiso, excesivo","inflacion, meta, tasa_intervencion, politica_monetaria, riesgo, ajuste",B (66 %),,Sí
+4. Inflación por depreciación y alimentos,"fenomeno_nino, ipc, regulado, variacion, alimento, transable, devaluacion, indexacion","inflacion, precio, alimento, aumento, efecto, comportamiento",A (55 %),,Sí
+Tópico 5 (inestable),"restante, subasta, decision, aprobacion, consideracion, base, unanimidad, mayoria","tasa_intervencion, decision, puntos_basicos, siguiente, inflacion, inalterado",B (64 %),,No
+6. Déficit externo y capacidad productiva,"capacidad, productivo, cuenta_corriente, exceso, balanza_pagos, velocidad, deficit, debilidad","capacidad, deficit, incertidumbre, cuenta_corriente, economia, productivo",B (65 %),,Sí
+7. Seguimiento y provisión de liquidez,"monitoreo, cuidadoso, situacion, evaluacion, ambiente, activo, local, disponible","internacional, politica_monetaria, comportamiento, informacion, disponible, inflacion",A (84 %),Posible artefacto de formato o de época,Sí
+8. Inflación básica y expectativas frente a la meta,"medio, meta_inflacion, consecutivo, punto, resumen, mitad, largo_plazo, linea","inflacion, meta_inflacion, expectativas_inflacion, inflacion_basica, largo_plazo, indicador",A (80 %),Posible artefacto de formato o de época,Sí
+Tópico 9 (inestable),"prima_riesgo, socio, gobierno, colombia, dolar, significativo, petroleo, precio_petroleo","colombia, pais, economia, crecimiento, precio, internacional",A (71 %),Posible artefacto de formato o de época,No
+10. Economía mundial,"asia, zona_euro, latino, america, perspectiva, emergente, volatilidad, central","economia, crecimiento, estados_unidos, mundial, recuperacion, emergente",A (84 %),Posible artefacto de formato o de época,Sí

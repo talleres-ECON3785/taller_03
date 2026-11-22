@@ -59,20 +59,7 @@ fuente_figuras <- "Fuente: comunicados y minutas de la Junta Directiva del Banco
 
 # --- epocas y escenarios ------------------------------------------------------
 
-anios_ventana <- 5
-# "antes" / "despues" de `corte`; con ventana, NA fuera de los 5 anos a cada lado
-asignar_epoca <- function(fecha, corte, ventana) {
-  epoca <- if_else(fecha < corte, "antes", "despues")
-  if (ventana) epoca[fecha < corte - years(anios_ventana) | fecha >= corte + years(anios_ventana)] <- NA
-  epoca
-}
-escenarios <- tibble(
-  escenario = c("principal", "completa", "corte_p4", "corte_trm"),
-  nombre = c("Principal: corte 2014-10-30, 5 años a cada lado", "Muestra completa 2007–2026, corte 2014-10-30",
-             "Corte 2014-09-26, 5 años a cada lado", "Corte 2014-12-19, 5 años a cada lado"),
-  corte = c(corte_crisis, corte_crisis, cortes_alternativos[["apertura_p4"]], cortes_alternativos[["depreciacion_trm"]]),
-  ventana = c(TRUE, FALSE, TRUE, TRUE)
-)
+# `asignar_epoca()` y `escenarios` viven en 00_funciones_texto.R (los comparten 08, 09 y 10)
 nombre_esc <- setNames(escenarios$nombre, escenarios$escenario)
 
 # tokens limpios y palabras por documento de cada fuente (como en 03)
@@ -137,21 +124,7 @@ oraciones <- anotados %>%
             n_tok = n(), .groups = "drop") %>%
   mutate(oracion = paste(unidad, sentence_id, sep = "__"))
 
-# recupera la oracion original del PDF (con mayusculas y tildes) a partir de la
-# tokenizada: compara las dos sin espacios, signos ni tildes. Si no la
-# encuentra, devuelve la tokenizada (minusculas y compuestos con guion bajo)
-# udpipe separa "del" y "al" en "de el" y "a el": se vuelven a unir
-contraer <- function(x) str_replace_all(x, c("\\bde el\\b" = "del", "\\ba el\\b" = "al"))
-clave <- function(x) gsub("[^a-z_]", "", sin_tilde(str_to_lower(contraer(x))))
-texto_original <- function(id_doc, texto_tok) {
-  crudas <- str_squish(partir_oraciones(corpus$texto[corpus$id == id_doc])[[1]])
-  claves <- clave(aplicar_compuestos(crudas, unir_referencia = FALSE))
-  # la oracion de udpipe tiene que estar completa dentro de la cruda
-  hit <- which(str_detect(claves, fixed(clave(texto_tok))))
-  out <- if (length(hit)) crudas[hit[1]] else
-    str_replace_all(contraer(texto_tok), c("_" = " ", " ([,.;:%)])" = "\\1", "\\( " = "("))
-  if (nchar(out) > 330) paste0(str_sub(out, 1, 327), "…") else out
-}
+# `texto_original()` (oracion original del PDF) vive en 00_funciones_texto.R
 
 # fragmento para un termino (palabra o bigrama, en lemas) en una fuente y un
 # conjunto de documentos: del documento con mas oraciones que lo usan, la
@@ -161,7 +134,7 @@ fragmento <- function(f, ids, termino) {
   if (nrow(cand) == 0) return(tibble(fecha = as.Date(NA), fragmento = NA_character_))
   if (any(between(cand$n_tok, 12, 70))) cand <- filter(cand, between(n_tok, 12, 70))
   elegida <- cand %>% add_count(id, name = "usos") %>% arrange(desc(usos), fecha, sentence_id) %>% slice(1)
-  tibble(fecha = elegida$fecha, fragmento = texto_original(elegida$id, elegida$texto_tok))
+  tibble(fecha = elegida$fecha, fragmento = texto_original(corpus$texto[corpus$id == elegida$id], elegida$texto_tok))
 }
 ids_epoca <- function(f, e, esc = "principal") docs_esc$id[docs_esc$escenario == esc & docs_esc$fuente == f & docs_esc$epoca == e]
 tipo_doc <- c(com = "comunicado", junta = "minuta")
@@ -519,7 +492,7 @@ datos_frag_temas <- docs_esc %>% filter(escenario == "principal") %>%
   inner_join(oraciones %>% filter(between(n_tok, 12, 70)) %>% select(oracion, fecha, texto_tok), by = "oracion") %>%
   group_by(fuente, tema, epoca) %>%
   arrange(desc(n_tema), fecha, .by_group = TRUE) %>% slice(1) %>% ungroup() %>%
-  rowwise() %>% mutate(fragmento = texto_original(id, texto_tok)) %>% ungroup() %>%
+  rowwise() %>% mutate(fragmento = texto_original(corpus$texto[corpus$id == id], texto_tok)) %>% ungroup() %>%
   transmute(tema = factor(tema, levels = names(temas)), fuente, epoca = epocas[epoca],
             documento = paste(tipo_doc[fuente], fecha), n_tema, fragmento) %>%
   arrange(tema, fuente, epoca)
@@ -640,7 +613,7 @@ fragmento_par <- function(f, e, a, b) {
            str_detect(lemas, fixed(paste0(" ", b, " "))), between(n_tok, 12, 70)) %>%
     arrange(fecha) %>% slice(1)
   if (nrow(cand) == 0) return(tibble(documento = NA_character_, fragmento = NA_character_))
-  tibble(documento = paste(tipo_doc[[f]], cand$fecha), fragmento = texto_original(cand$id, cand$texto_tok))
+  tibble(documento = paste(tipo_doc[[f]], cand$fecha), fragmento = texto_original(corpus$texto[corpus$id == cand$id], cand$texto_tok))
 }
 frag_anclas <- top_cor %>% group_by(fuente, epoca, item1) %>% slice(1) %>% ungroup() %>%
   mutate(pmap_dfr(list(fuente, epoca, item1, item2), fragmento_par)) %>%
