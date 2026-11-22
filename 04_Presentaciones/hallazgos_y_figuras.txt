@@ -4,7 +4,7 @@ Base del borrador de la presentación a la mesa de renta fija (video de máximo 
 
 Preparado el 2026-11-21 a partir de las notas de 05_Notas/ y de los .csv de 03_Resultados/.
 No crea hallazgos nuevos: cada cifra sale de una nota y se verificó contra el .csv que se cita.
-Los embeddings (script 10) están en curso y quedan marcados como PENDIENTE.
+Los embeddings (script 10_glove.R) se agregaron el 2026-11-21 en la sección 5.
 
 Convenciones del documento
 - Pregunta del equipo: ¿cómo cambiaron los temas de interés de la Junta del Banco de la República
@@ -562,37 +562,81 @@ Preguntas abiertas
 
 
 ====================================================================================================
-5. ESPACIO PARA LOS EMBEDDINGS (script 10)        >>> PENDIENTE <<<
+5. EMBEDDINGS (script 10_glove.R)        >>> LISTO: UNA LÍNEA EN LA DIAPOSITIVA 7 <<<
 ====================================================================================================
 
-Estado: en curso (otro integrante). Sin resultados en 03_Resultados/ al cierre de este documento.
-Antes de usarlos debe quedar registrada la ampliación del catálogo
-(07_Recursos/catalogo_metodos.md y «Decisiones tomadas» de CLAUDE.md).
+Estado: terminado el 2026-11-21 (Santiago Muñoz Martínez).
+- Tabla: 03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.png.
+- Nota: 05_Notas/10_glove/T_contexto_inflacion_expectativas.md (estado: matizado).
+- Los embeddings están en el catálogo (Laboratorio 13); no requieren ampliación.
 
-Qué tendrían que mostrar para CONFIRMAR los hallazgos
-- Hallazgo 2: que los vecinos de «déficit» y de «petróleo / precio del petróleo» después del corte
-  incluyan «cuenta corriente», «balanza de pagos», «ingreso» y «financiamiento». También que los
-  vecinos de «externo» pasen de «mundial», «Europa» y «Estados Unidos» a términos de Colombia.
-- Hallazgo 4: que los vecinos de «inflación» y de «expectativas de inflación» pasen de
-  «proyección», «monitoreo», «credibilidad» y «largo plazo» a «devaluación», «traslado»,
-  «indexación», «persistencia» y «anclaje». Así coincidirían con las correlaciones de
-  03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv.
-- Hallazgo 3: que «crecimiento» pase de vecinos de demanda interna y crédito a vecinos de
-  «términos de intercambio», «ingreso» y «debilidad».
+Qué mide
+- Si la Junta usa las mismas palabras en otro contexto antes y después del corte. No mide cuánto se
+  mencionan.
+- Cada palabra ancla tiene un vector «antes» y uno «después» en un mismo modelo. Sus vecinos son las
+  palabras que se usan en frases parecidas, aunque no aparezcan en la misma oración.
+- El coseno antes–después mide cuánto se parece el contexto entre épocas (1 = igual).
+- Modelo principal: GloVe, porque se reproduce exactamente en cada corrida. Robustez: Word2Vec, que
+  no usa la semilla de R y varía unas centésimas entre corridas.
 
-Qué los CONTRADIRÍA
-- Que los vecinos de las anclas no cambien entre épocas.
-- Que cambien solo en las minutas y no en los comunicados: sería un posible artefacto de formato.
-- Que los vecinos estables entre semillas sean pocos: el corpus sería demasiado chico para esta
-  medida.
+Anclas
+- Inflación, expectativas de inflación, crecimiento y tasa de intervención: las de 09 con 30 o más
+  oraciones en cada época.
+- Déficit, tasa de cambio y petróleo quedan fuera: antes del corte casi no se mencionaban (déficit,
+  2 oraciones). Su hallazgo es que entraron a la conversación (hallazgos 2 y 5), no que cambiaran de
+  contexto.
 
-En qué diapositivas entrarían
-- Una línea de confirmación en la diapositiva del hallazgo 4 (inflación), que es donde el contraste
-  con las correlaciones es directo.
-- Si el resultado es claro, una diapositiva propia después de la del hallazgo 4. Habría que quitar
-  tiempo a la diapositiva del método.
-- Figura o tabla: PENDIENTE (prevista en PLAN.md como
-  03_Resultados/Tablas/10_*/conjunto_vecinos_antes_despues.png).
+Coseno antes–después (comunicados y minutas juntos, épocas 2009-10-30 a 2019-10-29)
+
+| Ancla                     | GloVe | Word2Vec |
+| ------------------------- | ----- | -------- |
+| expectativas de inflación | 0,31  | 0,61     |
+| inflación                 | 0,56  | 0,78     |
+| crecimiento               | 0,59  | 0,72     |
+| tasa de intervención      | 0,71  | 0,69     |
+
+Qué se puede afirmar (coincide en los dos métodos)
+- Las expectativas de inflación son la palabra cuyo contexto más cambia: tienen el coseno más bajo
+  con los dos métodos.
+- Después del corte, la inflación se discute junto a «meta» y «convergencia».
+- Confirma, con una tercera medida, el mensaje del hallazgo 4: la inflación no recibió más espacio,
+  recibió otra discusión.
+
+Qué NO se debe afirmar (solo aparece con un método)
+- Que las expectativas pasaron a discutirse como «anclaje / desanclaje»: solo con GloVe. Con
+  Word2Vec, los vecinos son «derivar», «papel» e «implícita» (las expectativas que se derivan de
+  los TES).
+- Un orden de cambio entre inflación, crecimiento y tasa de intervención, o que la tasa sirva de
+  control: el orden cambia con el método.
+- De cada 10 vecinos, solo 1 a 4 se repiten entre los dos métodos. Con unas 97 mil palabras, los
+  embeddings confirman patrones; no sostienen conclusiones por sí solos.
+
+Fragmentos para el video
+- Minuta del 2015-01-30: «Algunos miembros de la Junta consideran que el efecto de la devaluación
+  puede inicialmente primar sobre el del menor crecimiento y desviar transitoriamente la inflación
+  de la meta.»
+- Comunicado del 2018-10-26: «La inflación observada y su convergencia esperada a la meta del 3%.»
+
+En qué diapositivas entran (decidido el 2026-11-21)
+- Diapositiva 7 (inflación): una línea de confirmación debajo de la figura del LDA. El presentador
+  la dice en unos 10 segundos:
+  «Una tercera medida lo confirma: después de 2014, las expectativas de inflación son la palabra
+  cuyo uso más cambia, y la inflación se discute junto a la meta y la convergencia.»
+- Apéndice A9: la tabla conjunto_glove_vecinos.png, para preguntas.
+- Diapositiva 10 (alcance): como argumento de rigor, tres medidas distintas (palabras, tópicos y
+  embeddings) apuntan en la misma dirección.
+
+Por qué NO llevan una diapositiva propia
+- No agregan un hallazgo nuevo: confirman el de la diapositiva 7. Una diapositiva aparte repetiría
+  el mensaje.
+- Explicar qué es un vecino y qué mide el coseno toma casi un minuto de método. La presentación
+  debe centrarse en resultados, y el plan ya va en 13:30 de un máximo de 15 minutos.
+- Lo más vistoso («anclaje / desanclaje») depende del método. Lo robusto cabe en una frase.
+- La tabla es densa (4 anclas, 80 vecinos, lemas sin tildes) y no se lee a media pantalla en el
+  video.
+- Excepción: si el equipo quiere resaltar la originalidad del método, una diapositiva simple solo
+  con «expectativas de inflación» (3 vecinos antes, 3 después y un fragmento), no la tabla.
+  Para no pasar de 15 minutos habría que quitar la diapositiva 5.
 
 
 ====================================================================================================
@@ -662,6 +706,9 @@ Diapositiva 7
 - Presentador: 3
 - Frase del presentador: «La inflación no recibió más espacio, recibió otra discusión: indexación,
   persistencia, traslado.»
+- Línea de embeddings (sección 5): «Una tercera medida lo confirma: después de 2014, las
+  expectativas de inflación son la palabra cuyo uso más cambia, y la inflación se discute junto a
+  la meta y la convergencia.»
 
 Diapositiva 8
 - Título: La atención al exterior subió con la caída del petróleo y tocó su máximo antes que el
@@ -712,10 +759,10 @@ Reparto entre presentadores
 - Presentador 4: diapositivas 10 a 12, 3:00.
 - Total: 13:30.
 
-Si entran los embeddings, una diapositiva de 1:00 después de la 7. Para no pasar de 15 minutos se
-compensa quitando la 5 (su mensaje cabe en la 4) o recortando la 2 a 0:30.
+Los embeddings no llevan diapositiva propia: entran como una línea en la 7 y como apéndice A9
+(razones en la sección 5).
 
-Apéndice (no cuenta en el tiempo): A1 a A8 de la sección 7.
+Apéndice (no cuenta en el tiempo): A1 a A9 de la sección 7.
 
 Notas de diseño (04_Presentaciones/indicaciones_deck.md)
 - Ningún título lleva «:» en la mitad, ni «—pero», ni la forma «no es X, es Y».
@@ -789,6 +836,11 @@ A8. Correlaciones entre palabras
   Tablas/09_antes_despues/conjunto_bigramas_frecuentes_epoca.png. En las minutas, 9 de los 20
   bigramas de la figura son posibles artefactos de formato (votación y fórmulas de decisión), así
   que no se recomiendan para el cuerpo de la presentación.
+
+A9. Embeddings
+- Tablas/10_glove/conjunto_glove_vecinos.png: vecinos de las cuatro anclas antes y después del
+  corte, coseno antes–después con GloVe y Word2Vec, y coincidencia con las correlaciones de 09.
+  Proporción 1,74:1, cercana a 16:9. Lectura y límites en la sección 5.
 
 Figuras recomendadas que necesitan ajuste de legibilidad para el video (no se modificaron)
 

@@ -23,23 +23,25 @@ domingo 22 de noviembre de 2026.**
      cifras, fragmentos y lectura de robustez. Las figuras por reunión del LDA
      (`conjunto_lda_theta_por_reunion_topicos_1_4.png` y `_6_10.png`) ya
      están en formato de diapositiva.
+   - Embeddings (`10_glove.R`): una línea de confirmación en la diapositiva 7
+     y `conjunto_glove_vecinos.png` como apéndice A9. Solo se afirma lo que
+     coincide en GloVe y Word2Vec (ver la nota de `05_Notas/10_glove/`).
    - *Terminado cuando:* el borrador en `04_Presentaciones/` tiene cada cambio
      de tema con su fragmento y la salvedad «asociación, no causalidad», y el
      video dura máximo 15 minutos.
-2. **H3c de `PLAN.md` (P3c.1–P3c.8): `10_word2vec.R`, o decidir omitirlo
-   (integrante por definir).**
-   - Antes de correr: registrar Word2Vec como ampliación del catálogo
-     (P3c.1). Contrastar con `pairwise_cor()` de `09` y con los tópicos de
-     `08` (vecinos de «inflación» y de «déficit»).
-   - *Terminado cuando:* existe `conjunto_vecinos_antes_despues.png` con su
-     nota en `05_Notas/10_word2vec/`, o la omisión queda registrada en
-     «Decisiones tomadas».
+2. **H3d de `PLAN.md` (P3d.1–P3d.3): cerrar la robustez común (integrante por
+   definir).**
+   - `08` y `09` ya tienen los cortes alternativos, los comunicados como
+     control y la ventana de 5 años. `10` solo tiene robustez entre métodos
+     (GloVe frente a Word2Vec); no se le corrieron los cortes alternativos.
+   - *Terminado cuando:* P3d.1–P3d.3 quedan marcados en `PLAN.md`, y el alcance
+     de `10` queda declarado en «Decisiones tomadas» o se agregan los cortes
+     alternativos a `10_glove.R`.
 3. **Llevar `SantiagoMunozM` a `main` con un pull request (lo pide Santiago
    Muñoz Martínez, no el agente).**
-   - `SamuelEscandonC` ya está en `main` (PR #6). `00_main.R` corre completo
-     en `SantiagoMunozM` (nueve scripts, 4,6 minutos); si `main` avanzó, hay
-     que traerlo antes y resolver conflictos en `PLAN.md`, `CLAUDE.md` y
-     `HANDOFF.md`.
+   - Antes: correr `00_main.R` completo con la robustez de Word2Vec ya
+     agregada a `10_glove.R` (diez scripts) y traer `main` si avanzó,
+     resolviendo conflictos en `PLAN.md`, `CLAUDE.md` y `HANDOFF.md`.
    - *Terminado cuando:* el PR está mergeado y `00_main.R` corre sin errores
      en `main`.
 
@@ -48,9 +50,14 @@ domingo 22 de noviembre de 2026.**
 - Roles de los integrantes en el Taller 3.
 - La validación manual de la votación quedó fuera de `PLAN.md`: decidir si se
   abandona.
-- Corpus pequeño (unas 177 mil palabras limpias) para entrenar embeddings y
-  partirlo en dos épocas; los cambios de formato de las minutas pueden
-  confundirse con cambio de temas.
+- Embeddings (`10`): con 97 mil palabras en 8.913 oraciones, GloVe y Word2Vec
+  comparten solo 1 a 4 de cada 10 vecinos. Solo se concluye lo que coincide en
+  los dos métodos. Word2Vec no se reproduce exactamente: su columna de coseno
+  cambia unas centésimas en cada corrida de `00_main.R`.
+- Los `.csv` de `05`, `07` y `09` regenerados en la corrida completa del
+  2026-11-21 (5) están sin commitear. Los de `07` y `09` solo cambian decimales
+  a partir de la posición 15; los de `05` cambian los tópicos VEM
+  exploratorios. Decidir si se versionan.
 - Fecha de la retroalimentación a compañeros (no afecta el repositorio).
 - Los dos xlsx de inflación total y meta también quedaron sin versionar en
   `01_Datos/01_Crudos/` de la carpeta principal del repositorio (en `main`).
@@ -95,9 +102,11 @@ domingo 22 de noviembre de 2026.**
 
 ## Estado actual
 
-- **Pipeline:** `00_main.R` corre nueve scripts (01 a 09) en unos 4,6 minutos
-  si ya existe la anotación de `udpipe` (verificado el 2026-11-21 en
-  `SantiagoMunozM`). Requiere Chrome para las tablas e internet la primera vez.
+- **Pipeline:** `00_main.R` corre diez scripts (01 a 10) en unos 5 minutos si
+  ya existe la anotación de `udpipe`. La corrida completa del 2026-11-21 (4,8
+  minutos) fue antes de agregar la robustez con Word2Vec; después solo se
+  corrió `10_glove.R`. Requiere Chrome para las tablas e internet la primera
+  vez.
 - **Scripts:**
   - de formato y definiciones: `00_formato_graficas.R`, `00_formato_tablas.R`
     (desde el 2026-11-21: encabezados y cifras centrados, texto a la izquierda,
@@ -113,7 +122,10 @@ domingo 22 de noviembre de 2026.**
       diccionario y serie 2007–2019;
     - `09_antes_despues.R`: palabras, bigramas, atención por tema y
       correlaciones.
-  - `10_word2vec.R` no existe.
+    - `10_glove.R`: embeddings GloVe con las anclas marcadas por época
+      (inflación, expectativas de inflación, crecimiento y tasa de
+      intervención), vecinos y coseno antes–después, más la robustez con
+      Word2Vec.
 - **Datos:**
   - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios y
     anotados en `01_Datos/03_Listos/`.
@@ -130,18 +142,36 @@ domingo 22 de noviembre de 2026.**
       (+2,8 / +18,4, matizada);
     - bajan: economía mundial, inflación básica frente a la meta, actividad,
       crédito y liquidez.
-- **Notas:** doce notas en `05_Notas/`, cuatro de ellas de `08_lda_oraciones/`.
-  La del sector externo se matizó: el LDA y el diccionario coinciden en la
-  dirección antes/después y, reunión a reunión, solo en las minutas.
-- **Plan:** `PLAN.md` con H1, H2, H3a (LDA) y H3b (`09`) terminados. Siguen
-  H3c (Word2Vec, sin registrar), H3d (robustez; falta solo `10`) y H4.
-- **Reglas:** el catálogo registra `pdftools`, `gt` y `readxl`; `widyr` está
-  en el `p_load()`. Word2Vec sigue sin registrar.
+  - Embeddings, coseno antes–después (GloVe / Word2Vec): expectativas de
+    inflación 0,31 / 0,61, el más bajo en los dos métodos; inflación
+    0,56 / 0,78; crecimiento 0,59 / 0,72; tasa de intervención 0,71 / 0,69.
+- **Notas:** trece notas en `05_Notas/`. La de `10_glove/` está matizada: solo
+  se sostiene lo que coincide en GloVe y Word2Vec. La del sector externo
+  también está matizada: el LDA y el diccionario coinciden en la dirección
+  antes/después y, reunión a reunión, solo en las minutas.
+- **Plan:** `PLAN.md` con H1, H2, H3a (LDA), H3b (`09`) y H3c (`10`)
+  terminados. Siguen H3d (robustez; falta declarar el alcance de `10`) y H4.
+- **Reglas:** el catálogo incluye los Labs 11, 12 y 13 (Word2Vec y GloVe) y
+  registra como ampliaciones `pdftools`, `gt` y `readxl`. `widyr`, `text2vec`
+  y `word2vec` están en el `p_load()`.
 - **Git:** el trabajo del LDA está en `SantiagoMunozM` y el de `09` en
   `SamuelEscandonC` (mergeado a `main` en el PR #6); `SantiagoMunozM` no está
   mergeado a `main`.
 
 ## Registro de sesiones
+
+### 2026-11-21 (5): embeddings antes y después del corte (H3c)
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). El Lab 13 pasó al catálogo y se
+  escribió `10_glove.R` (H3c, P3c.1–P3c.8 cerrados). Se usó GloVe porque
+  `word2vec` no se reproduce con la semilla de R; Word2Vec quedó como
+  robustez. Las expectativas de inflación son el ancla que más cambia de
+  contexto en los dos métodos; la nota nueva quedó matizada porque el
+  «anclaje» y la tasa como control solo aparecen con GloVe. Se acordó una
+  línea en la diapositiva 7 y la tabla en el apéndice.
+- Bitácora: [2026-11-21_embeddings-glove.md](06_Bitacoras/2026-11-21_embeddings-glove.md)
+- **Siguientes objetivos:** (1) H4, interpretación y deck; (2) H3d, cerrar la
+  robustez y declarar el alcance de `10`; (3) PR de `SantiagoMunozM` a `main`.
 
 ### 2026-11-21 (4): LDA con bloques de oraciones (H3a)
 

@@ -100,3 +100,4 @@ básica.
 
 - 2026-11-21: nota creada con la primera corrida de `08_lda_oraciones.R`.
 - 2026-11-21: contraste por reunión con el diccionario de `09` (P3a.9): consistente (r = 0,71 y 0,73 con la suma de 4 y 8). Cifras sin cambios.
+- 2026-11-21: contraste con los embeddings (`10_glove.R`, [T_contexto_inflacion_expectativas](../10_glove/T_contexto_inflacion_expectativas.md)): consistente. «Inflación» pasa de vecinos de seguimiento (proyección, resultado) a meta, convergencia y desviar; el tópico 8 (inflación básica frente a la meta) baja y la discusión pasa al desvío por choques.
