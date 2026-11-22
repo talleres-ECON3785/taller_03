@@ -16,32 +16,26 @@ domingo 22 de noviembre de 2026.**
      cada objetivo cita el paso del plan del que sale. Se reescribe al cerrar
      cada sesión. -->
 
-1. **H4 de `PLAN.md` (P4.1–P4.5): interpretación y deck, todo el equipo
-   (domingo 22).**
-   - Insumos listos: las notas de `05_Notas/08_lda_oraciones/` (LDA) y de
-     `05_Notas/09_antes_despues/` (diccionario, palabras, bigramas), con
-     cifras, fragmentos y lectura de robustez. Las figuras por reunión del LDA
-     (`conjunto_lda_theta_por_reunion_topicos_1_4.png` y `_6_10.png`) ya
-     están en formato de diapositiva.
-   - *Terminado cuando:* el borrador en `04_Presentaciones/` tiene cada cambio
-     de tema con su fragmento y la salvedad «asociación, no causalidad», y el
-     video dura máximo 15 minutos.
-2. **H3c de `PLAN.md` (P3c.1–P3c.8): `10_word2vec.R`, o decidir omitirlo
-   (integrante por definir).**
-   - Antes de correr: registrar Word2Vec como ampliación del catálogo
-     (P3c.1). Contrastar con `pairwise_cor()` de `09` y con los tópicos de
-     `08` (vecinos de «inflación» y de «déficit»).
-   - *Terminado cuando:* existe `conjunto_vecinos_antes_despues.png` con su
-     nota en `05_Notas/10_word2vec/`, o la omisión queda registrada en
-     «Decisiones tomadas».
-3. **Llevar `SantiagoMunozM` a `main` con un pull request (lo pide Santiago
-   Muñoz Martínez, no el agente).**
-   - `SamuelEscandonC` ya está en `main` (PR #6). `00_main.R` corre completo
-     en `SantiagoMunozM` (nueve scripts, 4,6 minutos); si `main` avanzó, hay
-     que traerlo antes y resolver conflictos en `PLAN.md`, `CLAUDE.md` y
-     `HANDOFF.md`.
-   - *Terminado cuando:* el PR está mergeado y `00_main.R` corre sin errores
-     en `main`.
+1. **H4 de `PLAN.md` (P4.5): deck final y video, todo el equipo (domingo 22).**
+   - Hay un borrador: `04_Presentaciones/borrador_presentacion.pptx` (13 diapositivas más el
+     apéndice, guion en las notas del orador). Se regenera con
+     `python 04_Presentaciones/construir_borrador.py`.
+   - Faltan:
+     - revisarlo en PowerPoint (Codec Pro no está en LibreOffice);
+     - reemplazar la diapositiva 7 (embeddings);
+     - pasar la versión final a `08_Entregables/`;
+     - grabar el video.
+   - *Terminado cuando:* el video dura máximo 15 minutos, los cuatro integrantes exponen y cada
+     hallazgo lleva su fragmento y la salvedad «asociación, no causalidad».
+2. **H3c de `PLAN.md`: `10_word2vec.R` (otro integrante), o decidir omitirlo.**
+   - Para confirmar los hallazgos, los vecinos de «inflación» deberían pasar de proyección y
+     monitoreo a devaluación, traslado e indexación (sección 5 de `hallazgos_y_figuras.txt`).
+   - *Terminado cuando:* existe la figura de vecinos con su nota y la diapositiva 7 del deck la
+     usa, o la omisión queda en «Decisiones tomadas» y la diapositiva 7 se quita.
+3. **Correr `00_main.R` completo (ahora con `11`) y abrir el PR de `SamuelEscandonC` a `main`
+   (Samuel Escandón).**
+   - *Terminado cuando:* `00_main.R` termina sin errores, las figuras de `11` coinciden con las
+     del deck y el PR está abierto.
 
 **Bloqueos y preguntas abiertas:**
 
@@ -78,8 +72,9 @@ domingo 22 de noviembre de 2026.**
   con los tópicos 6 + 10).
 - `00_main.R` emite un warning de ggplot (`position_stack()` con intervalos
   que se solapan); no se revisó de qué figura sale.
-- `04_Presentaciones/indicaciones_deck.md` está sin seguimiento y no lo creó
-  esta rama: confirmar de quién es antes de versionarlo.
+- El título de la diapositiva 7 del deck (embeddings) es provisional.
+- La figura de verificación «el discurso cambió antes de las alzas» no se generó: la regla solo se
+  cumple para el entorno externo (ver `05_Notas/11_figuras_diapositiva/`).
 - Lista de palabras vacías de redacción: `mantener`, `continuar`, `seguir`,
   los verbos de atribución («resaltar», «destacar», «señalar»…) y adjetivos
   como `anual`, `mayor` o `menor` quedan entre las palabras más frecuentes. Si
@@ -95,53 +90,54 @@ domingo 22 de noviembre de 2026.**
 
 ## Estado actual
 
-- **Pipeline:** `00_main.R` corre nueve scripts (01 a 09) en unos 4,6 minutos
-  si ya existe la anotación de `udpipe` (verificado el 2026-11-21 en
-  `SantiagoMunozM`). Requiere Chrome para las tablas e internet la primera vez.
+- **Pipeline:** `00_main.R` corre diez scripts: 01 a 09 y `11`.
+  - Con 01 a 09 tardaba unos 4,6 minutos (2026-11-21); `11` suma unos 10 segundos.
+  - La corrida completa con `11` todavía no se ha hecho; `11` se probó solo.
+  - Requiere Chrome para las tablas e internet la primera vez.
 - **Scripts:**
-  - de formato y definiciones: `00_formato_graficas.R`, `00_formato_tablas.R`
-    (desde el 2026-11-21: encabezados y cifras centrados, texto a la izquierda,
-    márgenes de 8 px) y `00_funciones_texto.R` (periodos, formatos de minuta,
-    compuestos, palabras vacías, temas, corte, `construir_bigramas()`,
-    `asignar_epoca()`, `escenarios` y `texto_original()`);
+  - de formato y definiciones: `00_formato_graficas.R` (incluye `tema_diapositiva` y
+    `colores_macro_diapositiva`), `00_formato_tablas.R` y `00_funciones_texto.R`;
   - de texto: `01_extraer_texto.R` a `05_lda_exploratorio.R`;
   - de series: `06_series_macro.R` y `07_graficas_macro.R`;
-  - antes/después del corte:
-    - `08_lda_oraciones.R`: LDA con bloques de 60 palabras, estimado en la
-      ventana con K = 10 y α = 0,1; 8 tópicos estables con nombre; θ por
-      reunión antes/después en cuatro escenarios, contraste con el
-      diccionario y serie 2007–2019;
-    - `09_antes_despues.R`: palabras, bigramas, atención por tema y
-      correlaciones.
-  - `10_word2vec.R` no existe.
+  - antes/después del corte: `08_lda_oraciones.R` (LDA, K = 10) y `09_antes_despues.R` (palabras,
+    bigramas, temas y correlaciones);
+  - `11_figuras_diapositiva.R`: versiones 16:9 de las figuras para la presentación y la
+    verificación del momento del cambio;
+  - `10_word2vec.R` no existe todavía (otro integrante).
 - **Datos:**
-  - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios y
-    anotados en `01_Datos/03_Listos/`.
-  - Series macro en `01_Datos/03_Listos/`, y `macro_por_reunion.rds` con las
-    205 reuniones alineadas.
-- **Fecha de corte:** 2014-10-30. Alternativas: 2014-09-26 y 2014-12-19. En
-  la ventana de 5 años: 54 y 53 comunicados, 59 y 53 minutas.
-- **Resultados:**
-  - exploratorios (01 a 05), macro (07), antes/después por diccionario (09) y
-    LDA (08). Mapa completo en `README.md`.
-  - LDA, peso medio por reunión antes → después (pp, comunicados / minutas):
-    - suben: déficit externo (+14,1 / +9,4), inflación por depreciación
-      (+10,8 / +2,0, matizada en minutas) y decisión y postura
-      (+2,8 / +18,4, matizada);
-    - bajan: economía mundial, inflación básica frente a la meta, actividad,
-      crédito y liquidez.
-- **Notas:** doce notas en `05_Notas/`, cuatro de ellas de `08_lda_oraciones/`.
-  La del sector externo se matizó: el LDA y el diccionario coinciden en la
-  dirección antes/después y, reunión a reunión, solo en las minutas.
-- **Plan:** `PLAN.md` con H1, H2, H3a (LDA) y H3b (`09`) terminados. Siguen
-  H3c (Word2Vec, sin registrar), H3d (robustez; falta solo `10`) y H4.
-- **Reglas:** el catálogo registra `pdftools`, `gt` y `readxl`; `widyr` está
-  en el `p_load()`. Word2Vec sigue sin registrar.
-- **Git:** el trabajo del LDA está en `SantiagoMunozM` y el de `09` en
-  `SamuelEscandonC` (mergeado a `main` en el PR #6); `SantiagoMunozM` no está
-  mergeado a `main`.
+  - corpus de 393 documentos (194 comunicados y 199 minutas);
+  - series macro y `macro_por_reunion.rds` (205 reuniones alineadas).
+- **Fecha de corte:** 2014-10-30. Alternativas: 2014-09-26 y 2014-12-19.
+- **Presentación** (en `04_Presentaciones/`):
+  - documento base: `hallazgos_y_figuras.txt`;
+  - reglas de diseño: `indicaciones_deck.md`;
+  - plantilla: `plantilla_presentacion.pptx`;
+  - borrador: `borrador_presentacion.pptx`, que genera `construir_borrador.py`.
+- **Notas:** trece notas en `05_Notas/`. Las de `08`, `09` y `11` sostienen la presentación; las
+  dos discrepancias entre notas y `.csv` de `09` quedaron corregidas.
+- **Plan:** `PLAN.md` tiene H1, H2, H3a (LDA) y H3b (`09`) terminados. Siguen H3c (Word2Vec) y H4
+  (el borrador del deck existe; faltan la versión final y el video).
+- **Git:**
+  - `main` incluye `SantiagoMunozM` (PR #8) y `SamuelEscandonC` hasta el documento de hallazgos
+    (PR #9);
+  - el trabajo de esta sesión está en `SamuelEscandonC`, sin mergear.
 
 ## Registro de sesiones
+
+### 2026-11-21 (5): documento de hallazgos, figuras para diapositiva y borrador del deck
+
+- Samuel Escandón (`SamuelEscandonC`). Avanza H4 (P4.2 y P4.5, sin cerrar). Se escribieron:
+  - `hallazgos_y_figuras.txt`;
+  - `11_figuras_diapositiva.R`, con versiones 16:9 de las figuras de 07 a 09 y una verificación:
+    el entorno externo supera su máximo previo antes de la primera alza y la inflación por
+    depreciación después;
+  - el borrador del deck sobre la plantilla del equipo, con `python-pptx` y el guion en las notas.
+  Se corrigieron dos discrepancias de las notas de `09`. No se corrió `00_main.R` completo.
+- Bitácora: [2026-11-21_figuras-diapositiva-y-borrador.md](06_Bitacoras/2026-11-21_figuras-diapositiva-y-borrador.md)
+- **Siguientes objetivos:**
+  1. Deck final y video (P4.5).
+  2. Word2Vec (H3c) u omitirlo.
+  3. `00_main.R` completo y PR de `SamuelEscandonC` a `main`.
 
 ### 2026-11-21 (4): LDA con bloques de oraciones (H3a)
 

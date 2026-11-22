@@ -185,6 +185,29 @@ colores_macro <- c(
   "Meta"                = gris_texto
 )
 
+# para las figuras de diapositiva (11_figuras_diapositiva.R), las series macro
+# no usan el azul ni el ocre de comunicados y minutas, para que no se confundan
+# cuando comparten figura con el texto: Brent y TRM en grises oscuros (cada una
+# en su panel) e inflacion en verde-azulado
+colores_macro_diapositiva <- c(
+  "Brent"           = gris_texto,
+  "TRM"             = gris_secundario,
+  "Inflación total" = paleta_categorica[3]
+)
+
+# complemento de tema para diapositivas 16:9 vistas a media pantalla en un
+# video: la misma familia de tema_presentacion, con letra mas grande
+tema_diapositiva <- theme(
+  plot.title = element_text(size = 22),
+  plot.subtitle = element_text(size = 15),
+  plot.caption = element_text(size = 11),
+  axis.text.x = element_text(size = 15),
+  axis.text.y = element_text(size = 15),
+  axis.title = element_text(size = 15),
+  strip.text = element_text(size = 17),
+  legend.text = element_text(size = 15)
+)
+
 # -----------------------------------------------------------------------------
 # 5. Exportacion
 # -----------------------------------------------------------------------------

@@ -82,3 +82,4 @@ preocupaciones que las cifras todavía no muestran.
   (valle del Brent en enero de 2016, pico de la TRM en febrero de 2016, pico de
   la inflación en julio de 2016; aquí con las fechas de las reuniones en que
   la Junta tenía esos datos).
+- 2026-11-21: `11_figuras_diapositiva.R` verificó si el discurso cambió antes de la primera alza (2015-09-25). El entorno externo supera su máximo de 2009–2014 antes de la alza (comunicados 2014-12-19, minutas 2015-03-20). La inflación por depreciación (tópico 4 del LDA) lo supera después (comunicados 2015-11-27) o nunca (minutas). Ver [X_externo_antes_de_las_alzas](../11_figuras_diapositiva/X_externo_antes_de_las_alzas.md). Estado sin cambios (matizado).

@@ -1,6 +1,6 @@
 # Después del choque, la Junta dedicó un tercio menos de su texto a la actividad económica y más al frente fiscal; el aumento del entorno externo y de la inflación es claro en los comunicados y débil en las minutas
 
-- **Estado:** vigente (actividad y fiscal: robustos; entorno externo e inflación: matizados)
+- **Estado:** vigente (actividad y fiscal: robustos; entorno externo: robusto en comunicados y matizado en minutas; inflación: matizada)
 - **Tipo / fuente:** T; comunicados y minutas (solo la discusión de la Junta); descriptivo
 - **Script de origen:** `02_Scripts/09_antes_despues.R`
 - **Última verificación:** 2026-11-21, con `02_Scripts/09_antes_despues.R`
@@ -23,7 +23,7 @@ reunión como unidad. Épocas: 2009-10-30 a 2014-10-29 y 2014-10-30 a
 | --- | --- | --- | --- |
 | Actividad económica | 24,3 → 17,8; −6,4 [−8,8; −4,1] | 23,3 → 15,5; −7,9 [−10,7; −5,0] | Robusta |
 | Fiscal | 1,6 → 4,1; +2,5 [1,5; 3,4] | 1,7 → 2,6; +0,9 [0,0; 1,7] | Robusta |
-| Entorno externo | 15,4 → 21,9; +6,5 [3,6; 9,4] | 12,7 → 14,7; +2,1 [−0,8; 4,9] | Matizada |
+| Entorno externo | 15,4 → 21,9; +6,5 [3,6; 9,4] | 12,7 → 14,7; +2,1 [−0,8; 4,9] | Robusta en comunicados; matizada en minutas |
 | Inflación | 18,0 → 22,1; +4,1 [1,5; 6,7] | 18,7 → 19,4; +0,7 [−2,1; 3,5] | Matizada |
 | Mercado laboral | 0,9 → 0,3; −0,7 [−1,1; −0,2] | 1,5 → 1,0; −0,5 [−1,1; 0,1] | Matizada |
 | Riesgo e incertidumbre | 3,4 → 4,7; +1,2 [0,0; 2,5] | 4,5 → 4,9; +0,4 [−1,0; 1,8] | Robusta (signo), pequeña |
@@ -97,3 +97,4 @@ comunicado es donde se lee primero el cambio de prioridades.
   Consistente con
   [T_inflacion_sigue_episodios](../03_frecuencias_tfidf/T_inflacion_sigue_episodios.md):
   la atención a la inflación sube en 2015–2016.
+- 2026-11-21: corregida la lectura de «Entorno externo» en la tabla: robusta en comunicados y matizada en minutas, como en `03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues.csv` (antes decía «Matizada» para toda la fila). Cifras sin cambios.

@@ -299,6 +299,34 @@ cortes 2014-09-26 y 2014-12-19. La construcción de bigramas se movió a
 | `Tablas/09_antes_despues/{comunicados,minutas}_correlaciones_anclas.png` | Las 8 palabras más correlacionadas (phi, `pairwise_cor()`, documento = oración) con cada palabra ancla, antes y después |
 | `Tablas/09_antes_despues/*.csv` | Cifras sin formato de cada tabla; además el detalle completo de palabras y bigramas (`*_cambio_detalle.csv`, con TF-IDF de dos grupos), la atención por reunión (`conjunto_temas_por_reunion.csv`) y los fragmentos de las anclas (`conjunto_fragmentos_anclas.csv`) |
 
+### `11_figuras_diapositiva.R`: versiones de las figuras para la presentación
+
+Solo lee resultados ya guardados de `07`, `08` y `09` (no estima nada) y
+los redibuja en 16:9 (13,33 × 7,5 pulgadas) con letra grande para un video.
+Las cifras son las de los scripts de origen; las figuras originales no cambian.
+El tema de letra grande (`tema_diapositiva`) y los colores de las series macro
+que no se confunden con los de comunicados y minutas
+(`colores_macro_diapositiva`) viven en `00_formato_graficas.R`.
+
+| Resultado | Contenido |
+| --- | --- |
+| `Figuras/11_figuras_diapositiva/conjunto_lda_externo_6_10.png` | Tópicos 6 (déficit externo) y 10 (economía mundial), antes y después, comunicados y minutas, con IC 95 % |
+| `Figuras/11_figuras_diapositiva/conjunto_lda_credito_actividad_1_2.png` | Tópicos 1 (actividad interna) y 2 (crédito), ídem |
+| `Figuras/11_figuras_diapositiva/conjunto_lda_inflacion_4_8.png` | Tópicos 4 (inflación por depreciación) y 8 (inflación básica frente a la meta), ídem |
+| `Figuras/11_figuras_diapositiva/conjunto_externo_macro_2013_2018.png` | Atención al entorno externo, Brent, TRM e inflación por reunión, 2013–2018, con el corte, el ciclo de alzas y los extremos fechados |
+| `Figuras/11_figuras_diapositiva/conjunto_palabras_10_10.png` | Las 10 palabras que más ganan y las 10 que más pierden, con tildes |
+| `Figuras/11_figuras_diapositiva/minutas_correlaciones_inflacion.png` | Palabras más correlacionadas con «inflación» y «expectativas de inflación» en las minutas, antes y después |
+| `Tablas/11_figuras_diapositiva/conjunto_verificacion_antes_alzas.csv` | Primera reunión en que la media móvil del tópico 4 y del tema «Entorno externo» supera su máximo de los 5 años antes del corte, frente a la primera alza (2015-09-25). La figura `conjunto_cambio_antes_alzas.png` solo se genera si las dos medidas lo superan antes de la alza en comunicados y en minutas; con los datos actuales no se genera |
+
+### Borrador de la presentación (fuera del pipeline)
+
+`04_Presentaciones/construir_borrador.py` (Python, `python-pptx`) arma
+`04_Presentaciones/borrador_presentacion.pptx` sobre la plantilla del equipo
+(`04_Presentaciones/plantilla_presentacion.pptx`) con las figuras de
+`03_Resultados/` y el guion en las notas del orador. El contenido sale de
+`04_Presentaciones/hallazgos_y_figuras.txt`. Se corre aparte, desde la raíz:
+`python 04_Presentaciones/construir_borrador.py`.
+
 ### `05_lda_exploratorio.R`: tópicos preliminares de las minutas
 
 Exploratorio, sin selección de hiperparámetros. `<m>` es `vem` (LDA por
