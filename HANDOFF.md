@@ -17,10 +17,11 @@ domingo 22 de noviembre de 2026.**
      cada sesión. -->
 
 1. **H4 de `PLAN.md` (P4.5): deck final y video, todo el equipo (domingo 22).**
-   - Borrador: `04_Presentaciones/borrador_presentacion.pptx`, generado por
-     `python 04_Presentaciones/construir_borrador.py`, con el guion en las notas del orador.
-   - Faltan: revisarlo en PowerPoint (Codec Pro no está en LibreOffice), pasar la versión final a
-     `08_Entregables/` y grabar el video.
+   - Borrador: `04_Presentaciones/borrador_presentacion.pptx` (13 diapositivas principales y
+     14 de apéndice), generado por `python 04_Presentaciones/construir_borrador.py`. Guion:
+     `04_Presentaciones/guion_presentacion.txt` (14:20 estimados), copiado a las notas del orador.
+   - Faltan: revisarlo en PowerPoint (Codec Pro no está en LibreOffice), poner los nombres de los
+     presentadores, cronometrar un ensayo, pasar la versión final a `08_Entregables/` y grabar.
    - *Terminado cuando:* el video dura máximo 15 minutos, los cuatro integrantes exponen y cada
      hallazgo lleva su fragmento y la salvedad «asociación, no causalidad».
 2. **H3d de `PLAN.md` (P3d.1–P3d.3): cerrar la robustez común (integrante por definir).**
@@ -72,7 +73,9 @@ domingo 22 de noviembre de 2026.**
   con los tópicos 6 + 10).
 - `00_main.R` emite un warning de ggplot (`position_stack()` con intervalos
   que se solapan); no se revisó de qué figura sale.
-- El título de la diapositiva 7 del deck (embeddings) es provisional.
+- El guion estima 14:20 con 140 palabras por minuto; falta un ensayo cronometrado. Menciona tres
+  hechos de contexto sin `.csv` propio (alzas de la Reserva Federal, Colombia exportador de
+  petróleo, umbral de mercado bajista).
 - La figura de verificación «el discurso cambió antes de las alzas» no se generó: la regla solo se
   cumple para el entorno externo (ver `05_Notas/11_figuras_diapositiva/`).
 - Lista de palabras vacías de redacción: `mantener`, `continuar`, `seguir`,
@@ -141,12 +144,26 @@ domingo 22 de noviembre de 2026.**
   registra como ampliaciones `pdftools`, `gt` y `readxl`. `widyr`, `text2vec`
   y `word2vec` están en el `p_load()`.
 - **Presentación** (en `04_Presentaciones/`): documento base `hallazgos_y_figuras.txt`, reglas
-  `indicaciones_deck.md`, plantilla `plantilla_presentacion.pptx` y borrador
-  `borrador_presentacion.pptx` (lo genera `construir_borrador.py`).
+  `indicaciones_deck.md`, plantilla `plantilla_presentacion.pptx`, borrador
+  `borrador_presentacion.pptx` (lo genera `construir_borrador.py`; 13 principales, con una
+  diapositiva de embeddings, y apéndice A1 a A9) y guion `guion_presentacion.txt` (14:20, cuatro
+  presentadores, cinco preguntas probables).
 - **Git:** `main` incluye `SantiagoMunozM` hasta los embeddings (PR #10) y `SamuelEscandonC` hasta
-  el documento de hallazgos (PR #9); el resto de `SamuelEscandonC` está sin mergear.
+  el documento de hallazgos (PR #9). `SamuelEscandonC` ya trae `main` y tiene sin mergear el script
+  `11`, el deck y el guion.
 
 ## Registro de sesiones
+
+### 2026-11-21 (6): diapositiva de embeddings y guion del video
+
+- Samuel Escandón (`SamuelEscandonC`). Avanza H4 (P4.5, sin cerrar). Se trajo `main` (embeddings,
+  PR #10) conservando lo de las dos ramas. `11` suma la figura de cosenos GloVe / Word2Vec y el
+  deck pasa a tener una diapositiva propia de embeddings (solo lo que coincide en los dos métodos)
+  y el apéndice A9. Se escribió `guion_presentacion.txt` (13 diapositivas, 14:20, cuatro
+  presentadores, cinco preguntas), copiado a las notas del orador. No se corrió `00_main.R`.
+- Bitácora: [2026-11-21_diapositiva-embeddings-y-guion.md](06_Bitacoras/2026-11-21_diapositiva-embeddings-y-guion.md)
+- **Siguientes objetivos:** (1) deck final y video (P4.5); (2) H3d, robustez y alcance de `10`;
+  (3) `00_main.R` completo y PR de `SamuelEscandonC` a `main`.
 
 ### 2026-11-21 (5): embeddings antes y después del corte (H3c)
 

@@ -9,6 +9,7 @@
 #   03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv
 #   03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv
 #   03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.csv
+#   03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.csv
 #   01_Datos/03_Listos/macro_por_reunion.rds, tokens_anotados.rds (solo para
 #     poner tildes a las etiquetas)
 # Salidas:  03_Resultados/Figuras/11_figuras_diapositiva/ y
@@ -366,6 +367,40 @@ fig_series <- ggplot(series, aes(fecha, valor)) +
 guardar_figura("macro_series_2007_2026.png", fig_series, carpeta_salida, width = ancho, height = alto)
 
 # -----------------------------------------------------------------------------
+# 5d. Embeddings: coseno antes-despues de cada ancla con GloVe y con Word2Vec
+# -----------------------------------------------------------------------------
+
+# lee la tabla de 10_glove.R (no recalcula nada). 1 = el ancla se usa en el mismo
+# contexto en las dos epocas; mas bajo = su contexto cambio mas
+cosenos <- leer("03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.csv") %>%
+  # las anclas vienen con espacio en vez de guion bajo; la tasa se nombra a mano (no es un compuesto del diccionario)
+  transmute(ancla = recode(etiqueta(str_replace_all(ancla, " ", "_")), "tasa intervención" = "tasa de intervención"),
+            GloVe = coseno_antes_despues, Word2Vec = coseno_w2v) %>%
+  pivot_longer(-ancla, names_to = "metodo", values_to = "coseno") %>%
+  mutate(metodo = factor(metodo, levels = c("GloVe", "Word2Vec")),
+         destacada = ancla == "expectativas de inflación",
+         ancla_fig = reorder_within(ancla, -coseno, metodo))
+fig_cosenos <- ggplot(cosenos, aes(coseno, ancla_fig, fill = destacada)) +
+  geom_col(width = 0.65) +
+  geom_vline(xintercept = 1, color = gris_texto, linewidth = 0.7, linetype = "dashed") +
+  annotate("text", x = 0.99, y = Inf, label = "1 = mismo contexto", hjust = 1, vjust = 1.3, size = 5, color = gris_texto) +
+  geom_text(aes(label = num_es(coseno, 2)), hjust = -0.2, size = 5.4, color = gris_texto) +
+  facet_wrap(~ metodo, scales = "free_y") +
+  scale_y_reordered() +
+  scale_x_continuous(limits = c(0, 1.02), breaks = seq(0, 1, 0.25), labels = scales::label_number(decimal.mark = ","),
+                     expand = expansion(mult = c(0, 0.02))) +
+  scale_fill_manual(values = c("TRUE" = paleta_categorica[3], "FALSE" = gris_nota), guide = "none") +
+  labs(title = "Parecido entre el contexto de cada palabra antes y después del corte",
+       subtitle = "Comunicados y minutas (solo la discusión de la Junta) en un solo modelo, 5 años antes y 5 años después del 2014-10-30.",
+       x = "Coseno entre el vector de la palabra antes y después (más bajo = su contexto cambió más)", y = NULL,
+       caption = paste("GloVe: promedio de tres semillas. Word2Vec: promedio de cinco entrenamientos, como robustez; varía unas centésimas entre corridas.",
+                       "Palabras ancla con 30 o más oraciones en cada época; documento = oración.",
+                       fuente_txt, sep = "\n")) +
+  tema_presentacion + tema_paneles + tema_barras_h + tema_diapositiva +
+  theme(axis.text.y = element_text(size = 17, color = gris_texto))
+guardar_figura("conjunto_glove_cosenos.png", fig_cosenos, carpeta_salida, width = ancho, height = alto)
+
+# -----------------------------------------------------------------------------
 # 6. Chequeos
 # -----------------------------------------------------------------------------
 
@@ -376,7 +411,9 @@ stopifnot(
   nrow(cor_inf) == 32, # 2 anclas x 2 epocas x 8 palabras
   nrow(verificacion) == 4, all(is.finite(verificacion$maximo_antes)),
   nrow(temas_ad) == 24, # 6 temas x 2 fuentes x 2 epocas
-  nrow(p10) == 1
+  nrow(p10) == 1,
+  nrow(cosenos) == 8, # 4 anclas x 2 metodos
+  all(between(cosenos$coseno, -1, 1))
 )
 
 message("11_figuras_diapositiva: listo. Verificación antes de alzas: ", if (sostiene) "se sostiene" else "no se sostiene")

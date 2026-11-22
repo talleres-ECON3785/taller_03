@@ -160,6 +160,49 @@ notas(portada, "1", "0:15", "Presentación del equipo y de la pregunta.",
       "Pregunta: ¿cómo cambiaron los temas de interés de la Junta antes y después de la crisis del "
       "petróleo de 2014? (04_Presentaciones/hallazgos_y_figuras.txt)", "No aplica.")
 
+# --- utilidades para leer cifras de los .csv y poner tildes ----------------------------
+def leer(ruta):
+    return pd.read_csv(ruta, encoding="utf-8")
+
+
+def num(x, d=1, signo=False):
+    """Cifra con coma decimal y punto de miles."""
+    s = f"{x:+,.{d}f}" if signo else f"{x:,.{d}f}"
+    return s.replace(",", "§").replace(".", ",").replace("§", ".").replace("-", "−")
+
+
+def ic(a, b, d=1):
+    return f"[{num(a, d)}; {num(b, d)}]"
+
+
+def sin_tilde(x):
+    return "".join(c for c in unicodedata.normalize("NFD", x) if unicodedata.category(c) != "Mn")
+
+
+# tildes de las etiquetas: cada lema toma la escritura más frecuente en los fragmentos originales
+# de 08 y 09; los compuestos se escriben con su expresión
+TEXTOS = pd.concat([leer(TAB / "08_lda_oraciones" / "conjunto_lda_fragmentos.csv").astype(str).stack()] +
+                   [leer(TAB / "09_antes_despues" / f).fragmento.astype(str) for f in
+                    ["conjunto_fragmentos_temas.csv", "conjunto_fragmentos_anclas.csv",
+                     "conjunto_palabras_seleccion_fragmentos.csv", "conjunto_bigramas_seleccion_fragmentos.csv"]])
+CONTEO = pd.Series(re.findall(r"[a-záéíóúüñ]+", " ".join(TEXTOS).lower())).value_counts()
+FORMA = {}
+for palabra, _ in CONTEO.items():
+    FORMA.setdefault(sin_tilde(palabra).replace("ñ", "n"), palabra)
+COMPUESTOS = {"postura_politica": "postura de política", "fenomeno_nino": "fenómeno de El Niño",
+              "cuenta_corriente": "cuenta corriente", "balanza_pagos": "balanza de pagos",
+              "meta_inflacion": "meta de inflación", "largo_plazo": "largo plazo", "zona_euro": "zona euro"}
+# lemas que no aparecen con tilde en los fragmentos, siglas y nombres propios
+FORMA.update({"construccion": "construcción", "ipc": "IPC", "asia": "Asia", "america": "América",
+              "proyeccion": "proyección"})
+
+
+def etiqueta(lema):
+    if lema in COMPUESTOS:
+        return COMPUESTOS[lema]
+    return " ".join(FORMA.get(p, p) for p in lema.split("_"))
+
+
 # --- 1. Respuesta ----------------------------------------------------------------
 s = nueva(OSCURO)
 titulo(s, "Después del choque petrolero, la Junta dejó de hablar del mundo y del crédito y pasó a "
@@ -189,8 +232,8 @@ bloques = [
                 "la muestra 2007–2026 y con cortes en septiembre y diciembre de 2014."),
     ("Documentos", "Comunicados y minutas por separado. De las minutas solo se usa la discusión "
                    "de la Junta; los comunicados controlan el cambio de formato de 2014."),
-    ("Medidas", "Palabras y temas de un diccionario fijado de antemano, y un modelo de tópicos "
-                "(LDA) estimado con bloques de oraciones."),
+    ("Medidas", "Tres medidas: un diccionario de temas fijado de antemano, un modelo de tópicos "
+                "(LDA) y embeddings que miden el contexto de cada palabra."),
 ]
 for i, (cab, cuerpo) in enumerate(bloques):
     x = MARGEN + (i % 2) * 9.25
@@ -203,7 +246,7 @@ for i, (cab, cuerpo) in enumerate(bloques):
     caja_texto(s, x + 0.35, y + 0.3, 8.25, 2.8, [(cab, {"negrita": True, "tam": 28}), (cuerpo, {"tam": 24})],
                espacio=10)
 notas(s, "1", "1:00",
-      "El corte lo fijó el petróleo, no el texto; leímos comunicados y minutas con dos medidas.",
+      "El corte lo fijó el petróleo, no el texto; leímos comunicados y minutas con tres medidas.",
       "Corte y ventanas: 03_Resultados/Tablas/09_antes_despues/conjunto_documentos_por_epoca.csv "
       "(54/53 comunicados, 59/53 minutas; minutas 43.788 y 23.104 palabras). Regla del corte: "
       "«Decisiones tomadas» de CLAUDE.md (2026-11-19).", "No aplica.")
@@ -253,7 +296,7 @@ diapositiva_figura(
     "El crédito y el detalle de la actividad interna perdieron espacio en la discusión",
     D11 / "conjunto_lda_credito_actividad_1_2.png",
     "«El crecimiento del crédito a los hogares permanece alto…» Comunicado, 30-04-2012",
-    ("2", "1:15",
+    ("2", "1:00",
      "Lo que dominaba en 2010–2013 casi desaparece: el crédito pasa de 11 % a menos de 2 % del "
      "peso de los temas en cada reunión.",
      "Tópico 2: comunicados 10,7 → 1,5 % (−9,2 pp [−10,9; −7,5]), minutas 12,3 → 3,3 % (−9,0 pp). "
@@ -273,7 +316,7 @@ diapositiva_figura(
     D11 / "conjunto_lda_inflacion_4_8.png",
     "«El traslado de parte de la devaluación del peso a los precios al consumidor… la probable "
     "activación de mecanismos de indexación.» Comunicado, 25-09-2015",
-    ("2", "1:30",
+    ("2", "1:15",
      "La inflación no recibió más espacio, recibió otra discusión: indexación, persistencia, traslado.",
      "Tópico 4: comunicados 5,1 → 15,8 % (+10,8 pp [7,9; 13,6], robusto), minutas 7,5 → 9,6 % "
      "(+2,0 pp [−0,6; 4,7], matizado). Tópico 8: comunicados 11,5 → 4,6 % (−6,9 pp), minutas "
@@ -286,22 +329,46 @@ diapositiva_figura(
      "tanto por su impacto directo sobre los precios y las expectativas de inflación como por la "
      "probable activación de mecanismos de indexación.» Comunicado del 25-09-2015."))
 
-# --- 7. Embeddings (pendiente) ------------------------------------------------------------
+# --- 7. Embeddings --------------------------------------------------------------------------
+# solo lo que sostienen GloVe y Word2Vec; los vecinos se leen de la tabla de 10_glove.R
+glove = leer(TAB / "10_glove" / "conjunto_glove_vecinos.csv").set_index("ancla")
+
+
+def estables(lista):
+    """Vecinos sin asterisco (los que se repiten en las tres semillas), con tildes."""
+    return ", ".join(etiqueta(v.strip().replace(" ", "_")) for v in lista.split(",") if "*" not in v)
+
+
 s = nueva()
-titulo(s, "Contexto de las palabras clave antes y después del corte (pendiente de los embeddings)")
-caja = s.shapes.add_shape(1, Inches(MARGEN), Inches(2.6), Inches(ANCHO - 2 * MARGEN), Inches(6.6))
-caja.fill.solid()
-caja.fill.fore_color.rgb = rgb("BFBFBF")
-caja.line.fill.background()
-caja.shadow.inherit = False
-caja_texto(s, MARGEN, 2.6, ANCHO - 2 * MARGEN, 6.6, ["PENDIENTE: figura de embeddings (script 10)"],
-           tam=36, color=TEXTO, alinear=PP_ALIGN.CENTER, ancla=MSO_ANCHOR.MIDDLE)
-caja_texto(s, MARGEN, 9.5, ANCHO - 2 * MARGEN, 1.2,
-           ["Debería mostrar que los vecinos de «inflación» pasan de proyección y monitoreo a devaluación, "
-            "traslado, indexación y persistencia, en comunicados y minutas."], tam=24, color=GRIS)
-notas(s, "3", "0:45", "PENDIENTE: depende del resultado del script 10. Título provisional.",
-      "Qué confirmaría y qué contradiría: 04_Presentaciones/hallazgos_y_figuras.txt, sección 5.",
-      "PENDIENTE.")
+titulo(s, "Las expectativas de inflación son la palabra cuyo contexto más cambió, y la inflación pasó a "
+          "discutirse junto a la meta")
+imagen(s, D11 / "conjunto_glove_cosenos.png", MARGEN, 2.3, 11.2, 7.6, centrar=False)
+bloques_vec = [("Vecinos estables antes → después (GloVe)", {"tam": 18, "color": GRIS, "espacio": 12})]
+for ancla, nombre in [("inflacion", "«inflación»"), ("expectativas inflacion", "«expectativas de inflación»")]:
+    bloques_vec += [(nombre, {"negrita": True, "tam": 22, "espacio": 4}),
+                    ("Antes: " + estables(glove.loc[ancla, "lista_antes"]), {"tam": 19, "espacio": 4}),
+                    ("Después: " + estables(glove.loc[ancla, "lista_despues"]), {"tam": 19, "espacio": 16})]
+caja_texto(s, 12.5, 2.4, 6.6, 6.6, bloques_vec)
+caja_texto(s, 12.5, 9.05, 6.6, 1.1, ["El «anclaje / desanclaje» de las expectativas solo aparece con GloVe."],
+           tam=16, color=GRIS)
+caja_texto(s, MARGEN, 10.4, ANCHO - 2 * MARGEN, 0.8,
+           ["«…el efecto de la devaluación puede inicialmente primar sobre el del menor crecimiento y desviar "
+            "transitoriamente la inflación de la meta.» Minuta, 30-01-2015"], tam=18, color=GRIS, cursiva=True)
+notas(s, "3", "1:15",
+      "Una tercera medida, que mira el contexto de cada palabra, confirma que la inflación cambió de discusión.",
+      f"Coseno antes–después, GloVe / Word2Vec: expectativas de inflación "
+      f"{num(glove.loc['expectativas inflacion', 'coseno_antes_despues'], 2)} / "
+      f"{num(glove.loc['expectativas inflacion', 'coseno_w2v'], 2)}; inflación "
+      f"{num(glove.loc['inflacion', 'coseno_antes_despues'], 2)} / {num(glove.loc['inflacion', 'coseno_w2v'], 2)}; "
+      f"crecimiento {num(glove.loc['crecimiento', 'coseno_antes_despues'], 2)} / "
+      f"{num(glove.loc['crecimiento', 'coseno_w2v'], 2)}; tasa de intervención "
+      f"{num(glove.loc['tasa intervencion', 'coseno_antes_despues'], 2)} / "
+      f"{num(glove.loc['tasa intervencion', 'coseno_w2v'], 2)} "
+      "(03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.csv). Coinciden en que las expectativas son el "
+      "ancla que más cambia y en que «inflación» va con meta y convergencia; el orden del resto y el "
+      "«anclaje» dependen del método (05_Notas/10_glove/T_contexto_inflacion_expectativas.md).",
+      "«Algunos miembros de la Junta consideran que el efecto de la devaluación puede inicialmente primar "
+      "sobre el del menor crecimiento y desviar transitoriamente la inflación de la meta.» Minuta del 30-01-2015.")
 
 # --- 8. Texto frente a macro ----------------------------------------------------------------
 diapositiva_figura(
@@ -310,7 +377,7 @@ diapositiva_figura(
     D11 / "conjunto_externo_macro_2013_2018.png",
     "«El precio internacional del petróleo ha caído y se encuentra por debajo del pronóstico que tenía "
     "el equipo técnico.» Comunicado, 30-10-2014",
-    ("3", "1:30",
+    ("3", "1:15",
      "El texto se movió con el petróleo y tocó su máximo antes que la TRM y la inflación; la discusión "
      "de la inflación por depreciación llegó con las alzas, no antes.",
      "Máximos de la atención al entorno externo: minutas 2015-06-24, comunicados 2015-09-25; mínimo "
@@ -348,12 +415,13 @@ for i, (cab, items) in enumerate([
         ("Respaldado", [
             "Entraron el déficit externo y la depreciación como causa de la inflación.",
             "Salieron la economía mundial, el crédito y la inflación básica frente a la meta.",
-            "Se ve con palabras y con tópicos, en comunicados y minutas, con tres fechas de corte.",
+            "Se ve con el diccionario, los tópicos y los embeddings, en comunicados y minutas, con tres fechas de corte.",
         ]),
         ("Requiere más análisis", [
             "Causalidad: en la ventana también hubo El Niño, la Reserva Federal y el fin del ciclo de crédito.",
             "Si el texto se adelanta a las series: un solo episodio, con media móvil.",
             "Lo que cambia solo en minutas puede venir de su cambio de formato de mayo de 2014.",
+            "Los embeddings cambian según el método (GloVe o Word2Vec); solo se usa lo que coincide.",
         ])]):
     x = MARGEN + i * 9.25
     caja = s.shapes.add_shape(1, Inches(x), Inches(2.75), Inches(8.95), Inches(7.6))
@@ -362,7 +430,7 @@ for i, (cab, items) in enumerate([
     caja.line.fill.background()
     caja.shadow.inherit = False
     caja_texto(s, x + 0.4, 3.05, 8.15, 7.1,
-               [(cab, {"negrita": True, "tam": 30, "espacio": 20})] + [(t, {"tam": 25, "espacio": 22}) for t in items])
+               [(cab, {"negrita": True, "tam": 30, "espacio": 18})] + [(t, {"tam": 24, "espacio": 16}) for t in items])
 notas(s, "4", "1:00",
       "Es asociación en un solo episodio; el formato de las minutas y El Niño son las salvedades.",
       "04_Presentaciones/hallazgos_y_figuras.txt, sección 3.", "No aplica.")
@@ -394,55 +462,13 @@ caja_texto(s, MARGEN, 3.3, 17.0, 6.5, [
     "Validar a mano la votación y la dirección del voto de la minoría.",
     "Separar el efecto del petróleo del de El Niño en la discusión de la inflación.",
 ], tam=30, color="FFFFFF", espacio=26)
-notas(s, "4", "0:45", "Probar si los temas anticipan la decisión, validar la votación y repetirlo en 2021–2023.",
+notas(s, "4", "1:00", "Probar si los temas anticipan la decisión, validar la votación y repetirlo en 2021–2023.",
       "04_Presentaciones/hallazgos_y_figuras.txt, sección 4 (preguntas abiertas).", "No aplica.")
 
 # --- Apéndice ---------------------------------------------------------------------------------
 s = nueva(OSCURO)
 titulo(s, "Apéndice", color="FFFFFF")
 notas(s, "—", "—", "Material de soporte para preguntas.", "—", "—")
-# --- apéndice con elementos nativos: las cifras se leen de los .csv ----------------------------
-def leer(ruta):
-    return pd.read_csv(ruta, encoding="utf-8")
-
-
-def num(x, d=1, signo=False):
-    """Cifra con coma decimal y punto de miles."""
-    s = f"{x:+,.{d}f}" if signo else f"{x:,.{d}f}"
-    return s.replace(",", "§").replace(".", ",").replace("§", ".").replace("-", "−")
-
-
-def ic(a, b, d=1):
-    return f"[{num(a, d)}; {num(b, d)}]"
-
-
-def sin_tilde(x):
-    return "".join(c for c in unicodedata.normalize("NFD", x) if unicodedata.category(c) != "Mn")
-
-
-# tildes de las etiquetas: cada lema toma la escritura más frecuente en los fragmentos originales
-# de 08 y 09; los compuestos se escriben con su expresión
-TEXTOS = pd.concat([leer(TAB / "08_lda_oraciones" / "conjunto_lda_fragmentos.csv").astype(str).stack()] +
-                   [leer(TAB / "09_antes_despues" / f).fragmento.astype(str) for f in
-                    ["conjunto_fragmentos_temas.csv", "conjunto_fragmentos_anclas.csv",
-                     "conjunto_palabras_seleccion_fragmentos.csv", "conjunto_bigramas_seleccion_fragmentos.csv"]])
-CONTEO = pd.Series(re.findall(r"[a-záéíóúüñ]+", " ".join(TEXTOS).lower())).value_counts()
-FORMA = {}
-for palabra, _ in CONTEO.items():
-    FORMA.setdefault(sin_tilde(palabra).replace("ñ", "n"), palabra)
-COMPUESTOS = {"postura_politica": "postura de política", "fenomeno_nino": "fenómeno de El Niño",
-              "cuenta_corriente": "cuenta corriente", "balanza_pagos": "balanza de pagos",
-              "meta_inflacion": "meta de inflación", "largo_plazo": "largo plazo", "zona_euro": "zona euro"}
-# lemas que no aparecen con tilde en los fragmentos, siglas y nombres propios
-FORMA.update({"construccion": "construcción", "ipc": "IPC", "asia": "Asia", "america": "América"})
-
-
-def etiqueta(lema):
-    if lema in COMPUESTOS:
-        return COMPUESTOS[lema]
-    return " ".join(FORMA.get(p, p) for p in lema.split("_"))
-
-
 def tabla(s, x, y, anchos, filas, tam=20, destacar=(), alto_fila=0.62):
     """Tabla nativa sin bordes: encabezado oscuro y filas alternas. `destacar`: índices de filas en negrita."""
     gf = s.shapes.add_table(len(filas), len(anchos), Inches(x), Inches(y), Inches(sum(anchos)),
@@ -761,6 +787,8 @@ apendice = [
     lambda: apendice_macro(["P6", "P7", "P8", "P9", "P10"], titulo_macro_2),
     ("A8. Palabras que acompañan a «inflación» en las minutas", D11 / "minutas_correlaciones_inflacion.png"),
     ("A8. Palabras que más ganan y más pierden peso", D11 / "conjunto_palabras_10_10.png"),
+    ("A9. Vecinos de cada palabra ancla antes y después del corte (GloVe, con Word2Vec como robustez)",
+     TAB / "10_glove" / "conjunto_glove_vecinos.png"),
 ]
 for elemento in apendice:
     if callable(elemento):
@@ -771,6 +799,19 @@ for elemento in apendice:
     caja_texto(s, MARGEN, 0.45, ANCHO - 2 * MARGEN, 1.0, [t], tam=32, fuente=TITULO_FUENTE)
     imagen(s, ruta, MARGEN, 1.6, ANCHO - 2 * MARGEN, 9.25)
     notas(s, "—", "—", "Apéndice.", f"Fuente: {ruta.relative_to(RAIZ).as_posix()}", "—")
+
+# --- guion en las notas del orador -----------------------------------------------------------
+# el texto que se lee en voz alta vive en guion_presentacion.txt; aquí se antepone a las notas
+guion = (RAIZ / "04_Presentaciones" / "guion_presentacion.txt").read_text(encoding="utf-8")
+patron = (r"DIAPOSITIVA (\d+) · .*?\n(Presentador: .*?)\nTEXTO\n(.*?)\nSEÑALAR\n(.*?)\n"
+          r"TRANSICIÓN\n(.*?)\n\n")
+bloques_guion = re.findall(patron, guion, re.S)
+assert len(bloques_guion) == 13, "el guion debe tener las 13 diapositivas principales"
+for n, cab, texto, senalar, trans in bloques_guion:
+    tf = prs.slides[int(n) - 1].notes_slide.notes_text_frame
+    previas = tf.text.split("\n\n", 1)[1]  # sin la línea de presentador y duración del generador
+    tf.text = (f"{cab}\n\nGUION\n{' '.join(texto.split())}\n\nSEÑALAR\n{' '.join(senalar.split())}"
+               f"\n\nTRANSICIÓN\n{' '.join(trans.split())}\n\n{previas}")
 
 prs.save(SALIDA)
 print("Guardado:", SALIDA, "-", len(prs.slides), "diapositivas")

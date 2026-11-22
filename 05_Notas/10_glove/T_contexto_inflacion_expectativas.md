@@ -7,6 +7,9 @@
 
 ## Evidencia
 
+- Figura para la diapositiva 8 del deck: `03_Resultados/Figuras/11_figuras_diapositiva/conjunto_glove_cosenos.png`
+  (`02_Scripts/11_figuras_diapositiva.R`), que redibuja el coseno antes–después de GloVe y Word2Vec
+  de `conjunto_glove_vecinos.csv` sin cambiar las cifras.
 - Tabla `03_Resultados/Tablas/10_glove/conjunto_glove_vecinos.png` (cifras en
   `conjunto_glove_vecinos.csv`); cada vecino con su coseno en
   `conjunto_glove_vecinos_detalle.csv`; fragmentos en
@@ -151,3 +154,6 @@ preocupación que acompañó el ciclo de alzas de 2015–2016.
   la meta y anclaje» a lo que coincide en los dos métodos; el anclaje de las
   expectativas y el papel de control de la tasa de intervención quedan como
   resultados de un solo método.
+- 2026-11-21: la figura `conjunto_glove_cosenos.png` (script `11`) lleva el coseno a la
+  diapositiva 8; las cifras coinciden con `conjunto_glove_vecinos.csv` (0,31 / 0,61; 0,56 / 0,78;
+  0,59 / 0,72; 0,71 / 0,69). El deck solo usa lo que coincide en los dos métodos. Estado sin cambio.
