@@ -18,6 +18,7 @@ Las reglas están en `CLAUDE.md` ("Notas de hallazgos").
 | [08_lda_oraciones/T_inflacion_de_meta_a_choques.md](08_lda_oraciones/T_inflacion_de_meta_a_choques.md) | vigente (choques: matizado en minutas) | ¿Cambia la forma en que la Junta discute la inflación? (de la inflación básica frente a la meta a la depreciación y los alimentos; LDA) |
 | [08_lda_oraciones/T_decision_postura_sube.md](08_lda_oraciones/T_decision_postura_sube.md) | matizado | ¿Dedica la Junta más espacio a justificar su decisión de tasa después del choque? (LDA) |
 | [08_lda_oraciones/T_actividad_credito_liquidez_bajan.md](08_lda_oraciones/T_actividad_credito_liquidez_bajan.md) | vigente | ¿Qué temas internos pierden espacio después del choque? (actividad, crédito y liquidez; LDA) |
+| [10_glove/T_contexto_inflacion_expectativas.md](10_glove/T_contexto_inflacion_expectativas.md) | matizado (sensible al método: GloVe frente a Word2Vec) | ¿Cambió el contexto en que la Junta usa «inflación» y «expectativas de inflación»? (vecinos en un modelo GloVe, antes y después del corte) |
 | [11_figuras_diapositiva/X_externo_antes_de_las_alzas.md](11_figuras_diapositiva/X_externo_antes_de_las_alzas.md) | matizado | ¿Cambió el discurso antes de la primera alza de la tasa (2015-09-25)? |
 
 Resultados exploratorios sin nota (quedan en la bitácora del 2026-11-12):

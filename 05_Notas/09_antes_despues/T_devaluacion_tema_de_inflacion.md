@@ -95,3 +95,10 @@ expectativas. Para la mesa, las palabras «persistencia», «indexación» y
 ## Historial
 
 - 2026-11-21: nota creada con la primera corrida de `09_antes_despues.R`.
+- 2026-11-21: contraste con los embeddings (`10_glove.R`,
+  [T_contexto_inflacion_expectativas](../10_glove/T_contexto_inflacion_expectativas.md)):
+  consistente. Los vecinos de «inflación» pasan de proyección y resultado a
+  meta, convergencia y desviar, y los de «expectativas de inflación» a
+  anclaje y desanclaje. Devaluación, indexación y persistencia no están entre
+  los vecinos: la expectativa del último punto de «Límites» se cumple en el
+  marco, no palabra por palabra.

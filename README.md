@@ -299,6 +299,24 @@ cortes 2014-09-26 y 2014-12-19. La construcción de bigramas se movió a
 | `Tablas/09_antes_despues/{comunicados,minutas}_correlaciones_anclas.png` | Las 8 palabras más correlacionadas (phi, `pairwise_cor()`, documento = oración) con cada palabra ancla, antes y después |
 | `Tablas/09_antes_despues/*.csv` | Cifras sin formato de cada tabla; además el detalle completo de palabras y bigramas (`*_cambio_detalle.csv`, con TF-IDF de dos grupos), la atención por reunión (`conjunto_temas_por_reunion.csv`) y los fragmentos de las anclas (`conjunto_fragmentos_anclas.csv`) |
 
+### `10_glove.R`: en qué contextos se usan las palabras ancla antes y después del corte
+
+Hito H3c de `PLAN.md`. Embeddings GloVe (`text2vec`, Lab 13) con un solo
+modelo para comunicados y discusión de la Junta, 2007–2026; documento =
+oración de udpipe. En la ventana principal (2009-10-30 a 2019-10-29) cada ancla
+se marca por época (`inflacion_antes` / `inflacion_despues`), así que el modelo
+le da un vector a cada época. Anclas: las de `09` con 30 o más oraciones en cada
+época (inflación, expectativas de inflación, crecimiento y tasa de
+intervención). Tres semillas promediadas. Se usa GloVe y no Word2Vec porque el
+paquete `word2vec` no se puede reproducir con la semilla de R.
+
+| Resultado | Contenido |
+| --- | --- |
+| `Tablas/10_glove/conjunto_glove_vecinos.png` (y `.csv`) | Los 10 vecinos por coseno de cada ancla antes y después (marcados los que no se repiten en las tres semillas), el coseno entre los dos vectores del ancla y cuántos vecinos coinciden con las correlaciones phi de `09` |
+| `Tablas/10_glove/conjunto_glove_vecinos_detalle.csv` | Cada vecino con su coseno promedio, si es estable entre semillas y si está entre las palabras phi de `09` |
+| `Tablas/10_glove/conjunto_glove_fragmentos.csv` | Por ancla y época, una oración con el ancla y su vecino principal |
+| `Tablas/10_glove/conjunto_w2v_vecinos_detalle.csv` | Robustez con Word2Vec skip-gram (mismo texto y anclas, 5 entrenamientos promediados): vecinos, en cuántas corridas aparecen y si también están en GloVe. No se reproduce exactamente entre corridas; su coseno antes–después va en la columna «Word2Vec» de la tabla |
+
 ### `11_figuras_diapositiva.R`: versiones de las figuras para la presentación
 
 Solo lee resultados ya guardados de `07`, `08` y `09` (no estima nada) y

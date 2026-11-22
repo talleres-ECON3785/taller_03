@@ -17,34 +17,34 @@ domingo 22 de noviembre de 2026.**
      cada sesión. -->
 
 1. **H4 de `PLAN.md` (P4.5): deck final y video, todo el equipo (domingo 22).**
-   - Hay un borrador: `04_Presentaciones/borrador_presentacion.pptx` (13 diapositivas más el
-     apéndice, guion en las notas del orador). Se regenera con
-     `python 04_Presentaciones/construir_borrador.py`.
-   - Faltan:
-     - revisarlo en PowerPoint (Codec Pro no está en LibreOffice);
-     - reemplazar la diapositiva 7 (embeddings);
-     - pasar la versión final a `08_Entregables/`;
-     - grabar el video.
+   - Borrador: `04_Presentaciones/borrador_presentacion.pptx`, generado por
+     `python 04_Presentaciones/construir_borrador.py`, con el guion en las notas del orador.
+   - Faltan: revisarlo en PowerPoint (Codec Pro no está en LibreOffice), pasar la versión final a
+     `08_Entregables/` y grabar el video.
    - *Terminado cuando:* el video dura máximo 15 minutos, los cuatro integrantes exponen y cada
      hallazgo lleva su fragmento y la salvedad «asociación, no causalidad».
-2. **H3c de `PLAN.md`: `10_word2vec.R` (otro integrante), o decidir omitirlo.**
-   - Para confirmar los hallazgos, los vecinos de «inflación» deberían pasar de proyección y
-     monitoreo a devaluación, traslado e indexación (sección 5 de `hallazgos_y_figuras.txt`).
-   - *Terminado cuando:* existe la figura de vecinos con su nota y la diapositiva 7 del deck la
-     usa, o la omisión queda en «Decisiones tomadas» y la diapositiva 7 se quita.
-3. **Correr `00_main.R` completo (ahora con `11`) y abrir el PR de `SamuelEscandonC` a `main`
-   (Samuel Escandón).**
-   - *Terminado cuando:* `00_main.R` termina sin errores, las figuras de `11` coinciden con las
-     del deck y el PR está abierto.
+2. **H3d de `PLAN.md` (P3d.1–P3d.3): cerrar la robustez común (integrante por definir).**
+   - `08` y `09` ya tienen los cortes alternativos y los comunicados como control. `10` solo tiene
+     robustez entre métodos (GloVe frente a Word2Vec).
+   - *Terminado cuando:* P3d.1–P3d.3 quedan marcados en `PLAN.md` y el alcance de `10` queda
+     declarado en «Decisiones tomadas».
+3. **Correr `00_main.R` completo (01 a 11) y abrir el PR de `SamuelEscandonC` a `main` (Samuel
+   Escandón).**
+   - *Terminado cuando:* `00_main.R` termina sin errores y el PR está abierto.
 
 **Bloqueos y preguntas abiertas:**
 
 - Roles de los integrantes en el Taller 3.
 - La validación manual de la votación quedó fuera de `PLAN.md`: decidir si se
   abandona.
-- Corpus pequeño (unas 177 mil palabras limpias) para entrenar embeddings y
-  partirlo en dos épocas; los cambios de formato de las minutas pueden
-  confundirse con cambio de temas.
+- Embeddings (`10`): con 97 mil palabras en 8.913 oraciones, GloVe y Word2Vec
+  comparten solo 1 a 4 de cada 10 vecinos. Solo se concluye lo que coincide en
+  los dos métodos. Word2Vec no se reproduce exactamente: su columna de coseno
+  cambia unas centésimas en cada corrida de `00_main.R`.
+- Los `.csv` de `05`, `07` y `09` regenerados en la corrida completa del
+  2026-11-21 (5) están sin commitear. Los de `07` y `09` solo cambian decimales
+  a partir de la posición 15; los de `05` cambian los tópicos VEM
+  exploratorios. Decidir si se versionan.
 - Fecha de la retroalimentación a compañeros (no afecta el repositorio).
 - Los dos xlsx de inflación total y meta también quedaron sin versionar en
   `01_Datos/01_Crudos/` de la carpeta principal del repositorio (en `main`).
@@ -90,39 +90,76 @@ domingo 22 de noviembre de 2026.**
 
 ## Estado actual
 
-- **Pipeline:** `00_main.R` corre diez scripts: 01 a 09 y `11`.
-  - Con 01 a 09 tardaba unos 4,6 minutos (2026-11-21); `11` suma unos 10 segundos.
-  - La corrida completa con `11` todavía no se ha hecho; `11` se probó solo.
+- **Pipeline:** `00_main.R` corre once scripts (01 a 11).
+  - La corrida completa de 01 a 10 tardó 4,8 minutos (2026-11-21), antes de agregar la robustez con
+    Word2Vec a `10`; `11` suma unos 10 segundos. La corrida completa con los once no se ha hecho.
   - Requiere Chrome para las tablas e internet la primera vez.
 - **Scripts:**
   - de formato y definiciones: `00_formato_graficas.R` (incluye `tema_diapositiva` y
     `colores_macro_diapositiva`), `00_formato_tablas.R` y `00_funciones_texto.R`;
   - de texto: `01_extraer_texto.R` a `05_lda_exploratorio.R`;
   - de series: `06_series_macro.R` y `07_graficas_macro.R`;
-  - antes/después del corte: `08_lda_oraciones.R` (LDA, K = 10) y `09_antes_despues.R` (palabras,
-    bigramas, temas y correlaciones);
+  - antes/después del corte:
+    - `08_lda_oraciones.R`: LDA con bloques de 60 palabras, estimado en la
+      ventana con K = 10 y α = 0,1; 8 tópicos estables con nombre; θ por
+      reunión antes/después en cuatro escenarios, contraste con el
+      diccionario y serie 2007–2019;
+    - `09_antes_despues.R`: palabras, bigramas, atención por tema y
+      correlaciones.
+    - `10_glove.R`: embeddings GloVe con las anclas marcadas por época
+      (inflación, expectativas de inflación, crecimiento y tasa de
+      intervención), vecinos y coseno antes–después, más la robustez con
+      Word2Vec.
   - `11_figuras_diapositiva.R`: versiones 16:9 de las figuras para la presentación y la
-    verificación del momento del cambio;
-  - `10_word2vec.R` no existe todavía (otro integrante).
+    verificación del momento del cambio.
 - **Datos:**
-  - corpus de 393 documentos (194 comunicados y 199 minutas);
-  - series macro y `macro_por_reunion.rds` (205 reuniones alineadas).
-- **Fecha de corte:** 2014-10-30. Alternativas: 2014-09-26 y 2014-12-19.
-- **Presentación** (en `04_Presentaciones/`):
-  - documento base: `hallazgos_y_figuras.txt`;
-  - reglas de diseño: `indicaciones_deck.md`;
-  - plantilla: `plantilla_presentacion.pptx`;
-  - borrador: `borrador_presentacion.pptx`, que genera `construir_borrador.py`.
-- **Notas:** trece notas en `05_Notas/`. Las de `08`, `09` y `11` sostienen la presentación; las
-  dos discrepancias entre notas y `.csv` de `09` quedaron corregidas.
-- **Plan:** `PLAN.md` tiene H1, H2, H3a (LDA) y H3b (`09`) terminados. Siguen H3c (Word2Vec) y H4
-  (el borrador del deck existe; faltan la versión final y el video).
-- **Git:**
-  - `main` incluye `SantiagoMunozM` (PR #8) y `SamuelEscandonC` hasta el documento de hallazgos
-    (PR #9);
-  - el trabajo de esta sesión está en `SamuelEscandonC`, sin mergear.
+  - Corpus: 393 documentos (194 comunicados y 199 minutas). Tokens limpios y
+    anotados en `01_Datos/03_Listos/`.
+  - Series macro en `01_Datos/03_Listos/`, y `macro_por_reunion.rds` con las
+    205 reuniones alineadas.
+- **Fecha de corte:** 2014-10-30. Alternativas: 2014-09-26 y 2014-12-19. En
+  la ventana de 5 años: 54 y 53 comunicados, 59 y 53 minutas.
+- **Resultados:**
+  - exploratorios (01 a 05), macro (07), antes/después por diccionario (09) y
+    LDA (08). Mapa completo en `README.md`.
+  - LDA, peso medio por reunión antes → después (pp, comunicados / minutas):
+    - suben: déficit externo (+14,1 / +9,4), inflación por depreciación
+      (+10,8 / +2,0, matizada en minutas) y decisión y postura
+      (+2,8 / +18,4, matizada);
+    - bajan: economía mundial, inflación básica frente a la meta, actividad,
+      crédito y liquidez.
+  - Embeddings, coseno antes–después (GloVe / Word2Vec): expectativas de
+    inflación 0,31 / 0,61, el más bajo en los dos métodos; inflación
+    0,56 / 0,78; crecimiento 0,59 / 0,72; tasa de intervención 0,71 / 0,69.
+- **Notas:** trece notas en `05_Notas/`. La de `10_glove/` está matizada: solo
+  se sostiene lo que coincide en GloVe y Word2Vec. La del sector externo
+  también está matizada: el LDA y el diccionario coinciden en la dirección
+  antes/después y, reunión a reunión, solo en las minutas.
+- **Plan:** `PLAN.md` con H1, H2, H3a (LDA), H3b (`09`) y H3c (`10`)
+  terminados. Siguen H3d (robustez; falta declarar el alcance de `10`) y H4.
+- **Reglas:** el catálogo incluye los Labs 11, 12 y 13 (Word2Vec y GloVe) y
+  registra como ampliaciones `pdftools`, `gt` y `readxl`. `widyr`, `text2vec`
+  y `word2vec` están en el `p_load()`.
+- **Presentación** (en `04_Presentaciones/`): documento base `hallazgos_y_figuras.txt`, reglas
+  `indicaciones_deck.md`, plantilla `plantilla_presentacion.pptx` y borrador
+  `borrador_presentacion.pptx` (lo genera `construir_borrador.py`).
+- **Git:** `main` incluye `SantiagoMunozM` hasta los embeddings (PR #10) y `SamuelEscandonC` hasta
+  el documento de hallazgos (PR #9); el resto de `SamuelEscandonC` está sin mergear.
 
 ## Registro de sesiones
+
+### 2026-11-21 (5): embeddings antes y después del corte (H3c)
+
+- Santiago Muñoz Martínez (`SantiagoMunozM`). El Lab 13 pasó al catálogo y se
+  escribió `10_glove.R` (H3c, P3c.1–P3c.8 cerrados). Se usó GloVe porque
+  `word2vec` no se reproduce con la semilla de R; Word2Vec quedó como
+  robustez. Las expectativas de inflación son el ancla que más cambia de
+  contexto en los dos métodos; la nota nueva quedó matizada porque el
+  «anclaje» y la tasa como control solo aparecen con GloVe. Se acordó una
+  línea en la diapositiva 7 y la tabla en el apéndice.
+- Bitácora: [2026-11-21_embeddings-glove.md](06_Bitacoras/2026-11-21_embeddings-glove.md)
+- **Siguientes objetivos:** (1) H4, interpretación y deck; (2) H3d, cerrar la
+  robustez y declarar el alcance de `10`; (3) PR de `SantiagoMunozM` a `main`.
 
 ### 2026-11-21 (5): documento de hallazgos, figuras para diapositiva y borrador del deck
 

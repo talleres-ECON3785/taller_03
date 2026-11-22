@@ -2,10 +2,12 @@
 
 Este documento fija **qué métodos de texto como datos se pueden usar en el
 Taller 3 y con qué paquetes y funciones de R se aplican**. Se armó revisando los
-Laboratorios 11 y 12 del curso (ECON-3785, 2026-2), que trabajan con los
-resúmenes de la Revista CEPAL (`Laboratorios/Laboratorio 11/Laboratorio_11/02_Scripts/`
-y `Laboratorios/Laboratorio 12/Laboratorio_12/02_Scripts/`). Es la referencia
-obligatoria para escribir cualquier script de análisis de este repositorio.
+Laboratorios 11, 12 y 13 del curso (ECON-3785, 2026-2), que trabajan con los
+resúmenes de la Revista CEPAL (`Laboratorios/Laboratorio 11/Laboratorio_11/02_Scripts/`,
+`Laboratorios/Laboratorio 12/Laboratorio_12/02_Scripts/` y
+`Laboratorios/Laboratorio 13/Laboratorio_13/02_Scripts/`; el Lab 13 se agregó
+el 2026-11-21). Es la referencia obligatoria para escribir cualquier script de
+análisis de este repositorio.
 
 **Reglas de uso**
 
@@ -42,6 +44,12 @@ obligatoria para escribir cualquier script de análisis de este repositorio.
 | Selección de hiperparámetros de LDA | 12 | `topicmodels` | perplejidad por *document completion* con CV, coherencia UMass | Rejilla de K × α × δ, número de pliegues | Elegir K, α, δ con criterio fuera de muestra |
 | Validación de tópicos | 12 | — | documentos más representativos, cruce con etiquetas externas | Qué etiqueta externa | Sustentar el nombre de cada tópico con ejemplos (lo exige el enunciado) |
 | Agregación de tópicos en el tiempo | 12 | `dplyr`, `ggplot2` | promedio de `gamma` por periodo, `geom_area()` / `geom_col()` | Periodo de agregación | Serie de atención por tema, para cruzar con las series macro |
+| Word2Vec (skip-gram con muestreo negativo) | 13 | `word2vec` | `word2vec()`, `as.matrix()`, `predict(type = "nearest")` | Unidad de texto (ventana sin cruzar documentos), `dim`, `window`, `iter`, `negative`, `min_count` | Vecinos de las anclas antes y después del corte (H3c) |
+| GloVe | 13 | `text2vec`, `Matrix` | `itoken()`, `create_vocabulary()`, `prune_vocabulary()`, `vocab_vectorizer()`, `create_tcm()`, `GlobalVectors$new()`, `fit_transform()` | Ventana, frecuencia mínima, `rank`, `x_max`, iteraciones | Alternativa o contraste de Word2Vec |
+| Vecinos por coseno y analogías | 13 | `text2vec` | `sim2(method = "cosine", norm = "l2")` | Número de vecinos | Qué palabras se usan en contextos parecidos a un ancla |
+| Vectores preentrenados (fastText `cc.es.300`) | 13 | `readr` | `read_csv()` de la matriz recortada | — | Solo como referencia: el archivo del lab está recortado al vocabulario CEPAL |
+| Espacio de palabras en 3D | 13 | `stats`, `plotly` | `prcomp()`, `plot_ly(type = "scatter3d")` | Palabras y campos temáticos que se grafican | Exploración (interactivo; no sale como `.png` para el deck) |
+| Temas como regiones del espacio y embeddings de documento | 13 | `stats` | `kmeans()` sobre vectores normalizados; promedio de vectores por documento (`colMeans()`) | Número de grupos, palabras frecuentes | Agrupar palabras o documentos por cercanía semántica |
 
 ---
 
@@ -313,11 +321,129 @@ ordenados por el periodo en que alcanzan su pico. En el taller, esta serie de
 atención por tópico (por reunión, trimestre o año) es la que se cruza con las
 series macroeconómicas.
 
+## 10. Datos para embeddings (Lab 13, `01_datos.R`)
+
+Reutiliza la limpieza del Lab 11 (palabras vacías de *snowball* en español e
+inglés sin tildes, sin dígitos, lista de dominio). Dos detalles:
+
+- **El orden de las palabras importa.** A diferencia de la DTM, los embeddings
+  usan la secuencia: los tokens limpios se guardan en el orden del texto, con
+  el `id` del documento.
+- **Revisar la lista de palabras vacías con el método.** El lab saca "estado" y
+  "estados" de las vacías porque en los resúmenes de la CEPAL son contenido
+  (el Estado), no relleno. En el taller se hace la misma revisión con las
+  anclas (p. ej. que ninguna ancla esté en la lista de vacías o de dominio).
+
+## 11. Word2Vec (Lab 13, `02_word2vec.R`)
+
+**Qué estima.** Un vector de `dim` números por palabra, entrenado para que el
+vector de una palabra prediga las palabras de su ventana (*skip-gram*). Dos
+palabras quedan cerca si aparecen en contextos parecidos, aunque nunca estén
+juntas en la misma oración (similitud de segundo orden; `pairwise_cor()` solo
+ve la aparición conjunta).
+
+```r
+# una cadena por documento: la ventana no cruza documentos
+textos <- tokens %>%
+  group_by(id) %>%
+  summarise(texto = paste(word, collapse = " ")) %>%
+  pull(texto)
+
+set.seed(2026)
+modelo_w2v <- word2vec(x = textos, type = "skip-gram", dim = 50, window = 5,
+                       iter = 20, negative = 5, min_count = 5, threads = 1)
+
+Wv <- as.matrix(modelo_w2v)
+Wv <- Wv[rownames(Wv) != "</s>", ]   # token de fin de documento
+predict(modelo_w2v, c("inflacion"), type = "nearest", top_n = 8)
+```
+
+- Especificación del lab: `dim = 50`, `window = 5`, `iter = 20`,
+  `negative = 5`, `min_count = 5`. Con el corpus de la Junta (unas 177 mil
+  palabras limpias en total) hay que revisarla y registrarla.
+- **Semilla:** `word2vec()` no tiene argumento de semilla. El lab usa
+  `set.seed()` antes de entrenar y `threads = 1`; con más de un hilo el
+  resultado no se puede reproducir. En el taller: `set.seed(2026)` y
+  `threads = 1` (el lab usa `123`; **no se copia**).
+- `min_count` deja fuera del modelo las palabras con menos apariciones: una
+  palabra rara no tiene vector.
+
+## 12. GloVe (Lab 13, `03_glove.R`)
+
+**Qué estima.** Vectores que reproducen el logaritmo de la matriz de
+co-ocurrencias (cuántas veces dos palabras aparecen a menos de `window`
+palabras una de otra).
+
+```r
+it <- itoken(split(tokens$word, tokens$id), progressbar = FALSE)  # tokens en orden, por documento
+vocabulario <- create_vocabulary(it) %>% prune_vocabulary(term_count_min = 5)
+X <- create_tcm(it, vocab_vectorizer(vocabulario), skip_grams_window = 5)
+
+set.seed(2026)
+glove <- GlobalVectors$new(rank = 50, x_max = 10)
+W <- glove$fit_transform(X, n_iter = 50, convergence_tol = 1e-4, n_threads = 4)
+W <- W + t(glove$components)         # vectores principales + de contexto
+```
+
+- El lab mide qué tan dispersa es la matriz (`nnzero()` de `Matrix`):
+  `100 * (1 - nnzero(X) / prod(dim(X)))` % de ceros.
+- El lab usa `n_threads = 4`; para reproducir los resultados conviene
+  `n_threads = 1`.
+
+## 13. Vecinos, analogías y vectores preentrenados (Lab 13, `04_vecinos.R`, `05_preentrenados.R`)
+
+Funciones del lab, que se reutilizan tal cual con cualquier matriz de vectores
+(filas = palabras):
+
+```r
+vecinos <- function(W, palabra, n = 8) {
+  s <- sim2(W, W[palabra, , drop = FALSE], method = "cosine", norm = "l2")[, 1]
+  s <- s[names(s) != palabra]
+  round(head(sort(s, decreasing = TRUE), n), 2)
+}
+
+analogia <- function(W, a, b, c, n = 5) {   # a - b + c
+  v <- W[a, ] - W[b, ] + W[c, ]
+  s <- sim2(W, matrix(v, nrow = 1), method = "cosine", norm = "l2")[, 1]
+  s <- s[!names(s) %in% c(a, b, c)]
+  round(head(sort(s, decreasing = TRUE), n), 2)
+}
+```
+
+- El lab compara los vecinos de una misma palabra con GloVe y con Word2Vec
+  (`comparar()`): si los dos métodos coinciden, el vecino es más confiable.
+- **Vectores preentrenados:** fastText en español (`cc.es.300`, Grave et al.
+  2018), que el lab lee de un `.csv` **recortado al vocabulario de la CEPAL**.
+  Muestran vecinos de "sentido común" del español general, no del corpus. Para
+  usarlos con el vocabulario de la Junta habría que descargar el archivo
+  completo (varios GB), lo que se registraría como ampliación.
+- Los vecinos son una medida de texto: en el taller se validan con fragmentos
+  de los documentos (lo exige el enunciado).
+
+## 14. El espacio y los temas como regiones (Lab 13, `06_espacio.R`, `08_de_que_habla.R`)
+
+- **Espacio en 3D:** `prcomp()` sobre los vectores de las palabras frecuentes
+  más unos campos temáticos definidos a mano, y `plot_ly(..., type =
+  "scatter3d")` con las palabras de fuera de los campos en gris. Reporta el %
+  de varianza de los tres primeros componentes. Es interactivo: sirve para
+  explorar, no para una figura del deck.
+- **Temas como regiones:** `kmeans()` (`nstart = 25`, semilla antes) sobre los
+  vectores **normalizados** (`M / sqrt(rowSums(M^2))`) de las palabras con 30 o
+  más apariciones; cada grupo se describe con sus palabras más frecuentes.
+- **Embeddings de documento:** el vector de un documento es el promedio de los
+  vectores de sus palabras (`colMeans()`); se normalizan, se agrupan con
+  `kmeans()` y cada grupo se lee con los documentos más cercanos a su centro
+  (coseno con el centroide). El lab grafica el % de documentos de cada grupo
+  por década: es el análogo de "tópicos en el tiempo" (sección 9) con
+  embeddings.
+- El lab no tiene `07_*.R`: `08_de_que_habla.R` lee `puntos_3d.rds`, que
+  genera `06_espacio.R`.
+
 ---
 
 ## Herramientas previstas, no cubiertas en los laboratorios
 
-Hacen falta en el taller y no se vieron en los Labs 11–12. Cada una se registra
+Hacen falta en el taller y no se vieron en los Labs 11–13. Cada una se registra
 en ["Registro de ampliaciones"](#registro-de-ampliaciones) antes de usarse.
 
 | Herramienta | Por qué hace falta | Estado |
@@ -327,14 +453,15 @@ en ["Registro de ampliaciones"](#registro-de-ampliaciones) antes de usarse.
 | Relación medida de texto – variable macro (regresión lineal, `lm`/`fixest`, de laboratorios anteriores; ver catálogo del Taller 2) | Cuantificar cómo se asocia la atención a un tema con el contexto macro | Pendiente de decidir |
 | Diccionarios de tono (p. ej. palabras *hawkish*/*dovish*) | Medir la orientación de la política, no solo el tema | Pendiente de decidir; no se vio en clase |
 | Red de co-ocurrencias (`igraph`, `ggraph`) | Visualizar `pairwise_cor()`; el Lab 11 carga los paquetes pero no la dibuja | Pendiente de decidir |
-| Embeddings de palabras (GloVe o Word2Vec) | Pregunta del equipo (2026-11-18): comparar de qué se hablaba antes y después de la crisis del petróleo de 2014 y cómo cambian las prioridades de la Junta | Elegidos por el equipo; **sin registrar**: falta paquete, funciones y especificación en el "Registro de ampliaciones". No se usan hasta entonces |
+| Embeddings de palabras (GloVe o Word2Vec) | Pregunta del equipo (2026-11-18): comparar de qué se hablaba antes y después de la crisis del petróleo de 2014 y cómo cambian las prioridades de la Junta | **Cubiertos en el Lab 13 (2026-11-21)**: pasan al catálogo (secciones 10 a 14) y no requieren ampliación. Su especificación en el taller (anclas por época, dimensión, ventana) se registra en "Decisiones tomadas" |
 
 ## Fuera del catálogo
 
-No se usan, salvo que se registren como ampliación: embeddings
-(`word2vec`, `text2vec`; **previstos para la pregunta del equipo, ver "Herramientas previstas"**), modelos de tópicos estructurales (`stm`), modelos de
-lenguaje o clasificadores supervisados de texto, y análisis de sentimiento con
-léxicos genéricos.
+No se usan, salvo que se registren como ampliación: alineación de espacios de
+embeddings estimados por separado (p. ej. Procrustes), vectores preentrenados
+completos (el Lab 13 solo usa un recorte al vocabulario CEPAL), modelos de
+tópicos estructurales (`stm`), modelos de lenguaje o clasificadores
+supervisados de texto, y análisis de sentimiento con léxicos genéricos.
 
 ## Registro de ampliaciones
 

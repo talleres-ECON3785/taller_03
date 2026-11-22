@@ -44,7 +44,9 @@ pacman::p_load(
   topicmodels, # LDA()
   widyr,       # pairwise_cor(): correlacion entre palabras (catalogo, Lab 11)
   gt,          # formato de las tablas de la presentacion (ampliacion del catalogo)
-  readxl       # read_excel(): leer los xlsx de series macro del BanRep (ampliacion del catalogo)
+  readxl,      # read_excel(): leer los xlsx de series macro del BanRep (ampliacion del catalogo)
+  text2vec,    # create_tcm(), GlobalVectors: GloVe (catalogo, Lab 13)
+  word2vec     # word2vec(): Word2Vec skip-gram, robustez de GloVe (catalogo, Lab 13)
 )
 
 # -----------------------------------------------------------------------------
@@ -72,6 +74,7 @@ carpetas_salida <- c(
   "03_Resultados/Figuras/08_lda_oraciones",
   "03_Resultados/Tablas/09_antes_despues",
   "03_Resultados/Figuras/09_antes_despues",
+  "03_Resultados/Tablas/10_glove",
   "03_Resultados/Tablas/11_figuras_diapositiva",
   "03_Resultados/Figuras/11_figuras_diapositiva"
 )
@@ -93,6 +96,7 @@ scripts <- c(
   "02_Scripts/07_graficas_macro.R",
   "02_Scripts/08_lda_oraciones.R",
   "02_Scripts/09_antes_despues.R",
+  "02_Scripts/10_glove.R",
   "02_Scripts/11_figuras_diapositiva.R"
 )
 
