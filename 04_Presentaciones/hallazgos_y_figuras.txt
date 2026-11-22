@@ -1,0 +1,830 @@
+HALLAZGOS Y FIGURAS PARA LA PRESENTACIÓN
+Taller 3, ECON-3785: ¿De qué habla la Junta del Banco de la República?
+Base del borrador de la presentación a la mesa de renta fija (video de máximo 15 minutos)
+
+Preparado el 2026-11-21 a partir de las notas de 05_Notas/ y de los .csv de 03_Resultados/.
+No crea hallazgos nuevos: cada cifra sale de una nota y se verificó contra el .csv que se cita.
+Los embeddings (script 10) están en curso y quedan marcados como PENDIENTE.
+
+Convenciones del documento
+- Pregunta del equipo: ¿cómo cambiaron los temas de interés de la Junta del Banco de la República
+  antes y después de la crisis del petróleo de 2014 en Colombia?
+- Corte: 2014-10-30, primera reunión en que el Brent que tenía la Junta estaba 20 % o más por
+  debajo de su máximo de 12 meses. Se fijó solo con las series y las decisiones de tasa, antes de
+  mirar cualquier medida de texto. Cortes alternativos: 2014-09-26 y 2014-12-19.
+- Épocas del escenario principal: «antes», del 2009-10-30 al 2014-10-29, y «después», del
+  2014-10-30 al 2019-10-29. Son 54 comunicados antes y 53 después, y 59 minutas antes y 53 después.
+- Minutas: solo la discusión de la Junta. Los comunicados funcionan como control del cambio de
+  formato de las minutas del 2014-05-30.
+- Dos medidas de texto principales:
+  (a) script 09: palabras, bigramas y temas de un diccionario fijado a priori, por cada 1.000
+      palabras y por reunión, más correlaciones entre palabras en la misma oración;
+  (b) script 08: modelo de tópicos (LDA, K = 10) estimado con bloques de oraciones. Su medida es el
+      peso medio de cada tópico en la reunión, en %.
+- «pp» significa puntos porcentuales del peso del tópico. Los intervalos son IC del 95 % de una
+  prueba t de Welch con la reunión como unidad.
+- Estados de robustez (regla fijada antes de ver resultados):
+  - robusto: la dirección se mantiene con la muestra completa 2007–2026 y con los dos cortes
+    alternativos;
+  - matizado: algún escenario cambia la dirección;
+  - posible artefacto de formato: el cambio aparece en las minutas en dirección contraria a los
+    comunicados.
+
+
+====================================================================================================
+1. MENSAJE PRINCIPAL
+====================================================================================================
+
+Después de la caída del petróleo de 2014, la Junta cambió de qué habla. Dejó de describir la
+economía mundial, el crédito y el detalle de la actividad interna, y pasó a discutir cómo el choque
+entraba a Colombia: por el déficit externo y por una depreciación que se trasladaba a la inflación.
+
+El cambio aparece en los comunicados y en las minutas, con cualquiera de las tres fechas de corte.
+Para la mesa, la señal más temprana estuvo en los comunicados: la atención al exterior subió con la
+caída del petróleo, meses antes de que el peso y la inflación tocaran sus extremos.
+
+
+====================================================================================================
+2. HALLAZGOS PRINCIPALES (en el orden de la historia)
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+HALLAZGO 1. QUÉ PASÓ EN LA MACRO
+----------------------------------------------------------------------------------------------------
+
+a) Título de la diapositiva
+   La caída del petróleo llegó a la inflación en dos años, a través de la depreciación del peso
+
+b) Evidencia
+   Fuente: 03_Resultados/Tablas/07_graficas_macro/macro_cronologia.csv y macro_descriptiva.csv.
+   Nota: 05_Notas/07_graficas_macro/M_cronologia_choque_petrolero.md.
+   - Brent: pico de 115,2 USD por barril el 2014-06-19 y valle de 26,0 USD el 2016-01-20, una caída
+     del 77 %.
+   - TRM: mínimo de 1.846 pesos por dólar el 2014-07-25 y pico de 3.435 el 2016-02-12, un alza del
+     86 %.
+   - Inflación total: pico de 8,97 % en julio de 2016, frente a una meta de 3 %.
+   - Promedios por periodo de política monetaria, de P3 (2011-02 a 2014-09) a P4 (2014-09 a 2016-12):
+     · Brent: de 110,1 a 51,3 USD por barril;
+     · TRM: de 1.858 a 2.810 pesos por dólar;
+     · inflación: de 2,8 % a 5,8 %;
+     · meses fuera del rango meta: de 14 % a 81 %.
+   - Política monetaria: la primera alza llegó el 2015-09-25 (+25 pb, a 4,75 %) y la última el
+     2016-07-29 (a 7,75 %), con 11 alzas en el ciclo.
+
+c) Convergencia entre métodos
+   No aplica: es el contexto macro. Ningún dato de texto se usó para fijar las fechas.
+
+d) Robustez
+   Descriptivo. Los hitos dependen de las ventanas en que se buscan (la nota lo documenta).
+
+e) Fragmento
+   Comunicado del 2015-09-25: «La Junta Directiva del Banco de la República en su sesión de hoy
+   decidió incrementar la tasa de interés de intervención en 25 pb y la situó en 4,75%.»
+
+f) Figura recomendada
+   03_Resultados/Figuras/07_graficas_macro/macro_cronologia_choque.png
+   - Por qué: muestra la secuencia petróleo → peso → inflación con los hitos fechados, el ciclo de
+     alzas sombreado y la línea del corte. Es la historia que ordena el resto.
+   - Alternativa: 03_Resultados/Figuras/07_graficas_macro/macro_series_2007_2026.png (2007–2026),
+     útil para la diapositiva de implicaciones de hoy.
+   - Legibilidad a media pantalla: se lee bien. Los rótulos de los hitos y los ejes tienen buen
+     tamaño. La nota al pie no se lee a media pantalla, pero no hace falta en el video. Detalle
+     menor: el rótulo «Valle del Brent» toca la línea punteada del inicio del ciclo de alzas.
+
+----------------------------------------------------------------------------------------------------
+HALLAZGO 2. QUÉ TEMAS ENTRARON
+----------------------------------------------------------------------------------------------------
+
+a) Título de la diapositiva
+   Después del choque, la Junta pasó de describir la economía mundial a discutir el déficit externo
+   de Colombia
+
+b) Evidencia
+   LDA: 03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv.
+   Nota: 05_Notas/08_lda_oraciones/T_choque_externo_llega_a_colombia.md.
+   - Tópico 6, «Déficit externo y capacidad productiva» (peso medio en la reunión, en %):
+     · comunicados: de 2,3 a 16,4; +14,1 pp [11,4; 16,8];
+     · minutas: de 2,6 a 12,0; +9,4 pp [6,9; 11,9].
+   - Tópico 10, «Economía mundial»:
+     · comunicados: de 16,1 a 5,5; −10,6 pp [−13,3; −7,9];
+     · minutas: de 13,5 a 4,2; −9,3 pp [−11,4; −7,2].
+
+   Palabras: 03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv,
+   minutas_palabras_robustez.csv y comunicados_palabras_robustez.csv.
+   Nota: 05_Notas/09_antes_despues/T_cuenta_corriente_deficit_externo.md.
+   Por cada 1.000 palabras:
+   - «cuenta corriente»: de 0,00 a 2,03 en minutas (de 0 a 47 apariciones) y de 0,00 a 1,41 en
+     comunicados (de 0 a 43);
+   - «déficit»: de 0,02 a 2,21 en minutas y de 0,03 a 2,12 en comunicados. La nota dice 2,14; el
+     .csv dice 2,12 (ver la sección 3).
+
+   Correlaciones: 03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv. Después
+   del corte, «déficit» aparece en las minutas junto a «cuenta corriente» (phi 0,92) y «balanza de
+   pagos» (0,57). Antes del corte aparece en una sola oración.
+
+c) Convergencia entre métodos (heurística H2)
+   - Las palabras (09) y los tópicos (08) coinciden: el déficit externo entra y la descripción del
+     ciclo mundial sale.
+   - El diccionario de 09 da una lectura distinta:
+     · «Entorno externo» sube +6,5 por 1.000 palabras [3,6; 9,4] en comunicados y +2,1 [−0,8; 4,9]
+       en minutas (03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues_detalle.csv);
+     · la diferencia viene de la medida: el diccionario junta en un solo tema la economía mundial
+       (que baja) con el petróleo, la tasa de cambio, la cuenta corriente y la depreciación (que
+       suben), y el LDA los separa;
+     · las dos medidas coinciden en la dirección antes/después.
+   - Reunión a reunión, el diccionario y los tópicos 6 + 10 se mueven juntos en las minutas
+     (r = 0,39 [0,23; 0,54]) y no en los comunicados (r = 0,04 [−0,15; 0,23])
+     (03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.csv).
+   - Conclusión de la reconciliación: el diccionario sirve para el antes/después, pero es demasiado
+     genérico para seguir el sector externo reunión a reunión en los comunicados.
+
+   Matiz de tiempo, visible en la serie por reunión
+   (03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_6_10.png):
+   - el tópico 6 sube en 2015, pero su nivel más alto en los comunicados llega en 2017–2019;
+   - ese tópico junta el déficit externo con la capacidad productiva y la debilidad de la
+     actividad, es decir, con el ajuste posterior al choque;
+   - la economía mundial (tópico 10) cae justo en el corte en las minutas.
+
+d) Robustez
+   Robusto. Los dos tópicos y las dos palabras mantienen la dirección:
+   - en comunicados y en minutas;
+   - con la muestra completa: tópico 6 +10,0 pp en comunicados y +7,8 en minutas;
+   - con los cortes 2014-09-26 y 2014-12-19
+     (03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues_detalle.csv).
+   No es artefacto de formato: el tópico 10 tiene el 84 % de su peso en las minutas del formato A,
+   pero cae igual en los comunicados.
+
+e) Fragmento
+   Comunicado del 2015-02-20: «Como resultado de la fuerte caída de los ingresos por exportaciones
+   petroleras y del dinamismo de la demanda interna, el déficit en la cuenta corriente de la
+   balanza de pagos del país se ha ampliado.»
+
+f) Figura recomendada
+   03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png
+   - Por qué: compara antes y después en comunicados y minutas lado a lado, con intervalos, y deja
+     ver que un tópico sube mientras el otro baja.
+   - Alternativa: 03_Resultados/Figuras/09_antes_despues/conjunto_palabras_distintivas.png (las
+     palabras que ganan y pierden peso; «cuenta corriente» encabeza las dos columnas).
+   - Legibilidad a media pantalla: se lee, pero tiene ocho tópicos y sostiene tres diapositivas
+     (hallazgos 2, 3 y 4). Requiere ajuste:
+     · una versión por diapositiva, con solo los tópicos del mensaje (6 y 10 aquí);
+     · o los demás tópicos en gris;
+     · además, el panel de comunicados deja vacío el tramo de 20 a 30 por compartir la escala con
+       las minutas.
+   - La alternativa necesita más ajuste (ver la sección 7).
+
+----------------------------------------------------------------------------------------------------
+HALLAZGO 3. QUÉ TEMAS SALIERON
+----------------------------------------------------------------------------------------------------
+
+a) Título de la diapositiva
+   El crédito, la liquidez y el detalle de la actividad interna perdieron espacio en la discusión
+
+b) Evidencia
+   LDA: 03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv.
+   Nota: 05_Notas/08_lda_oraciones/T_actividad_credito_liquidez_bajan.md.
+   Peso medio en la reunión, en %:
+   - Tópico 2, «Crédito y sistema financiero»:
+     · comunicados: de 10,7 a 1,5; −9,2 pp [−10,9; −7,5];
+     · minutas: de 12,3 a 3,3; −9,0 pp [−10,6; −7,3].
+   - Tópico 1, «Actividad económica interna»:
+     · comunicados: de 15,2 a 11,6; −3,6 pp [−6,7; −0,5];
+     · minutas: de 14,8 a 7,9; −6,9 pp [−10,1; −3,6].
+   - Tópico 7, «Seguimiento y provisión de liquidez»:
+     · comunicados: de 14,2 a 8,1; −6,1 pp [−8,4; −3,8];
+     · minutas: de 9,4 a 3,5; −5,9 pp [−7,8; −4,0].
+
+   Diccionario: 03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues.csv.
+   Nota: 05_Notas/09_antes_despues/T_atencion_temas_antes_despues.md.
+   Tema «Actividad económica», por 1.000 palabras:
+   - comunicados: de 24,3 a 17,8; −6,4 [−8,8; −4,1];
+   - minutas: de 23,3 a 15,5; −7,9 [−10,7; −5,0].
+
+c) Convergencia entre métodos
+   - Coinciden: el tópico 1 y el tema «Actividad económica» del diccionario caen los dos.
+   - Reunión a reunión se mueven juntos: r = 0,53 [0,38; 0,65] en comunicados (107 reuniones) y
+     0,53 [0,38; 0,65] en minutas (112 reuniones)
+     (03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.csv).
+   - Ninguna medida de 09 recoge por separado el crédito ni la liquidez.
+
+d) Robustez
+   Robusto en los tres tópicos y en el tema del diccionario: comunicados y minutas, muestra completa
+   y cortes alternativos. Dos salvedades:
+   - El tópico 7 está dominado por una fórmula repetida en 2012 («La Junta reitera que el Banco de
+     la República cuenta con las herramientas y recursos suficientes…»). Su caída es en buena parte
+     el abandono de esa frase: no conviene presentarlo como cambio de análisis.
+   - La caída del crédito también responde al fin del ciclo de crédito de 2010–2013, anterior al
+     choque.
+
+e) Fragmento
+   Comunicado del 2012-04-30: «El crecimiento del crédito a los hogares permanece alto,
+   especialmente el de consumo, lo que indica que los hogares han elevado significativamente su
+   grado de endeudamiento.»
+
+f) Figura recomendada
+   03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (versión con los tópicos
+   1, 2 y 7; ver el ajuste del hallazgo 2).
+   - Alternativa: 03_Resultados/Figuras/09_antes_despues/conjunto_temas_antes_despues.png (temas
+     del diccionario, donde «Actividad económica» es la caída más grande).
+   - Legibilidad a media pantalla:
+     · la recomendada tiene el mismo ajuste del hallazgo 2;
+     · la alternativa se lee bien (seis temas, letra grande).
+   - La serie 03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png
+     muestra que el crédito se apaga justo en el corte, pero es densa (cuatro paneles): mejor para el
+     apéndice.
+
+----------------------------------------------------------------------------------------------------
+HALLAZGO 4. CÓMO CAMBIÓ LA FORMA DE HABLAR DE LA INFLACIÓN
+----------------------------------------------------------------------------------------------------
+
+a) Título de la diapositiva
+   La Junta pasó de vigilar la inflación básica frente a la meta a explicar el traslado de la
+   depreciación a los precios
+
+b) Evidencia
+   LDA: 03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv.
+   Nota: 05_Notas/08_lda_oraciones/T_inflacion_de_meta_a_choques.md.
+   Peso medio en la reunión, en %:
+   - Tópico 4, «Inflación por depreciación y alimentos»:
+     · comunicados: de 5,1 a 15,8; +10,8 pp [7,9; 13,6];
+     · minutas: de 7,5 a 9,6; +2,0 pp [−0,6; 4,7].
+   - Tópico 8, «Inflación básica y expectativas frente a la meta»:
+     · comunicados: de 11,5 a 4,6; −6,9 pp [−9,0; −4,8];
+     · minutas: de 12,2 a 5,4; −6,8 pp [−9,5; −4,1].
+
+   Palabras: 03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv.
+   Nota: 05_Notas/09_antes_despues/T_devaluacion_tema_de_inflacion.md.
+   Por cada 1.000 palabras:
+   - «indexación»: de 0,00 a 1,11 en comunicados y de 0,00 a 0,69 en minutas;
+   - «devaluación»: de 0,02 a 1,34 en minutas y de 0,03 a 0,85 en comunicados;
+   - «persistencia»: de 0,07 a 0,91 en minutas;
+   - «convergencia»: de 0,17 a 1,96 en comunicados.
+
+   Correlaciones: 03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv.
+   En las minutas, la palabra «inflación» aparece:
+   - antes del corte, junto a «proyección» (0,35), «cuidadoso» (0,29) y «monitoreo» (0,29);
+   - después, junto a «meta» (0,34), «convergencia» (0,30), «persistencia» (0,20) e «indexación»
+     (0,17).
+   Solo 2 de las 8 palabras más correlacionadas se repiten entre épocas.
+
+c) Convergencia entre métodos (heurística H2)
+   - Coinciden: las palabras nuevas (indexación, devaluación, persistencia) y el tópico 4 cuentan
+     la misma historia, y el seguimiento rutinario (tópico 8 y las palabras de monitoreo) se
+     reduce.
+   - El diccionario parece contradecirlo: «Inflación» casi no cambia, con +4,1 por 1.000 palabras
+     [1,5; 6,7] en comunicados y +0,7 [−2,1; 3,5] en minutas
+     (03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues_detalle.csv).
+   - El LDA lo explica: el diccionario suma dos conversaciones que se mueven en direcciones
+     opuestas (el tópico 4 sube y el 8 baja), así que su total cambia poco.
+   - Reunión a reunión, la suma de los tópicos 4 y 8 sigue al diccionario: r = 0,71 [0,60; 0,79]
+     en comunicados y 0,73 [0,63; 0,80] en minutas
+     (03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.csv).
+   - Mensaje para la diapositiva: la inflación no recibió más espacio, recibió otro tipo de
+     discusión.
+
+d) Robustez
+   - Tópico 8: robusto en comunicados y minutas.
+   - Tópico 4: robusto en comunicados y matizado en minutas. Sube con los dos cortes alternativos
+     (+1,8 y +3,0 pp), pero con la muestra completa baja (−0,5 pp [−2,6; 1,6]).
+   - Palabras indexación, devaluación, persistencia y convergencia: robustas en los dos tipos de
+     documento.
+   - Salvedades:
+     · el tópico 8 tiene el 80 % de su peso en las minutas del formato A, pero cae igual en los
+       comunicados;
+     · su nivel más alto fue en 2010–2011, así que parte de la caída empezó antes del corte
+       (figura conjunto_lda_theta_por_reunion_topicos_6_10.png);
+     · el tópico 4 junta la depreciación con El Niño de 2015–2016: el modelo no separa los dos
+       choques.
+
+e) Fragmento
+   Comunicado del 2015-09-25: «El traslado de parte de la devaluación del peso a los precios al
+   consumidor y la mayor intensidad del fenómeno de El Niño hacen más lenta la convergencia de la
+   inflación a la meta, tanto por su impacto directo sobre los precios y las expectativas de
+   inflación como por la probable activación de mecanismos de indexación.»
+
+f) Figura recomendada
+   03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (versión con los tópicos
+   4 y 8; ver el ajuste del hallazgo 2).
+   - Por qué: un tópico sube y el otro baja en la misma figura. Es la imagen exacta del mensaje.
+   - Alternativa: 03_Resultados/Tablas/09_antes_despues/minutas_correlaciones_anclas.png (con qué
+     palabras aparece «inflación» antes y después).
+   - Legibilidad a media pantalla:
+     · la recomendada lleva el mismo ajuste del hallazgo 2;
+     · la alternativa no se lee completa: tiene siete u ocho anclas con ocho palabras cada una;
+     · para el video convendría una versión con solo las filas «inflación» y «expectativas de
+       inflación», y con las palabras con tilde (la tabla muestra lemas sin tildes: «inflacion»,
+       «indexacion»).
+
+----------------------------------------------------------------------------------------------------
+HALLAZGO 5. CÓMO SE RELACIONA EN EL TIEMPO CON LAS SERIES
+----------------------------------------------------------------------------------------------------
+
+a) Título de la diapositiva
+   La atención al exterior subió con la caída del petróleo y tocó su máximo antes que el dólar y la
+   inflación
+
+b) Evidencia
+   Fuente: 03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.csv.
+   Nota: 05_Notas/09_antes_despues/X_atencion_se_adelanta_a_las_series.md.
+   Media móvil de 5 reuniones para el texto. Series macro con el último dato que la Junta tenía el
+   día de cada reunión.
+
+   | Reunión    | Evento                                                    | Valor                       |
+   | ---------- | --------------------------------------------------------- | --------------------------- |
+   | 2015-06-24 | Máximo de la atención al entorno externo, minutas         | 21,9 por 1.000 palabras     |
+   | 2015-09-25 | Máximo de la atención al entorno externo, comunicados     | 34,0 por 1.000 palabras     |
+   | 2015-10-30 | Máximo de la atención a la inflación, minutas             | 30,0 por 1.000 palabras     |
+   | 2016-01-29 | Mínimo del Brent                                          | 33,0 USD por barril         |
+   | 2016-02-19 | Máximo de la TRM                                          | 3.338 pesos por dólar       |
+   | 2016-08-31 | Máximo de la inflación total                              | 9,0 %                       |
+   | 2017-07-27 | Máximo de la atención a la inflación, comunicados         | 32,1 por 1.000 palabras     |
+
+   - En la figura por reunión, la atención al entorno externo de los comunicados salta en las
+     reuniones siguientes al corte (de unos 15 a más de 30 por 1.000 palabras), a la vez que cae el
+     Brent.
+   - n = 194 comunicados y 199 minutas; 205 reuniones con datos macro.
+
+   Las fechas de esta tabla son reuniones, no meses, así que no coinciden con la cronología del
+   hallazgo 1:
+   - el pico de la inflación aparece el 2016-08-31 con 9,0 % porque es la primera reunión en que la
+     Junta conocía el dato de julio (8,97 %);
+   - el mínimo del Brent (33,0 USD el 2016-01-29) es el cierre que la Junta tenía ese día, no el
+     valle diario de 26,0 USD.
+   Es la misma información con la regla de alineación; no es una inconsistencia.
+
+c) Convergencia entre métodos
+   - La medida es el diccionario de 09.
+   - El LDA (08) no tiene una cronología equivalente guardada, pero su serie por reunión
+     (03_Resultados/Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_6_10.png)
+     muestra que la economía mundial cae justo en el corte en las minutas.
+   - El déficit externo sube en 2015 y alcanza su nivel más alto en los comunicados en 2017–2019,
+     después del pico de la inflación.
+   - Lectura conjunta: la Junta reaccionó primero al choque externo y luego mantuvo la discusión
+     del ajuste. Esto es una lectura de las figuras, no una cifra guardada.
+
+d) Robustez
+   Matizado.
+   - Es una cronología de extremos sobre una media móvil, que suaviza y puede desplazar las fechas
+     unas pocas reuniones.
+   - En los comunicados, la atención a la inflación toca su máximo después del pico de la inflación
+     (2017-07-27), así que el adelanto no se sostiene en los dos tipos de documento.
+   - Es un solo episodio.
+   - No se evaluó con los cortes alternativos: la medida no depende del corte.
+
+e) Fragmento
+   Comunicado del 2014-10-30, primera reunión después del corte: «El precio internacional del
+   petróleo ha caído y se encuentra por debajo del pronóstico que tenía el equipo técnico.»
+
+f) Figura recomendada
+   03_Resultados/Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png
+   - Por qué: es la única figura que pone el texto y las tres series en paneles alineados por
+     reunión, con el corte marcado.
+   - Alternativa: 03_Resultados/Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png (la
+     tabla de arriba, que se lee bien a media pantalla).
+   - Legibilidad a media pantalla: NO se lee bien. La figura mide 11 × 11 pulgadas, tiene cinco
+     paneles y cubre 2007–2026; a media pantalla los ejes, los rótulos de los periodos y los puntos
+     quedan muy pequeños. Ajuste sugerido:
+     · una versión 16:9 recortada a 2013–2018;
+     · tres o cuatro paneles (entorno externo, Brent, TRM e inflación);
+     · las fechas de los extremos marcadas sobre las líneas.
+
+----------------------------------------------------------------------------------------------------
+HALLAZGO 6. QUÉ SIGNIFICA PARA LA MESA
+----------------------------------------------------------------------------------------------------
+
+a) Título de la diapositiva
+   El comunicado registró el cambio de agenda con más fuerza que la minuta
+
+b) Evidencia
+   Fuentes:
+   - 03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues_detalle.csv;
+   - 03_Resultados/Tablas/08_lda_oraciones/conjunto_lda_antes_despues.csv;
+   - 03_Resultados/Tablas/04_bigramas/conjunto_votacion_por_periodo.csv.
+   Notas:
+   - 05_Notas/09_antes_despues/T_atencion_temas_antes_despues.md;
+   - 05_Notas/08_lda_oraciones/T_inflacion_de_meta_a_choques.md;
+   - 05_Notas/08_lda_oraciones/T_decision_postura_sube.md;
+   - 05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md.
+
+   El comunicado registra el cambio con más fuerza:
+   - Entorno externo (diccionario): +6,5 por 1.000 palabras [3,6; 9,4] en comunicados, frente a
+     +2,1 [−0,8; 4,9] en minutas.
+   - Inflación por depreciación (tópico 4): +10,8 pp [7,9; 13,6] en comunicados, frente a +2,0 pp
+     [−0,6; 4,7] en minutas.
+
+   Lo que la minuta agrega es la deliberación:
+   - El espacio dedicado a justificar la postura (tópico 3) sube en las minutas de 12,2 % a 30,5 %
+     (+18,4 pp [13,2; 23,6]).
+   - En el periodo P4 (2014–2016), el 56 % de las minutas reporta una decisión por mayoría, frente
+     al 8 % de los comunicados. Hasta 2016 el comunicado casi nunca decía cómo se votó.
+
+c) Convergencia entre métodos
+   El diccionario (09) y el LDA (08) muestran la misma asimetría entre comunicados y minutas en el
+   sector externo y la inflación por depreciación.
+
+d) Robustez
+   Matizado. La parte de las minutas tiene salvedades de formato:
+   - el salto del tópico 3 en las minutas empieza con el cambio de formato del 2014-05-30, antes del
+     corte, y el texto de la discusión en las minutas se reduce a la mitad después del corte
+     (43.788 frente a 23.104 palabras);
+   - la votación es una clasificación automática sin validación manual, y parte de su aumento es un
+     cambio en cómo se redacta.
+   La parte de los comunicados es robusta para el entorno externo y para el tópico 4.
+
+e) Fragmento
+   Comunicado del 2016-04-29: «Con el fin de asegurar de que la inflación converja a la meta en
+   2017 y contribuir a la reducción en el déficit de la cuenta corriente, la Junta Directiva
+   decidió aumentar en 50 pb la tasa de interés de referencia.»
+
+f) Figura recomendada
+   03_Resultados/Figuras/09_antes_despues/conjunto_temas_antes_despues.png
+   - Por qué: comunicados y minutas lado a lado, con antes y después e intervalos. La diferencia
+     entre los dos paneles en «Entorno externo» e «Inflación» se ve sin explicación.
+   - Alternativa: 03_Resultados/Figuras/04_bigramas/conjunto_votacion_por_anio.png, para la parte
+     de la votación. No se abrió en esta revisión.
+   - Legibilidad a media pantalla: la recomendada se lee bien (seis temas, letra grande, leyenda
+     clara).
+
+
+====================================================================================================
+3. ALCANCE DE LA EVIDENCIA
+====================================================================================================
+
+Respaldado por la evidencia
+- Entre los cinco años anteriores y los cinco posteriores al 2014-10-30, la Junta cambió de qué
+  habla:
+  · entraron el déficit externo y la depreciación como causa de la inflación;
+  · salieron la economía mundial, el crédito, la liquidez y la inflación básica frente a la meta.
+- El cambio aparece:
+  · en las dos medidas (palabras y tópicos);
+  · en los dos tipos de documento;
+  · con los tres cortes.
+- La caída de la actividad económica es robusta en las dos medidas.
+
+Respaldado con matices
+- Que la atención al exterior se adelantó a los picos de la TRM y la inflación: es una cronología
+  de un solo episodio, con media móvil, y en los comunicados la atención a la inflación llegó
+  después del pico.
+- Que la minuta dedica más espacio a justificar la postura: puede pesar el formato (ver abajo).
+
+Lo que no se puede afirmar
+- Causalidad. La relación entre el texto y las series es asociativa. En la ventana también
+  ocurrieron:
+  · El Niño de 2015–2016;
+  · la normalización de la Reserva Federal;
+  · la desaceleración de China;
+  · el fin del ciclo de crédito de 2010–2013.
+  El texto no separa el efecto del petróleo de estos otros eventos.
+- Que el patrón se repita en otros choques: es un solo episodio.
+- Cuánto pesó cada tema en la decisión de tasa: las medidas dicen de qué se habla, no por qué se
+  decide.
+
+Fuentes de sensibilidad
+- Formato de las minutas: cambian de formato el 2014-05-30, cinco reuniones antes del corte, y su
+  texto de discusión se reduce a la mitad después.
+  · Toda medida se normaliza por extensión y se contrasta con los comunicados.
+  · Lo que cambia solo en las minutas se trata como posible artefacto.
+- Tamaño del corpus: unas 177 mil palabras limpias en total. El LDA se estimó con 1.619 bloques de
+  60 palabras; el tópico 5 y el 9 no se repiten con otras semillas y no se interpretan.
+- Diccionario: los temas se fijaron a priori. Son conteos que no ven el contexto y juntan
+  conversaciones que se mueven en direcciones opuestas (ver hallazgos 2 y 4). Ejemplo: «déficit»
+  está en el tema «Fiscal», aunque después de 2014 casi siempre se refiere a la cuenta corriente.
+- Número de tópicos: K = 10 y α = 0,1 se eligieron con una regla escrita antes de ver los tópicos
+  (perplejidad a menos del 5 % del mínimo, sin la peor coherencia). Otro K reparte los temas de
+  otra manera. Los nombres de los tópicos son interpretaciones sostenidas por sus palabras y
+  fragmentos.
+- Fórmulas repetidas: la Junta reutiliza frases entre reuniones (p. ej. «La Junta seguirá haciendo
+  un cuidadoso monitoreo…» antes de 2014). Parte de los cambios de vocabulario son de redacción, en
+  particular el tópico 7 y las palabras de votación.
+
+Discrepancias entre notas y .csv encontradas al preparar este documento (no se corrigieron)
+- 05_Notas/09_antes_despues/T_atencion_temas_antes_despues.md marca «Matizada» para toda la fila
+  «Entorno externo». En 03_Resultados/Tablas/09_antes_despues/conjunto_temas_antes_despues.csv la
+  lectura es «Robusta» en comunicados y «Matizada» solo en minutas.
+  · Las cifras son las mismas; la diferencia está en la etiqueta.
+  · En la presentación conviene decir «robusto en comunicados, matizado en minutas».
+- 05_Notas/09_antes_despues/T_cuenta_corriente_deficit_externo.md da para «déficit» en comunicados
+  2,14 por 1.000 palabras después del corte. El .csv
+  (03_Resultados/Tablas/09_antes_despues/conjunto_palabras_cambio_detalle.csv) da 2,12 (65
+  apariciones sobre 30.601 palabras). Este documento usa la cifra del .csv; la nota está por
+  corregir.
+- 05_Notas/08_lda_oraciones/T_choque_externo_llega_a_colombia.md describe el peso del tópico como
+  «unas 15 de cada 100 palabras». La medida es el peso medio del tópico en la reunión (θ), no una
+  proporción exacta de palabras. En la presentación conviene decir «peso del tema en la reunión».
+
+
+====================================================================================================
+4. IMPLICACIONES PARA LA MESA Y PRÓXIMOS PASOS
+====================================================================================================
+
+Qué aporta al seguimiento de la mesa
+- Los temas del comunicado se pueden medir reunión a reunión. En 2014–2016 cambiaron con la caída
+  del petróleo y antes de los picos del dólar y de la inflación.
+- Seguir de qué habla la Junta, y no solo qué decide, da una lectura temprana de qué riesgos pesan
+  en su función de reacción.
+- La minuta agrega la deliberación: la justificación de la postura y la votación, que hasta 2016
+  el comunicado no reportaba. Es la fuente para entender la tensión entre contener la inflación y
+  no ahogar una actividad débil.
+
+Conexión con hoy (2026), formulada como hipótesis, no como pronóstico
+- Contexto según la tabla de periodos (03_Resultados/Tablas/07_graficas_macro/macro_descriptiva.csv
+  y 03_Resultados/Tablas/01_extraer_texto/conjunto_periodos.csv):
+  · desde el 2026-01-30 (P10) la Junta está otra vez en un ciclo de alzas: subió 100 pb a 10,25 %
+    en enero, con 4 alzas y 2 reuniones sin cambio hasta septiembre;
+  · la inflación promedia 5,8 % (entre 5,3 % y 6,3 %) y está fuera del rango meta en todos los meses
+    del periodo.
+- A diferencia de 2014–2016, el choque externo va en la dirección contraria:
+  · el Brent promedia 96,3 USD en P10 y sube 60 % dentro del periodo;
+  · la TRM promedia 3.475 pesos y cae 8,7 %.
+- Hipótesis que la mesa podría vigilar en los comunicados, con las medidas de este trabajo:
+  1. Si reaparecen «indexación», «persistencia» y «anclaje de expectativas», o si sube el tópico de
+     inflación por choques frente al de inflación básica. En 2015–2016 esas palabras acompañaron el
+     ciclo de alzas.
+  2. Si el sector externo vuelve a ocupar espacio, ahora por un petróleo alto y un peso apreciado.
+     Esto ayudaría a distinguir si la Junta atribuye la inflación actual a factores externos o
+     internos.
+  3. En las minutas, cuánto espacio ocupa la justificación de la postura y hacia dónde vota la
+     minoría. En P10, el 83 % de las minutas reporta decisiones por mayoría
+     (05_Notas/04_bigramas/T_votacion_minuta_vs_comunicado.md).
+- La atención a la inflación por 1.000 palabras de 2024–2026 (20 a 22 en comunicados, 17 a 19 en
+  minutas) ya es comparable a la de 2015–2017 (23 a 28 y 18 a 23)
+  (05_Notas/03_frecuencias_tfidf/T_inflacion_sigue_episodios.md).
+- Salvedad: el modelo de tópicos se estimó con 2009–2019 y puede no describir bien el lenguaje de
+  2020–2026. Las hipótesis se verifican primero con el diccionario y las palabras.
+
+Preguntas abiertas
+- ¿Los cambios de tema anticipan la siguiente decisión de tasa? Requiere un diseño predictivo
+  evaluado fuera de muestra, con partición temporal.
+- ¿El patrón se repite en el choque inflacionario de 2021–2023 o en el actual?
+- ¿La dirección del voto de la minoría anticipa el siguiente movimiento? La clasificación de la
+  votación está pendiente de validación manual con 30 documentos.
+- ¿Qué separa el efecto del petróleo del de El Niño en la discusión de la inflación?
+
+
+====================================================================================================
+5. ESPACIO PARA LOS EMBEDDINGS (script 10)        >>> PENDIENTE <<<
+====================================================================================================
+
+Estado: en curso (otro integrante). Sin resultados en 03_Resultados/ al cierre de este documento.
+Antes de usarlos debe quedar registrada la ampliación del catálogo
+(07_Recursos/catalogo_metodos.md y «Decisiones tomadas» de CLAUDE.md).
+
+Qué tendrían que mostrar para CONFIRMAR los hallazgos
+- Hallazgo 2: que los vecinos de «déficit» y de «petróleo / precio del petróleo» después del corte
+  incluyan «cuenta corriente», «balanza de pagos», «ingreso» y «financiamiento». También que los
+  vecinos de «externo» pasen de «mundial», «Europa» y «Estados Unidos» a términos de Colombia.
+- Hallazgo 4: que los vecinos de «inflación» y de «expectativas de inflación» pasen de
+  «proyección», «monitoreo», «credibilidad» y «largo plazo» a «devaluación», «traslado»,
+  «indexación», «persistencia» y «anclaje». Así coincidirían con las correlaciones de
+  03_Resultados/Tablas/09_antes_despues/conjunto_correlaciones_anclas.csv.
+- Hallazgo 3: que «crecimiento» pase de vecinos de demanda interna y crédito a vecinos de
+  «términos de intercambio», «ingreso» y «debilidad».
+
+Qué los CONTRADIRÍA
+- Que los vecinos de las anclas no cambien entre épocas.
+- Que cambien solo en las minutas y no en los comunicados: sería un posible artefacto de formato.
+- Que los vecinos estables entre semillas sean pocos: el corpus sería demasiado chico para esta
+  medida.
+
+En qué diapositivas entrarían
+- Una línea de confirmación en la diapositiva del hallazgo 4 (inflación), que es donde el contraste
+  con las correlaciones es directo.
+- Si el resultado es claro, una diapositiva propia después de la del hallazgo 4. Habría que quitar
+  tiempo a la diapositiva del método.
+- Figura o tabla: PENDIENTE (prevista en PLAN.md como
+  03_Resultados/Tablas/10_*/conjunto_vecinos_antes_despues.png).
+
+
+====================================================================================================
+6. PROPUESTA DE ORDEN DE DIAPOSITIVAS
+====================================================================================================
+
+Duración total prevista: 13 min 30 s, más unos 60 a 90 s de transiciones (máximo 15 min).
+Las rutas son relativas a 03_Resultados/.
+
+Diapositiva 1
+- Título: Después del choque petrolero, la Junta pasó de hablar del mundo a hablar de cómo el
+  choque entraba a Colombia
+- Figura: ninguna (mensaje principal; opcional, una línea de tiempo mínima)
+- Duración: 1:00
+- Presentador: 1
+- Frase del presentador: «Esta es la respuesta: cambió de qué habla la Junta, y el cambio se vio
+  primero en los comunicados.»
+
+Diapositiva 2
+- Título: Comparamos cinco años antes y cinco después de la primera reunión con el petróleo en
+  mercado bajista
+- Figura: Tablas/09_antes_despues/conjunto_documentos_por_epoca.png (o sin figura)
+- Duración: 1:00
+- Presentador: 1
+- Frase del presentador: «El corte lo fijó el petróleo, no el texto; leímos comunicados y minutas
+  con dos medidas.»
+
+Diapositiva 3
+- Título: La caída del petróleo llegó a la inflación en dos años, a través de la depreciación del
+  peso
+- Figura: Figuras/07_graficas_macro/macro_cronologia_choque.png
+- Duración: 1:15
+- Presentador: 1
+- Frase del presentador: «El Brent cayó 77 %, el peso se depreció 86 % y la inflación llegó a 9 %.»
+
+Diapositiva 4
+- Título: Después del choque, la Junta pasó de describir la economía mundial a discutir el déficit
+  externo de Colombia
+- Figura: Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (tópicos 6 y 10)
+- Duración: 1:15
+- Presentador: 2
+- Frase del presentador: «El déficit externo pasó de 2 % a 16 % del peso de los comunicados, y la
+  economía mundial cayó a un tercio.»
+
+Diapositiva 5
+- Título: La cuenta corriente entró a la discusión de la Junta, que antes no la mencionaba
+- Figura: Figuras/09_antes_despues/conjunto_palabras_distintivas.png (versión ajustada)
+- Duración: 1:00
+- Presentador: 2
+- Frase del presentador: «En cinco años antes del corte no hay ni una mención; después, unas dos
+  por cada mil palabras.»
+
+Diapositiva 6
+- Título: El crédito, la liquidez y el detalle de la actividad interna perdieron espacio en la
+  discusión
+- Figura: Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (tópicos 1, 2 y 7)
+- Duración: 1:15
+- Presentador: 2
+- Frase del presentador: «Lo que dominaba en 2010–2013 casi desaparece: el crédito pasa de 11 % a
+  menos de 2 %.»
+
+Diapositiva 7
+- Título: La Junta pasó de vigilar la inflación básica frente a la meta a explicar el traslado de
+  la depreciación a los precios
+- Figura: Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (tópicos 4 y 8)
+- Duración: 1:30
+- Presentador: 3
+- Frase del presentador: «La inflación no recibió más espacio, recibió otra discusión: indexación,
+  persistencia, traslado.»
+
+Diapositiva 8
+- Título: La atención al exterior subió con la caída del petróleo y tocó su máximo antes que el
+  dólar y la inflación
+- Figura: Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png (versión recortada) o
+  Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png
+- Duración: 1:15
+- Presentador: 3
+- Frase del presentador: «El texto se movió con el petróleo y meses antes de los picos de la TRM y
+  de la inflación.»
+
+Diapositiva 9
+- Título: El comunicado registró el cambio de agenda con más fuerza que la minuta
+- Figura: Figuras/09_antes_despues/conjunto_temas_antes_despues.png
+- Duración: 1:00
+- Presentador: 3
+- Frase del presentador: «Para leer el cambio, el comunicado; para entender la deliberación, la
+  minuta.»
+
+Diapositiva 10
+- Título: Lo que la evidencia respalda y lo que requiere más análisis
+- Figura: ninguna (dos columnas de texto)
+- Duración: 1:00
+- Presentador: 4
+- Frase del presentador: «Es asociación en un solo episodio; el formato de las minutas y El Niño
+  son las salvedades.»
+
+Diapositiva 11
+- Título: En 2026 la Junta vuelve a subir tasas, con señales de texto que la mesa puede vigilar
+- Figura: Figuras/07_graficas_macro/macro_series_2007_2026.png
+- Duración: 1:15
+- Presentador: 4
+- Frase del presentador: «Hipótesis: si reaparecen indexación y persistencia, la discusión se
+  parece a la de 2015.»
+
+Diapositiva 12
+- Título: Próximos pasos para convertir esta lectura en una herramienta de seguimiento
+- Figura: ninguna
+- Duración: 0:45
+- Presentador: 4
+- Frase del presentador: «Probar si los temas anticipan la decisión, validar la votación y
+  repetirlo en 2021–2023.»
+
+Reparto entre presentadores
+- Presentador 1: diapositivas 1 a 3, 3:15.
+- Presentador 2: diapositivas 4 a 6, 3:30.
+- Presentador 3: diapositivas 7 a 9, 3:45.
+- Presentador 4: diapositivas 10 a 12, 3:00.
+- Total: 13:30.
+
+Si entran los embeddings, una diapositiva de 1:00 después de la 7. Para no pasar de 15 minutos se
+compensa quitando la 5 (su mensaje cabe en la 4) o recortando la 2 a 0:30.
+
+Apéndice (no cuenta en el tiempo): A1 a A8 de la sección 7.
+
+Notas de diseño (04_Presentaciones/indicaciones_deck.md)
+- Ningún título lleva «:» en la mitad, ni «—pero», ni la forma «no es X, es Y».
+- Sin subtítulos de comentario ni cajas de conclusión, salvo la diapositiva 10.
+- Las cifras grandes se reservan para la diapositiva 3 (77 %, 86 %, 9 %).
+
+
+====================================================================================================
+7. APÉNDICE
+====================================================================================================
+
+Figuras y tablas de soporte (rutas relativas a 03_Resultados/)
+
+A1. Metodología: corte y documentos
+- Tablas/07_graficas_macro/macro_cortes_candidatos.png: fechas candidatas de corte y los datos que
+  la Junta tenía ese día.
+- Tablas/07_graficas_macro/conjunto_ventanas_corte.png: minutas del formato B antes de cada corte y
+  palabras a cada lado.
+- Tablas/09_antes_despues/conjunto_documentos_por_epoca.png: reuniones y palabras por época en los
+  cuatro escenarios.
+- Tablas/01_extraer_texto/minutas_cortes_formato.png y
+  Figuras/01_extraer_texto/minutas_palabras_por_seccion.png: los cinco formatos de minuta y qué
+  parte es discusión de la Junta.
+
+A2. Metodología: modelo de tópicos
+- Tablas/08_lda_oraciones/conjunto_lda_umbral_bloques.png: por qué bloques de 60 palabras.
+- Tablas/08_lda_oraciones/conjunto_lda_seleccion.png: selección de K = 10 y α = 0,1 (perplejidad y
+  coherencia).
+
+A3. Validación de tópicos
+- Tablas/08_lda_oraciones/conjunto_lda_topicos.png: palabras por lift y β de cada tópico.
+- Tablas/08_lda_oraciones/conjunto_lda_fragmentos.png: bloques representativos. Según las notas,
+  tres fragmentos no sirven para la presentación:
+  · el primero del tópico 6 (comunicado 2019-07-26) incluye la lista de asistentes;
+  · el segundo del tópico 2 (minuta 2010-07-23) es una enumeración;
+  · dos del tópico 4 son casi idénticos.
+- Tablas/08_lda_oraciones/conjunto_lda_vs_diccionario.png: correlación por reunión entre tópicos y
+  temas del diccionario (reconciliación H2).
+
+A4. Robustez
+- Tablas/08_lda_oraciones/conjunto_lda_antes_despues.png (y _detalle.csv): diferencias, IC y
+  lectura en los cuatro escenarios.
+- Tablas/09_antes_despues/conjunto_temas_antes_despues.png y conjunto_temas_robustez.png: temas del
+  diccionario por escenario.
+- Tablas/09_antes_despues/comunicados_palabras_robustez.png y minutas_palabras_robustez.png:
+  palabras con su razón en el otro tipo de documento y en los tres escenarios.
+
+A5. Fragmentos (para preguntas)
+- Tablas/09_antes_despues/conjunto_fragmentos_palabras.png
+- Tablas/09_antes_despues/conjunto_fragmentos_bigramas.png
+- Tablas/09_antes_despues/conjunto_fragmentos_temas.png
+- 03_Resultados/Tablas/09_antes_despues/conjunto_fragmentos_anclas.csv (solo .csv)
+
+A6. Series por reunión
+- Figuras/08_lda_oraciones/conjunto_lda_theta_por_reunion_topicos_1_4.png y _topicos_6_10.png:
+  peso de cada tópico 2007–2019.
+- Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png: versión completa 2007–2026.
+- Figuras/03_frecuencias_tfidf/conjunto_temas_por_anio.png: validación, donde la atención a la
+  inflación sigue los episodios conocidos.
+
+A7. Datos macro
+- Tablas/07_graficas_macro/macro_descriptiva.png: Brent, TRM e inflación por periodo P1 a P10.
+- Tablas/07_graficas_macro/macro_cronologia.png: hitos del choque con su fecha y valor.
+- Figuras/07_graficas_macro/macro_series_2007_2026.png.
+- Las fuentes, la cobertura y las transformaciones de cada serie están en README.md y en
+  «Definición de variables» de CLAUDE.md.
+
+A8. Correlaciones entre palabras
+- Tablas/09_antes_despues/comunicados_correlaciones_anclas.png y minutas_correlaciones_anclas.png.
+- Bigramas: Figuras/09_antes_despues/conjunto_bigramas_cambio.png y
+  Tablas/09_antes_despues/conjunto_bigramas_frecuentes_epoca.png. En las minutas, 9 de los 20
+  bigramas de la figura son posibles artefactos de formato (votación y fórmulas de decisión), así
+  que no se recomiendan para el cuerpo de la presentación.
+
+Figuras recomendadas que necesitan ajuste de legibilidad para el video (no se modificaron)
+
+1. Figuras/08_lda_oraciones/conjunto_lda_antes_despues.png (diapositivas 4, 6 y 7)
+   - Ocho tópicos en dos paneles: demasiados mensajes para una diapositiva.
+   - Ajuste: una versión por diapositiva con solo los tópicos del mensaje, o el resto en gris.
+     El panel de comunicados deja vacío el tramo de 20 a 30 por compartir la escala con las minutas.
+
+2. Figuras/09_antes_despues/conjunto_temas_macro_por_reunion.png (diapositiva 8)
+   - 11 × 11 pulgadas, cinco paneles, 2007–2026: a media pantalla no se leen los ejes ni los
+     rótulos.
+   - Ajuste: versión 16:9, 2013–2018, tres o cuatro paneles y extremos marcados. Mientras tanto,
+     usar la tabla conjunto_cronologia_texto_macro.png.
+
+3. Figuras/09_antes_despues/conjunto_palabras_distintivas.png (diapositiva 5)
+   - 30 palabras por panel con letra de 8,5 puntos, y lemas sin tildes («deficit», «devaluacion»,
+     «indexacion») que en una diapositiva parecen errores.
+   - Ajuste: 8 a 10 palabras por lado, etiquetas con tildes y letra más grande.
+
+4. Tablas/09_antes_despues/minutas_correlaciones_anclas.png (alternativa de la diapositiva 7)
+   - Ocho anclas con ocho palabras cada una y lemas sin tildes.
+   - Ajuste: solo las filas «inflación» y «expectativas de inflación», con tildes.
+
+5. Figuras/07_graficas_macro/macro_cronologia_choque.png (diapositiva 3)
+   - Se lee bien.
+   - Detalle menor: el rótulo «Valle del Brent» toca la línea punteada del inicio del ciclo de
+     alzas.
+
+Se leen bien sin ajuste
+- Figuras/09_antes_despues/conjunto_temas_antes_despues.png
+- Tablas/09_antes_despues/conjunto_cronologia_texto_macro.png
+
+No se abrieron en esta revisión
+- Figuras/07_graficas_macro/macro_series_2007_2026.png
+- Figuras/04_bigramas/conjunto_votacion_por_anio.png
+- Tablas/09_antes_despues/conjunto_documentos_por_epoca.png (abierta en la sesión anterior, antes
+  del cambio de formato de las tablas)
+
+Las tres deben revisarse a media pantalla antes de grabar.
