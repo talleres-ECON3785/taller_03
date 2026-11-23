@@ -1,0 +1,5 @@
+# Links al video entregable del Taller 3
+
+**OneDrive**: [uniandes-my.sharepoint.com/✌️/g/personal/d_plazasg_uniandes_edu_co/IQCkbdgrf1Y1T6fyTdaEzPzJAZugFqa0L5lBsDMdmkwILlk?e=f7PbxP&amp;nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D](https://uniandes-my.sharepoint.com/:v:/g/personal/d_plazasg_uniandes_edu_co/IQCkbdgrf1Y1T6fyTdaEzPzJAZugFqa0L5lBsDMdmkwILlk?e=f7PbxP&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
+
+**YouTube**: [youtu.be/z8hnSHRg9CA](https://youtu.be/z8hnSHRg9CA)
